@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import MerchantWindow from './components/MerchantWindow/MerchantWindow'
+
 export default function HomeModule() {
   return (
     <div className={styles.container}>
@@ -9,14 +11,7 @@ export default function HomeModule() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="merchant-window">
-        <main className={styles.main}>
-          Main Content comes here.
-        </main>
-        <aside>
-          Aside Content comes here.
-        </aside>
-      </div>
+      <MerchantWindow></MerchantWindow>
     </div>
   )
 }

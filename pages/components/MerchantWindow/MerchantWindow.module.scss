@@ -1,0 +1,5 @@
+.container {
+    display: grid;
+    grid-template-areas: 'merchant-form discounts'
+    'merchant-form products';
+}

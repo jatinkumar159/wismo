@@ -1,5 +1,7 @@
-.container {
+.container {    
   padding: 0 2rem;
+  display: grid;
+  grid-template-areas: 'merchant-form discounts' 'merchant-form products';
 }
 
 .main {
