@@ -26,6 +26,7 @@ export default function Confirmation() {
                 </Text>
                 <Text mb={2} className={styles.newAddress}>
                     <Link href="/new-address"> <SmallAddIcon />Add new delivery address</Link>
+                    {/* <Button size="xs" color="white" background="black" _hover={{bg:'black'}}> <SmallAddIcon />Add new delivery address</Button> */}
                 </Text>
             </Box>
 
