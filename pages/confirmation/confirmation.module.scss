@@ -30,3 +30,21 @@
 .newAddress {
     font-size: 0.75rem;
 }
+
+.orderSectionTitle {
+    p {
+        color: var(--chakra-colors-gray-500);
+    }
+}
+
+.viewToggle{
+    color: var(--chakra-colors-blue-400);
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+.view-more {
+    color: var(--chakra-colors-blue-400);
+}
