@@ -1,7 +1,7 @@
 import { EditIcon } from "@chakra-ui/icons";
 import { Box, IconButton, Text } from "@chakra-ui/react";
-import styles from './addresses/addresses.module.scss';
-import AddressCard from "./components/AddressCard/AddressCard";
+import styles from './addresses.module.scss';
+import AddressCard from "./../../components/AddressCard/AddressCard";
 
 export default function AddressList() {
     return (

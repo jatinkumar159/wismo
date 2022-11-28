@@ -1,6 +1,6 @@
 import { EditIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, IconButton, Link, Text } from '@chakra-ui/react';
-import AddressCard from '../../components/AddressCard/AddressCard';
+import AddressCard from './../../components/AddressCard/AddressCard';
 import { useAppSelector } from '../../redux/hooks';
 import { selectPhone } from '../../redux/slices/profileSlice';
 import styles from './confirmation.module.scss';

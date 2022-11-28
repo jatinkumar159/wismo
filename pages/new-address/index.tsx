@@ -1,6 +1,6 @@
 import { Box, Button, Flex, FormControl, FormLabel, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import { useFormik } from "formik";
-import styles from './new-address/new-address.module.scss';
+import styles from './new-address.module.scss';
 
 interface Address {
     mobile: string,

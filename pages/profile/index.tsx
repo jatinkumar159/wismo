@@ -69,12 +69,14 @@ export default function Profile() {
                 {({ values, errors, touched, isSubmitting, handleBlur, handleChange, submitForm }) => (
                     <Form>
                         <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
+                            <FormLabel fontSize="sm">Mobile Number</FormLabel>
                             <InputGroup>
                                 <InputLeftAddon>+91</InputLeftAddon>
                                 <Input
+                                    autoComplete='false'
                                     id='phone'
                                     type='tel'
-                                    placeholder='Phone Number'
+                                    placeholder='Mobile number'
                                     errorBorderColor='red.300'
                                     autoFocus
                                     value={values.phone}

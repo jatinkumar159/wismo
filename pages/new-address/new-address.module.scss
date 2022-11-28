@@ -1,4 +1,9 @@
 .container {
-    font-size: 0.875rem;
+    font-size: var(--chakra-fontSizes-sm);
     padding: 0.5rem 1rem;
+
+    label, input, button {
+        font-size: var(--chakra-fontSizes-sm);
+    }
+
 }
