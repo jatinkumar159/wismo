@@ -1,14 +1,13 @@
 import { ChangeEvent, useState } from 'react'
-import { Field, Form, Formik, useFormik, useFormikContext } from 'formik'
-import { Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, InputLeftElement, PinInput, PinInputField, Progress, useToast, VStack } from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
 import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
 import Head from 'next/head'
 import styles from './Profile.module.scss'
-import { PhoneIcon } from '@chakra-ui/icons'
-import { promisify } from 'util'
+import { useRouter } from 'next/router'
 
 export default function Profile() {
     const dispatch = useAppDispatch()
@@ -16,6 +15,7 @@ export default function Profile() {
     const isLoading = useAppSelector(selectIsLoading);
     const isVerified = useAppSelector(selectIsVerified);
     const toast = useToast();
+    const router = useRouter();
 
     const [otpRequestId, setOtpRequestId] = useState('');
 
@@ -59,7 +59,10 @@ export default function Profile() {
                     }
 
                     dispatch(setPhone(values.phone));
-                    if (data.is_guest_user) dispatch(verifyProfile());
+                    if (data.is_guest_user) {
+                        dispatch(verifyProfile());
+                        router.push('/confirmation');
+                    }
                     else setOtpRequestId(data.otp_request_id);
                 }}
             >
@@ -127,7 +130,7 @@ export default function Profile() {
                         // Store token to local storage? 
                         setIsOtpInvalid(false);
                         dispatch(verifyProfile());
-                        // redirect to address page
+                        router.push('/addresses');
                     } else {
                         setIsOtpInvalid(true);
                     }
