@@ -23,9 +23,10 @@
 }
 
 .attribution {
-    font-size:0.8rem;
+    font-size:0.875rem;
     a {
-        color: rgb(0,82,204);
+        color: var(--chakra-colors-blue-400);
+        font-weight:bold;
         &:hover {
             text-decoration: underline;
         }

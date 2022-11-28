@@ -1,0 +1,50 @@
+.container {
+    font-size:0.875rem;
+}
+
+.section {
+    border-bottom: 1px solid var(--chakra-colors-gray-200);
+    padding: 0.5rem 1rem;
+}
+
+.sectionContent {
+    p {
+        color: var(--chakra-colors-gray-500);
+    }
+
+    button {
+        margin-left: 0.5rem;
+    }
+}
+
+.mobileNumber {
+    color: var(--chakra-colors-black);
+}
+
+.moreAddresses {
+    font-size: 0.75rem;
+    font-weight:bold;
+    color: var(--chakra-colors-blue-400);
+}
+
+.newAddress {
+    font-size: 0.75rem;
+}
+
+.orderSectionTitle {
+    p {
+        color: var(--chakra-colors-gray-500);
+    }
+}
+
+.viewToggle{
+    color: var(--chakra-colors-blue-400);
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+.view-more {
+    color: var(--chakra-colors-blue-400);
+}
