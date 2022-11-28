@@ -12,7 +12,7 @@ const defaultProps = {
 
 export default function AddressCard(props: Props) {
     return (
-        <Box p={4} className={`${styles.card} ${styles.selectedCard}`}>
+        <Box p={4} className={`${styles.card} ${props.selected ? styles.selectedCard : ''}`} mb={2} mt={2}>
             <Flex align={'flex-start'} gap={'0.5rem'}>
                 <Flex>
                     {
