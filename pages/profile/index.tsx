@@ -1,21 +1,30 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import { Form, Formik } from 'formik'
-import { Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack } from '@chakra-ui/react'
+import {
+    Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
+    InputLeftElement,
+    Text,
+} from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
-import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
+import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
 import Head from 'next/head'
-import styles from './Profile.module.scss'
+import styles from './profile.module.scss'
 import { useRouter } from 'next/router'
+import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 
 export default function Profile() {
+
     const dispatch = useAppDispatch()
     const phone = useAppSelector(selectPhone);
+    const country = useAppSelector(selectCountry);
     const isLoading = useAppSelector(selectIsLoading);
     const isVerified = useAppSelector(selectIsVerified);
     const toast = useToast();
     const router = useRouter();
+    const { isOpen, onToggle, onClose } = useDisclosure();
 
     const [otpRequestId, setOtpRequestId] = useState('');
 
@@ -67,24 +76,37 @@ export default function Profile() {
                 }}
             >
                 {({ values, errors, touched, isSubmitting, handleBlur, handleChange, submitForm }) => (
-                    <Form>
-                        <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
-                            <InputGroup>
-                                <InputLeftAddon>+91</InputLeftAddon>
-                                <Input
-                                    id='phone'
-                                    type='tel'
-                                    placeholder='Phone Number'
-                                    errorBorderColor='red.300'
-                                    autoFocus
-                                    value={values.phone}
-                                    onBlur={handleBlur}
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, handleChange, submitForm)}
-                                />
-                            </InputGroup>
-                            <FormErrorMessage>{errors.phone}</FormErrorMessage>
-                        </FormControl>
-                    </Form>
+                    <>
+                        <Form>
+                            <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
+                                <InputGroup>
+                                    <InputLeftElement width="3em" cursor="pointer" onClick={onToggle}>
+                                        <Text as='span'>
+                                            {country.flag}
+                                        </Text>
+                                        {isOpen ? (
+                                            <ChevronUpIcon boxSize={6} color="gray.500" />
+                                        ) : (
+                                            <ChevronDownIcon boxSize={6} color="gray.500" />
+                                        )}
+
+                                    </InputLeftElement>
+                                    <Input
+                                        id='phone'
+                                        type='tel'
+                                        placeholder='Phone Number'
+                                        errorBorderColor='red.300'
+                                        autoFocus
+                                        value={values.phone}
+                                        onBlur={handleBlur}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, handleChange, submitForm)}
+                                    />
+                                </InputGroup>
+                                <FormErrorMessage>{errors.phone}</FormErrorMessage>
+                            </FormControl>
+                        </Form>
+                        {isOpen && <SearchCountry onClose={onClose} />}
+                    </>
                 )}
             </Formik>
         );
