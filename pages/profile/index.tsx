@@ -80,7 +80,7 @@ export default function Profile() {
                         <Form>
                             <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
                                 <InputGroup>
-                                    <InputLeftElement width="3em" cursor="pointer" onClick={onToggle}>
+                                    {/* <InputLeftElement width="3em" cursor="pointer" onClick={onToggle}>
                                         <Text as='span'>
                                             {country.flag}
                                         </Text>
@@ -90,7 +90,10 @@ export default function Profile() {
                                             <ChevronDownIcon boxSize={6} color="gray.500" />
                                         )}
 
-                                    </InputLeftElement>
+                                    </InputLeftElement> */}
+                                    <InputLeftAddon>
+                                        +91
+                                    </InputLeftAddon>
                                     <Input
                                         id='phone'
                                         type='tel'
