@@ -1,0 +1,26 @@
+.card {
+    border-radius: 0.375rem;
+    border: 1px solid var(--chakra-colors-gray-400);
+    background-color: var(--chakra-colors-gray-50);
+
+    &.selected {
+        border-color: var(--chakra-colors-green);
+    }
+
+    .cardChip {
+        text-transform: uppercase;
+        color: var(--chakra-colors-green-400);
+        font-weight: bold;
+        font-size: 0.75rem;
+        margin-left: 1rem;
+    }
+}
+
+.selectedCard {
+    border-width: 2px;
+    border-color: var(--chakra-colors-green-400);
+}
+
+.selectedDiscount {
+    color: var(--chakra-colors-green-400);
+}
