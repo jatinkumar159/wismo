@@ -7,7 +7,7 @@ export default function Confirmation() {
     return (
         <Box className={`${styles.container} confirmation`}>
             <Box className={styles.section}>
-                <div className={`${styles.sectionContent} mobile-section`}>
+                <div className={`mobile-section`}>
                     <p>Creating an order with <span className={styles.mobileNumber}>+91 9654723413</span>
                     <IconButton icon={<EditIcon/>} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent'}}/></p>
                 </div>
