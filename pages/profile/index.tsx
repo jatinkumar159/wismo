@@ -1,21 +1,41 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import { Form, Formik } from 'formik'
-import { Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack } from '@chakra-ui/react'
+import {
+    Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
+    InputLeftElement,
+    Text,
+} from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
-import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
+import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
 import Head from 'next/head'
-import styles from './Profile.module.scss'
+import styles from './profile.module.scss'
 import { useRouter } from 'next/router'
+import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 
 export default function Profile() {
+
     const dispatch = useAppDispatch()
     const phone = useAppSelector(selectPhone);
+    const country = useAppSelector(selectCountry);
     const isLoading = useAppSelector(selectIsLoading);
     const isVerified = useAppSelector(selectIsVerified);
     const toast = useToast();
     const router = useRouter();
+    const { isOpen, onToggle, onClose } = useDisclosure();
+
+    const getMySchema = ({ initialNumber }) => Yup.object({
+        mobile: Yup.string()
+          .test('isAvailableAsync', 'The provided email is not available', async (newValue) => {
+            // email unchanged or returned to initial value no need to do async call
+            if (newValue == initialNumber) return true;
+      
+            const result = await myAsyncCheck(email);
+            return result.exists == false;
+          })
+      })
 
     const [otpRequestId, setOtpRequestId] = useState('');
 
@@ -48,7 +68,8 @@ export default function Profile() {
                 }}
                 validationSchema={Yup.object({
                     phone: Yup.string().length(10, 'Invalid Mobile Number').required('Required'),
-                })}
+                })} 
+                validateOnBlur={false}
                 onSubmit={async (values) => {
                     const res = await verifyBuyer(values.phone);
                     const data = await res.json();
@@ -67,26 +88,38 @@ export default function Profile() {
                 }}
             >
                 {({ values, errors, touched, isSubmitting, handleBlur, handleChange, submitForm }) => (
-                    <Form>
-                        <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
-                            <FormLabel fontSize="sm">Mobile Number</FormLabel>
-                            <InputGroup>
-                                <InputLeftAddon>+91</InputLeftAddon>
-                                <Input
-                                    autoComplete='false'
-                                    id='phone'
-                                    type='tel'
-                                    placeholder='Mobile number'
-                                    errorBorderColor='red.300'
-                                    autoFocus
-                                    value={values.phone}
-                                    onBlur={handleBlur}
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, handleChange, submitForm)}
-                                />
-                            </InputGroup>
-                            <FormErrorMessage>{errors.phone}</FormErrorMessage>
-                        </FormControl>
-                    </Form>
+                    <>
+                        <Form>
+                            <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
+                                <FormLabel htmlFor="Mobile" fontSize="sm" ps={4}>Mobile</FormLabel>
+                                <InputGroup>
+                                    {/* <InputLeftElement width="3em" cursor="pointer" onClick={onToggle}>
+                                        <Text as='span'>
+                                            {country.flag}
+                                        </Text>
+                                        {isOpen ? (
+                                            <ChevronUpIcon boxSize={6} color="gray.500" />
+                                        ) : (
+                                            <ChevronDownIcon boxSize={6} color="gray.500" />
+                                        )}
+
+                                    </InputLeftElement> */}
+                                    <Input
+                                        id='phone'
+                                        type='tel'
+                                        placeholder='Phone Number'
+                                        errorBorderColor='red.300'
+                                        autoFocus
+                                        value={values.phone}
+                                        onBlur={handleBlur}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, handleChange, submitForm)}
+                                    />
+                                </InputGroup>
+                                <FormErrorMessage>{errors.phone}</FormErrorMessage>
+                            </FormControl>
+                        </Form>
+                        {isOpen && <SearchCountry onClose={onClose} />}
+                    </>
                 )}
             </Formik>
         );
