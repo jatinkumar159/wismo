@@ -18,7 +18,7 @@ export default function Confirmation() {
                     <p>Delivery Address</p>
                 </Box>
                 <Box mb={4}>
-                    <AddressCard/>
+                    <AddressCard selected={true}/>
                 </Box>
                 
                 <Text mb={2} className={styles.moreAddresses}>

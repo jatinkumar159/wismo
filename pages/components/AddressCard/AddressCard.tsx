@@ -2,14 +2,29 @@ import { CheckCircleIcon } from '@chakra-ui/icons';
 import { Box, Flex, Radio, Text } from '@chakra-ui/react';
 import styles from './AddressCard.module.scss';
 
-export default function AddressCard() {
+interface Props {
+    selected: boolean
+}
+
+const defaultProps = {
+    selected: false
+}
+
+export default function AddressCard(props: Props) {
     return (
         <Box p={4} className={`${styles.card} ${styles.selectedCard}`}>
             <Flex align={'flex-start'} gap={'0.5rem'}>
                 <Flex>
-                    <span className={styles.selectedAddress}>
-                        <CheckCircleIcon color={'chakra-colors-green-400'}/>
-                    </span>
+                    {
+                        props.selected && <span className={styles.selectedAddress}>
+                            <CheckCircleIcon color={'chakra-colors-green-400'}/>
+                        </span>
+                    }
+                    {
+                        !props.selected && <span className={styles.address}>
+                            <Radio/>
+                        </span>
+                    }
                 </Flex>
                 <Flex grow={1} flexDir={'column'}>
                     <Box mb={2}>
@@ -26,3 +41,5 @@ export default function AddressCard() {
         </Box>
     )
 }
+
+AddressCard.defaultProps = defaultProps;
