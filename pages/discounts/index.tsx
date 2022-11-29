@@ -1,6 +1,6 @@
 import { EditIcon } from "@chakra-ui/icons";
 import { Box, IconButton, Text } from "@chakra-ui/react";
-import DiscountCard from "../../components/DiscountCard/discountCard";
+import DiscountCard from "./../../components/DiscountCard/DiscountCard";
 import styles from './discounts.module.scss';
 
 export default function Discounts() {

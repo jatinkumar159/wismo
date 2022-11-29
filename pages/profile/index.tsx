@@ -1,11 +1,11 @@
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Form, Formik } from 'formik'
 import {
     Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
     InputLeftElement,
     Text,
 } from '@chakra-ui/react'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector, useMessaging } from '../../redux/hooks'
 import { sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
 import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
@@ -25,17 +25,6 @@ export default function Profile() {
     const toast = useToast();
     const router = useRouter();
     const { isOpen, onToggle, onClose } = useDisclosure();
-
-    const getMySchema = ({ initialNumber }) => Yup.object({
-        mobile: Yup.string()
-          .test('isAvailableAsync', 'The provided email is not available', async (newValue) => {
-            // email unchanged or returned to initial value no need to do async call
-            if (newValue == initialNumber) return true;
-      
-            const result = await myAsyncCheck(email);
-            return result.exists == false;
-          })
-      })
 
     const [otpRequestId, setOtpRequestId] = useState('');
 
