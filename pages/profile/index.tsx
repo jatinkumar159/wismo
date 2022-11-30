@@ -59,6 +59,7 @@ export default function Profile() {
                 validationSchema={Yup.object({
                     phone: Yup.string().length(10, 'Invalid Mobile Number').required('Required'),
                 })}
+                validateOnBlur={false}
                 onSubmit={async (values) => {
                     const res = await verifyBuyer(values.phone);
                     const data = await res.json();
@@ -80,6 +81,7 @@ export default function Profile() {
                     <>
                         <Form>
                             <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
+                                <FormLabel htmlFor="Mobile" fontSize="sm" ps={4}>Mobile</FormLabel>
                                 <InputGroup>
                                     {/* <InputLeftElement width="3em" cursor="pointer" onClick={onToggle}>
                                         <Text as='span'>

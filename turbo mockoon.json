@@ -1,0 +1,366 @@
+{
+  "uuid": "00abf6ea-ac79-41fa-8906-728e3983c7b7",
+  "lastMigration": 24,
+  "name": "Turbo",
+  "endpointPrefix": "",
+  "latency": 3000,
+  "port": 4000,
+  "hostname": "0.0.0.0",
+  "routes": [
+    {
+      "uuid": "ba0f5ccb-9ad3-444b-b621-de923ab38ab7",
+      "documentation": "Verify Profile",
+      "method": "post",
+      "endpoint": "auth/v1/buyer/verify",
+      "responses": [
+        {
+          "uuid": "92d6ef15-0113-4b4c-a39b-2ab2e61bc4ab",
+          "body": "{\n  \"is_guest_user\": false,\n  \"otp_request_id\": \"ef5be285-0838-444b-a5d7-02e311cec37d\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "NOT_GUEST_USER",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "mobile",
+              "value": "8171505570",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "6f19d89c-fd0c-4193-ad3f-59bd345127bb",
+          "body": "{\n  \"is_guest_user\": true,\n  \"token\": \"uwu\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "GUEST_USER",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "mobile",
+              "value": "8171505571",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "e40c6109-264f-4fd4-84f8-dbe9f2d93a4d",
+          "body": "{\n  \"error\": \"UC_R01\",\n  \"message\": \"Server time out\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Error Response",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "mobile",
+              "value": "8171505570",
+              "invert": true,
+              "operator": "equals"
+            },
+            {
+              "target": "query",
+              "modifier": "mobile",
+              "value": "8171505571",
+              "invert": true,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "937c7c52-afe0-44e3-91f9-5551228a39d0",
+      "documentation": "Send OTP",
+      "method": "post",
+      "endpoint": "auth/v1/otp/send",
+      "responses": [
+        {
+          "uuid": "ebbbc1c2-272e-4df4-bfa0-79e0d4c7d1e1",
+          "body": "{\n  \"otp_request_id\": \"ef5be285-0838-444b-a5d7-02e311cec37d\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OTP sent successfully",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "mobile",
+              "value": "8171505570",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "9a82191c-8a2c-485c-afcb-81ce0da4433c",
+          "body": "{\n  \"error\": \"UC_R01\",\n  \"message\": \"Server time out\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Error Response",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "mobile",
+              "value": "8171505570",
+              "invert": true,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "bab301d5-15ef-4365-96cf-2849704d28e7",
+      "documentation": "Verify OTP",
+      "method": "post",
+      "endpoint": "auth/v1/otp/verify",
+      "responses": [
+        {
+          "uuid": "0df91dbe-cbdf-4580-a050-c455d70f0620",
+          "body": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaWQiOjI3MTMwODQ3LCJtb2JpbGUiOiI4Mjc5NzAxMjY3IiwiaWF0IjoxNjY3Mjg3Njg2LCJleHAiOjE2OTg4MjM2ODZ9.eMM0mLxt_MN_X261qrw2DWQylG_dUY2Zic9t8p8AL2o\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Valid OTP",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "otp_request_id",
+              "value": "ef5be285-0838-444b-a5d7-02e311cec37d",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "query",
+              "modifier": "otp",
+              "value": "1234",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "d0353e75-3ccf-4739-9766-814f19369a93",
+          "body": "{\n  \"token\": \"\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Invalid OTP",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "otp_request_id",
+              "value": "ef5be285-0838-444b-a5d7-02e311cec37d",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "query",
+              "modifier": "otp",
+              "value": "1234",
+              "invert": true,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "57b5acb8-1a65-4283-9f5d-461e1532730b",
+          "body": "{\n  \"error\": \"UC_R01\",\n  \"message\": \"Server time out\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Error Response",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "otp_request_id",
+              "value": "81715055ef5be285-0838-444b-a5d7-02e311cec37d72",
+              "invert": true,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "05ae72d7-d9b4-484d-a14a-f37a234c124b",
+      "documentation": "Ger Profile",
+      "method": "get",
+      "endpoint": "buyer/v1/profile",
+      "responses": [
+        {
+          "uuid": "878e6c5f-116b-406f-b0bb-b302b2a2b4f9",
+          "body": "{\n  \"mobile\": \"8171505570\",\n  \"address_list\": [\n    {\n      \"address_id\": \"1\",\n      \"name\": \"Utkarsh Saxena\",\n      \"address_line_1\": \"G-342 A, G Block\",\n      \"address_line_2\": \"Sector 57, Near Hong Kong Bazaar\",\n      \"city\": \"Gurugram\",\n      \"district\": \"Gurugram\",\n      \"state\": \"Harayana\",\n      \"country\": \"India\",\n      \"pincode\": \"122001\",\n      \"address_type\": \"Home\",\n      \"selected\": true\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Has Address",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "mobile",
+              "value": "8171505570",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "848ace0f-1653-4fcb-8868-a872f374676f",
+          "body": "{\n  \"mobile\": \"8171505571\",\n  \"address_list\": []\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Does not have address",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "mobile",
+              "value": "8171505571",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": []
+}
