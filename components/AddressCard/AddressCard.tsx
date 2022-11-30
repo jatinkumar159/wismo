@@ -4,10 +4,12 @@ import { Address } from '../../apis/get';
 import styles from './AddressCard.module.scss';
 
 interface Props {
-    address: Address;
+    address: Address | undefined | null;
 }
 
 export default function AddressCard({ address }: Props) {
+    if (!address) return <></>;
+
     return (
         <Box p={4} className={`${styles.card} ${address.selected ? styles.selectedCard : ''}`} mb={2} mt={2}>
             <Flex align={'flex-start'} gap={'0.5rem'}>

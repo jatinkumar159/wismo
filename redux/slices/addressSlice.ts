@@ -3,13 +3,25 @@ import { Address } from "../../apis/get";
 import { AppState } from "../store";
 
 export interface AddressState {
-    selectedAddress: Address | undefined;
-    turboAddressList: Address[] | undefined;
-    unifillAddressList: Address[] | undefined;
+    selectedAddress: Address | null;
+    turboAddressList: Address[] | null | undefined;
+    unifillAddressList: Address[] | null | undefined;
 }
 
 const initialState: AddressState = {
-    selectedAddress: undefined,
+    selectedAddress: {
+        address_id: "1",
+        name: "Utkarsh Saxena",
+        address_line_1: "G-342 A, G Block",
+        address_line_2: "Sector 57, Near Hong Kong Bazaar",
+        city: "Gurugram",
+        district: "Gurugram",
+        state: "Harayana",
+        country: "India",
+        pincode: "122001",
+        address_type: "Home",
+        selected: true
+    },
     turboAddressList: [],
     unifillAddressList: [],
 }
@@ -22,7 +34,7 @@ export const addressSlice = createSlice({
             state.selectedAddress = action.payload;
         },
         unsetSelectedAddress: (state) => {
-            state.selectedAddress = undefined
+            state.selectedAddress = null;
         },
         setTurboAddressList: (state, action: PayloadAction<Address[]>) => {
             state.turboAddressList = action.payload;

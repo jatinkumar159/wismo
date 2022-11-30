@@ -4,15 +4,17 @@ import AddressCard from './../../components/AddressCard/AddressCard';
 import { useAppSelector } from '../../redux/hooks';
 import { selectPhone } from '../../redux/slices/profileSlice';
 import styles from './confirmation.module.scss';
+import { selectSelectedAddress } from '../../redux/slices/addressSlice';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
+    const selectedAddress = useAppSelector(selectSelectedAddress);
 
     return (
         <Box className={`${styles.container} confirmation`}>
             <Box className={styles.section}>
                 <div className={`mobile-section`}>
-                    <p>Creating an order with <span className={styles.mobileNumber}>+91 9654723413</span>
+                    <p>Creating an order with <span className={styles.mobileNumber}>{phone}</span>
                         <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} /></p>
                 </div>
             </Box>
@@ -22,7 +24,7 @@ export default function Confirmation() {
                     <p>Delivery Address</p>
                 </Box>
                 <Box mb={4}>
-                    <AddressCard selected={true} />
+                    <AddressCard address={selectedAddress} />
                 </Box>
 
                 <Text mb={2} className={styles.moreAddresses}>
