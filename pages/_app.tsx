@@ -11,15 +11,16 @@ import { useMessaging } from '../redux/hooks';
 const queryClient = new QueryClient()
 
 export default function App({ Component, pageProps }: AppProps) {
-  useEffect(
-    () => {
-    if(window) {
-      window.addEventListener("message", function(message: MessageEvent) {
-        console.log("Received postMessage", message)
-      });
-    }
-  });
-  useMessaging();
+  // useEffect(
+  //   () => {
+  //     if (window) {
+  //       window.addEventListener("message", function (message: MessageEvent) {
+  //         console.log("Received postMessage", message)
+  //       });
+  //     }
+  //   });
+
+  // useMessaging();
 
   return (
     <Provider store={store}>
