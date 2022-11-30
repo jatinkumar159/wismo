@@ -6,19 +6,34 @@ import store from '../redux/store'
 import Navigation from '../components/Navigation/Navigation';
 import '../styles/globals.css'
 import { useEffect } from 'react';
-import { initialiseMessaging } from '../redux/hooks';
+import { useAppDispatch } from '../redux/hooks';
 import styles from './../styles/app.module.scss';
 import Sidebar from '../components/Sidebar/Sidebar';
+import { setCardPayload } from '../redux/slices/settingsSlice';
 
 const queryClient = new QueryClient()
 
-export default function App({ Component, pageProps }: AppProps) {
-  initialiseMessaging();
+const InitialiseMessaging = () => {
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    const handler = (message: MessageEvent) => {
+      if (message.type.indexOf('TURBO') == -1) return;
+      dispatch(setCardPayload(message.data.cartPayload));
+    }
+
+    window.addEventListener("message", handler);
+    return () => window.removeEventListener('message', handler);
+  })
+  return null;
+}
+
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider>
         <QueryClientProvider client={queryClient}>
+          <InitialiseMessaging />
           <Flex flexDir="row" h={`100vh`}>
             <Flex className={styles.container} flexDir="column" grow={1}>
               <Navigation />
@@ -28,7 +43,6 @@ export default function App({ Component, pageProps }: AppProps) {
               <Sidebar />
             </Flex>
           </Flex>
-
         </QueryClientProvider>
       </ChakraProvider>
     </Provider>
