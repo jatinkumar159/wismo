@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import {
     Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
@@ -6,7 +6,7 @@ import {
     Text,
 } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
+import { resendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
 import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
 import Head from 'next/head'
@@ -117,7 +117,13 @@ export default function Profile() {
     }
 
     function EnterOTP() {
+        const [timer, setTimer] = useState<number>(60);
         const [isOtpInvalid, setIsOtpInvalid] = useState<boolean | undefined>(undefined);
+
+        useEffect(() => {
+            const interval = timer > 0 ? setInterval(() => setTimer(time => time - 1), 1000) : undefined;
+            return () => clearInterval(interval);
+        }, [timer]);
 
         const digits = useAppSelector(selectOtpLength);
         const inputs: string[] = [], initialValues: any = {}, validation: any = {};
@@ -131,11 +137,24 @@ export default function Profile() {
             handleChange(e);
             const _inputs = inputs.filter(input => input !== e.target.name);
             const otp = (e.target.value ?? '') + _inputs.reduce((acc, curr) => acc + (values[curr] ?? ''), '');
-            console.log(otp);
             if (otp.length === digits) {
                 setTimeout(() => submitForm(), 0);
             }
         }
+
+        const handleResendOTP = async () => {
+            const res = await resendOTP(phone);
+            const data = await res.json();
+
+            if (res.status !== 200) {
+                showToast(data);
+                return;
+            }
+
+            setOtpRequestId(data.otp_request_id);
+            setTimer(60);
+        }
+
         return (
             <Formik
                 initialValues={initialValues}
@@ -163,7 +182,6 @@ export default function Profile() {
             >
                 {({ values, isSubmitting, handleBlur, handleChange, submitForm }) => (
                     <Form>
-                        <span className={styles.label}></span>
                         <FormControl isInvalid={isOtpInvalid}>
                             <FormLabel>Enter OTP sent to {phone}</FormLabel>
                             <HStack>
@@ -177,6 +195,14 @@ export default function Profile() {
                             </HStack>
                             <FormErrorMessage>Invalid OTP</FormErrorMessage>
                         </FormControl>
+
+                        <HStack my={3}>
+                            <Button
+                                disabled={timer > 0}
+                                onClick={handleResendOTP}
+                            >Resend OTP</Button>
+                            {timer > 0 && <span>in {timer} seconds</span>}
+                        </HStack>
                     </Form>
                 )}
             </Formik>
