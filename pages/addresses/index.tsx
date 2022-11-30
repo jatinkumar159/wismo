@@ -2,12 +2,13 @@ import { EditIcon } from "@chakra-ui/icons";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, IconButton, Progress, Text } from "@chakra-ui/react";
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectPhone } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getAddresses } from "../../apis/get";
 import Head from "next/head";
 import Router, { useRouter } from "next/router";
+import { setTurboAddressList, setUnifillAddressList } from "../../redux/slices/addressSlice";
 
 const AddressListHead = () => {
     return <Head>
@@ -20,6 +21,7 @@ const AddressListHead = () => {
 export default function AddressList() {
     const router = useRouter();
     const phone = useAppSelector(selectPhone);
+    const dispatch = useAppDispatch();
     const { isLoading, isError, data } = useQuery(['getAddresses'], () => getAddresses(phone))
 
     if (!phone) return <>
@@ -37,6 +39,9 @@ export default function AddressList() {
         <span>An error occurred, please try again later!</span>
     </>
 
+    dispatch(setTurboAddressList(data.turbo_address_list));
+    dispatch(setUnifillAddressList(data.unifill_address_list));
+
     if (!data.turbo_address_list?.length && !data.unifill_address_list?.length) router.replace('/new-address');
 
     return (
@@ -50,12 +55,12 @@ export default function AddressList() {
                     </div>
                 </Box>
                 <Box ps={4} pe={4}>
-                    {!data.turbo_address_list?.length && data.unifill_address_list?.length && data.unifill_address_list.map(address => {
+                    {(!data.turbo_address_list?.length && data.unifill_address_list?.length) ? data.unifill_address_list.map(address => {
                         return <AddressCard key={address.address_id} address={address} />
-                    })}
-                    {!data.unifill_address_list?.length && data.turbo_address_list?.length && data.turbo_address_list.map(address => {
+                    }) : null}
+                    {(!data.unifill_address_list?.length && data.turbo_address_list?.length) ? data.turbo_address_list.map(address => {
                         return <AddressCard key={address.address_id} address={address} />
-                    })}
+                    }) : null}
                     {(data.unifill_address_list?.length && data.turbo_address_list?.length) ? (<>
                         {data.turbo_address_list.map(address => {
                             return <AddressCard key={address.address_id} address={address} />

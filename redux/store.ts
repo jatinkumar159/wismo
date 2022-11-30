@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import profileReducer from "./slices/profileSlice";
-import settingsReducer from "./slices/settingsSlice"
+import settingsReducer from "./slices/settingsSlice";
+import addressReducer from "./slices/addressSlice";
 
 export function makeStore() {
     return configureStore({
         reducer: {
             profile: profileReducer,
             settings: settingsReducer,
+            address: addressReducer,
         }
     })
 }

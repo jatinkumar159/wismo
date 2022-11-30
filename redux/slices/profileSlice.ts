@@ -10,7 +10,7 @@ export interface ProfileState {
 }
 
 const initialState: ProfileState = {
-    phone: '8171505573',
+    phone: '',
     country: { "name": "India", "flag": "🇮🇳", "code": "IN", "dial_code": "+91" },
     isLoading: false,
     isVerified: false,
