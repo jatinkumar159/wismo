@@ -6,20 +6,12 @@ export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
 
-export const useMessaging = () => {
+export const initialiseMessaging = () => {
+    const handler = (message: MessageEvent) => {
+        console.log(message.data);
+    }
     useEffect(() => {
-        if(window && window.hasOwnProperty('postMessage')) {
-            console.log("PostMessage Subscibed");
-            window.addEventListener("message", (ev) => console.log("received onMessage!"));
-            window.onmessage = (ev) => console.log("PostMessage from onMessage");
-        }
+        window.addEventListener("message", handler);
+        return () => window.removeEventListener('message', handler);
     })
-
-    useEffect(() => {
-        const onMessage = (event: MessageEvent) => {
-            console.log("received event", event);
-        };
-
-        window.addEventListener('message', onMessage);
-    }, []);
 }
