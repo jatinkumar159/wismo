@@ -8,7 +8,8 @@ export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
 
 export const initialiseMessaging = () => {
     const handler = (message: MessageEvent) => {
-        console.log(message.data);
+        if(message.type.indexOf('TURBO') == -1) return;
+        console.log(message.data.cartPayload);
     }
     useEffect(() => {
         window.addEventListener("message", handler);
