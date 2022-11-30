@@ -38,7 +38,7 @@ export default function NewAddress() {
                 <FormControl mb={4}>
                     <FormLabel ps={4} htmlFor="mobile">Mobile</FormLabel>
                     <InputGroup>
-                        <InputLeftAddon children={`+91`}></InputLeftAddon>
+                        <InputLeftAddon>+91</InputLeftAddon>
                         <Input type="tel" placeholder={`Mobile`}></Input>
                     </InputGroup>
                 </FormControl>
