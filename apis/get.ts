@@ -25,3 +25,8 @@ export async function getAddresses(phone: string): Promise<Addresses> {
     const res = await fetch(`${baseUrl}/buyer/v1/profile?mobile=${phone}`);
     return res.json();
 }
+
+export async function getPostalAddress(pincode: string): Promise<any> {
+    const res = await fetch (`https://api.postalpincode.in/pincode/${pincode}`);
+    return res.json();
+}

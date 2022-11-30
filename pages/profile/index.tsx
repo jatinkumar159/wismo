@@ -99,7 +99,7 @@ export default function Profile() {
                                     </InputLeftAddon>
                                     <Input
                                         id='phone'
-                                        type='tel'
+                                        type='number'
                                         placeholder='Phone Number'
                                         errorBorderColor='red.300'
                                         autoFocus
