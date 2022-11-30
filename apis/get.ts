@@ -3,7 +3,8 @@ const baseUrl = 'http://localhost:4000';
 
 export interface Addresses {
     mobile: string;
-    address_list: Address[];
+    turbo_address_list: Address[];
+    unifill_address_list: Address[];
 }
 
 export interface Address {
@@ -21,6 +22,6 @@ export interface Address {
 }
 
 export async function getAddresses(phone: string): Promise<Addresses> {
-    const res = await fetch(`${baseUrl}/buyer/v1/address?mobile=${phone}`);
+    const res = await fetch(`${baseUrl}/buyer/v1/profile?mobile=${phone}`);
     return res.json();
 }
