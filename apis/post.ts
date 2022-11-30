@@ -8,7 +8,7 @@ export async function verifyBuyer(phone: string): Promise<Response> {
     return res;
 }
 
-export async function sendOTP(phone: string): Promise<Response> {
+export async function resendOTP(phone: string): Promise<Response> {
     const res = await fetch(`${baseUrl}/auth/v1/otp/send?mobile=${phone}`, {
         method: 'POST',
     });

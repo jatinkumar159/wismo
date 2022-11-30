@@ -1,12 +1,12 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import {
     Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
     InputLeftElement,
     Text,
 } from '@chakra-ui/react'
-import { useAppDispatch, useAppSelector, useMessaging } from '../../redux/hooks'
-import { sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { resendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
 import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
 import Head from 'next/head'
@@ -14,6 +14,7 @@ import styles from './profile.module.scss'
 import { useRouter } from 'next/router'
 import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
+import { selectOtpLength } from '../../redux/slices/settingsSlice'
 
 export default function Profile() {
 
@@ -57,7 +58,7 @@ export default function Profile() {
                 }}
                 validationSchema={Yup.object({
                     phone: Yup.string().length(10, 'Invalid Mobile Number').required('Required'),
-                })} 
+                })}
                 validateOnBlur={false}
                 onSubmit={async (values) => {
                     const res = await verifyBuyer(values.phone);
@@ -93,9 +94,12 @@ export default function Profile() {
                                         )}
 
                                     </InputLeftElement> */}
+                                    <InputLeftAddon>
+                                        +91
+                                    </InputLeftAddon>
                                     <Input
                                         id='phone'
-                                        type='tel'
+                                        type='number'
                                         placeholder='Phone Number'
                                         errorBorderColor='red.300'
                                         autoFocus
@@ -115,33 +119,51 @@ export default function Profile() {
     }
 
     function EnterOTP() {
+        const [timer, setTimer] = useState<number>(60);
         const [isOtpInvalid, setIsOtpInvalid] = useState<boolean | undefined>(undefined);
+
+        useEffect(() => {
+            const interval = timer > 0 ? setInterval(() => setTimer(time => time - 1), 1000) : undefined;
+            return () => clearInterval(interval);
+        }, [timer]);
+
+        const digits = useAppSelector(selectOtpLength);
+        const inputs: string[] = [], initialValues: any = {}, validation: any = {};
+        for (let digit = 1; digit <= digits; digit++) {
+            inputs.push(`digit${digit}`);
+            initialValues[`digit${digit}`] = '';
+            validation[`digit${digit}`] = Yup.string().length(1).required();
+        }
 
         const handleOnChange = (e: ChangeEvent<HTMLInputElement>, values: any, handleChange: Function, submitForm: Function) => {
             handleChange(e);
-            const inputs = ['digit1', 'digit2', 'digit3', 'digit4'].filter(input => input !== e.target.name);
-            const otp = (e.target.value ?? '') + values[inputs[0]] + values[inputs[1]] + values[inputs[2]];
-            if (otp.length === 4) {
+            const _inputs = inputs.filter(input => input !== e.target.name);
+            const otp = (e.target.value ?? '') + _inputs.reduce((acc, curr) => acc + (values[curr] ?? ''), '');
+            if (otp.length === digits) {
                 setTimeout(() => submitForm(), 0);
             }
         }
+
+        const handleResendOTP = async () => {
+            const res = await resendOTP(phone);
+            const data = await res.json();
+
+            if (res.status !== 200) {
+                showToast(data);
+                return;
+            }
+
+            setOtpRequestId(data.otp_request_id);
+            setTimer(60);
+        }
+
         return (
             <Formik
-                initialValues={{
-                    digit1: '',
-                    digit2: '',
-                    digit3: '',
-                    digit4: '',
-                }}
-                validationSchema={Yup.object({
-                    digit1: Yup.string().length(1).required(),
-                    digit2: Yup.string().length(1).required(),
-                    digit3: Yup.string().length(1).required(),
-                    digit4: Yup.string().length(1).required(),
-                })}
+                initialValues={initialValues}
+                validationSchema={Yup.object(validation)}
                 validateOnMount={true}
                 onSubmit={async (values) => {
-                    const otp = values.digit1 + values.digit2 + values.digit3 + values.digit4;
+                    const otp = inputs.reduce((acc, curr) => acc + values[curr] ?? '', '');
                     const res = await verifyOTP(otpRequestId, otp);
                     const data = await res.json();
 
@@ -162,19 +184,27 @@ export default function Profile() {
             >
                 {({ values, isSubmitting, handleBlur, handleChange, submitForm }) => (
                     <Form>
-                        <span className={styles.label}></span>
                         <FormControl isInvalid={isOtpInvalid}>
                             <FormLabel>Enter OTP sent to {phone}</FormLabel>
                             <HStack>
-                                <PinInput otp isDisabled={isSubmitting}>
-                                    <PinInputField maxLength={1} name='digit1' value={values.digit1} onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, values, handleChange, submitForm)} autoFocus></PinInputField>
-                                    <PinInputField maxLength={1} name='digit2' value={values.digit2} onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, values, handleChange, submitForm)} ></PinInputField>
-                                    <PinInputField maxLength={1} name='digit3' value={values.digit3} onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, values, handleChange, submitForm)} ></PinInputField>
-                                    <PinInputField maxLength={1} name='digit4' value={values.digit4} onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, values, handleChange, submitForm)} ></PinInputField>
+                                <PinInput otp isDisabled={isSubmitting} placeholder=''>
+                                    {inputs.map(name => {
+                                        return (
+                                            <PinInputField key={name} maxLength={1} name={name} autoFocus={name === 'digit1'} value={values[name]} onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, values, handleChange, submitForm)} />
+                                        );
+                                    })}
                                 </PinInput>
                             </HStack>
                             <FormErrorMessage>Invalid OTP</FormErrorMessage>
                         </FormControl>
+
+                        <HStack my={3}>
+                            <Button
+                                disabled={timer > 0}
+                                onClick={handleResendOTP}
+                            >Resend OTP</Button>
+                            {timer > 0 && <span>in {timer} seconds</span>}
+                        </HStack>
                     </Form>
                 )}
             </Formik>
