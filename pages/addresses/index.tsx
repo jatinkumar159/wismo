@@ -1,5 +1,5 @@
-import { EditIcon } from "@chakra-ui/icons";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, IconButton, Progress, Spinner, Text, VStack, Center } from "@chakra-ui/react";
+import { ArrowForwardIcon, ArrowRightIcon, EditIcon, LockIcon, SmallAddIcon } from "@chakra-ui/icons";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, IconButton, Progress, Spinner, Text, VStack, Center, Link } from "@chakra-ui/react";
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -25,6 +25,10 @@ export default function AddressList() {
     const dispatch = useAppDispatch();
     const { isLoading, isError, data } = useQuery(['getAddresses'], () => getAddresses(phone))
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
+
+    const handleConfirmationRoute = () => {
+        router.push('/confirmation');
+    }
 
     const handleChangeMobile = () => {
         dispatch(unsetPhone());
@@ -110,9 +114,12 @@ export default function AddressList() {
                                     </Accordion>
                                 </>) : null}
                             </Box>
-                            <VStack mt={4}>
-                                <span>OR</span>
-                                <Button onClick={() => router.push('/new-address')}>Add New Address</Button>
+                            <VStack mt={4} mb={4} ps={4} pe={4} align={`flex-start`}>
+                                <Text mb={2} className={styles.newAddress}>
+                                    <Link href="/new-address"> <SmallAddIcon />Add new delivery address</Link>
+                                </Text>
+
+                                <Button onClick={handleConfirmationRoute} w={`100%`} bg={`black`} color={`white`} _hover={{background: `black`}}><LockIcon fontSize="xs" me={2}/> <Text as="span" fontSize="sm">Proceed to Payment <ArrowForwardIcon ms={2} /></Text></Button>
                             </VStack>
                         </Box>
                     </>
