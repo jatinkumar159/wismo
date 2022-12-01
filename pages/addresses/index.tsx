@@ -72,7 +72,7 @@ export default function AddressList() {
     return (
         <>
             {isPageTransitionActive ?
-                <Center>
+                <Center h={`100vh`}>
                     <Spinner />
                 </Center> : (
                     <>

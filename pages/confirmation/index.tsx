@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, SmallAddIcon } from '@chakra-ui/icons';
+import { ArrowForwardIcon, DeleteIcon, EditIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, IconButton, Link, Text } from '@chakra-ui/react';
 import AddressCard from './../../components/AddressCard/AddressCard';
 import { useAppSelector } from '../../redux/hooks';
@@ -81,6 +81,19 @@ export default function Confirmation() {
                         <Text>Pay via</Text>
                     </Box>
                 </Box>
+                <Flex borderBottom={`1px solid var(--chakra-colors-gray-200)`} ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                    <Flex flexDir="column" justifyContent="space-between" >
+                        <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">Cash on Delivery</Text>
+                    </Flex>
+                    <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
+                </Flex>
+
+                <Flex ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                    <Flex flexDir="column" justifyContent="space-between" >
+                        <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">Credit / Debit Card</Text>
+                    </Flex>
+                    <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
+                </Flex>
 
             </Box>
         </Box>
