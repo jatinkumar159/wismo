@@ -3,7 +3,7 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPane
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectPhone } from "../../redux/slices/profileSlice";
+import { selectPhone, setPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getAddresses } from "../../apis/get";
 import Head from "next/head";
@@ -25,6 +25,12 @@ export default function AddressList() {
     const dispatch = useAppDispatch();
     const { isLoading, isError, data } = useQuery(['getAddresses'], () => getAddresses(phone))
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
+
+    const handleChangeMobile = () => {
+        dispatch(unsetPhone());
+        dispatch(unverifyProfile());
+        router.push('/profile');
+    }
 
     useEffect(() => {
         const pageTransitionStart = () => setIsPageTransitionActive(true);
@@ -71,7 +77,7 @@ export default function AddressList() {
                             <Box className={styles.section} ps={4} pe={4}>
                                 <div className={`${styles.sectionContent} mobile-section`}>
                                     <p>Creating an order with <span className={styles.mobileNumber}>{phone}</span>
-                                        <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} /></p>
+                                        <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile}/></p>
                                 </div>
                             </Box>
                             <Box ps={4} pe={4}>

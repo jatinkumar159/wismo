@@ -2,20 +2,30 @@ import { DeleteIcon, EditIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, IconButton, Link, Text } from '@chakra-ui/react';
 import AddressCard from './../../components/AddressCard/AddressCard';
 import { useAppSelector } from '../../redux/hooks';
-import { selectPhone } from '../../redux/slices/profileSlice';
+import { selectPhone, unsetPhone, unverifyProfile } from '../../redux/slices/profileSlice';
 import styles from './confirmation.module.scss';
 import { selectSelectedAddress } from '../../redux/slices/addressSlice';
+import Router, { useRouter } from "next/router";
+import { useAppDispatch } from './../../redux/hooks';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
     const selectedAddress = useAppSelector(selectSelectedAddress);
+    const router = useRouter();
+    const dispatch = useAppDispatch();
+
+    const handleChangeMobile = () => {
+        dispatch(unsetPhone());
+        dispatch(unverifyProfile());
+        router.push('/new-address')
+    }
 
     return (
         <Box className={`${styles.container} confirmation`}>
             <Box className={styles.section}>
                 <div className={`mobile-section`}>
                     <p>Creating an order with <span className={styles.mobileNumber}>{phone}</span>
-                        <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} /></p>
+                        <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile}/></p>
                 </div>
             </Box>
 
