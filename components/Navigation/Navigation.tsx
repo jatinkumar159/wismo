@@ -1,7 +1,6 @@
 import { ArrowBackIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import { IconButton } from '@chakra-ui/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectIsVerified, selectPhone, unsetPhone } from '../../redux/slices/profileSlice';

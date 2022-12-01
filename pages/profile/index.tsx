@@ -4,6 +4,8 @@ import {
     Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
     InputLeftElement,
     Text,
+    Spinner,
+    Center,
 } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { resendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
@@ -21,13 +23,27 @@ export default function Profile() {
     const dispatch = useAppDispatch()
     const phone = useAppSelector(selectPhone);
     const country = useAppSelector(selectCountry);
-    const isLoading = useAppSelector(selectIsLoading);
+    // const isLoading = useAppSelector(selectIsLoading);
     const isVerified = useAppSelector(selectIsVerified);
     const toast = useToast();
     const router = useRouter();
-    const { isOpen, onToggle, onClose } = useDisclosure();
+    // const { isOpen, onToggle, onClose } = useDisclosure();
 
     const [otpRequestId, setOtpRequestId] = useState('');
+    const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
+
+    useEffect(() => {
+        const pageTransitionStart = () => setIsPageTransitionActive(true);
+        const pageTransitionStop = () => setIsPageTransitionActive(false);
+
+        router.events.on('routeChangeStart', pageTransitionStart)
+        router.events.on('routeChangeComplete', pageTransitionStop);
+
+        return () => {
+            router.events.off('routeChangeStart', pageTransitionStart);
+            router.events.off('routeChangeComplete', pageTransitionStop);
+        }
+    }, [router]);
 
     function showToast(data: any) {
         toast({
@@ -111,7 +127,7 @@ export default function Profile() {
                                 <FormErrorMessage>{errors.phone}</FormErrorMessage>
                             </FormControl>
                         </Form>
-                        {isOpen && <SearchCountry onClose={onClose} />}
+                        {/* {isOpen && <SearchCountry onClose={onClose} />} */}
                     </>
                 )}
             </Formik>
@@ -231,12 +247,17 @@ export default function Profile() {
                 <meta name="description" content="Turbo Merchant Experience" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {isLoading && <Progress size='xs' colorScheme='teal' isIndeterminate />}
-            <div className={styles.container}>
-                {!phone && <EnterPhone />}
-                {phone && !isVerified && <EnterOTP />}
-                {phone && isVerified && <DisplayPhone />}
-            </div>
+            {isPageTransitionActive ?
+                <Center h='100vh'>
+                    <Spinner />
+                </Center>
+                : (
+                    <div className={styles.container}>
+                        {!phone && <EnterPhone />}
+                        {phone && !isVerified && <EnterOTP />}
+                        {phone && isVerified && <DisplayPhone />}
+                    </div>
+                )}
         </>
     )
 }
