@@ -1,40 +1,24 @@
 import { CheckCircleIcon } from '@chakra-ui/icons';
-import { Box, Flex, Radio, Text } from '@chakra-ui/react';
+import { Box, Flex, Radio, Text, VStack } from '@chakra-ui/react';
+import { Coupon } from '../../redux/slices/confirmationSlice';
 import styles from './DiscountCard.module.scss';
 
 interface Props {
-    selected: boolean
+    coupon: Coupon,
+    isSelected: boolean,
 }
 
-const defaultProps = {
-    selected: false
-}
-
-export default function DiscountCard(props: Props) {
+export default function DiscountCard({ coupon, isSelected }: Props) {
     return (
-        <Box p={4} className={`${styles.card} ${props.selected ? styles.selectedCard : ''}`} mb={4}>
+        <Box p={4} className={`${styles.card} ${isSelected ? styles.selectedCard : ''}`} mb={4} minW='300'>
             <Flex align={'flex-start'} gap={'0.5rem'}>
-                <Flex>
-                    {
-                        props.selected && <span className={styles.selectedDiscount}>
-                            <CheckCircleIcon color={'chakra-colors-green-400'}/>
-                        </span>
-                    }
-                    {
-                        !props.selected && <span className={styles.discount}>
-                            <Radio/>
-                        </span>
-                    }
-                </Flex>
                 <Flex grow={1} flexDir={'column'}>
-                    <Box mb={2}>
-                        <Text className={styles.cardName}>WORLDCUP2022</Text>
-                        <Text as="span" fontSize="xs">₹500 flat discount on all orders above ₹3,000.</Text>
-                    </Box>
+                    <VStack mb={2} align='flex-start'>
+                        <Text className={styles.cardName} fontWeight='bold'>{coupon.code}</Text>
+                        <Text as="span" fontSize="xs">{coupon.discountPercentage}% off upto ₹{coupon.maxDiscount}</Text>
+                    </VStack>
                 </Flex>
             </Flex>
         </Box>
     )
 }
-
-DiscountCard.defaultProps = defaultProps;

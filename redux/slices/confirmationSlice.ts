@@ -3,8 +3,8 @@ import { AppState } from "../store";
 
 export interface Coupon {
     code: string;
-    discountPercentage: number;
-    discountAmount: number;
+    discountPercentage?: number;
+    discountAmount?: number;
     maxDiscount: number;
 }
 export interface ConfirmationState {
@@ -13,7 +13,20 @@ export interface ConfirmationState {
 }
 
 const initialState: ConfirmationState = {
-    availableCoupons: [],
+    availableCoupons: [
+        {
+            code: 'CouponA',
+            discountPercentage: 50,
+            discountAmount: 500,
+            maxDiscount: 500,
+        },
+        {
+            code: 'CouponB',
+            discountPercentage: 20,
+            discountAmount: 200,
+            maxDiscount: 200,
+        }
+    ],
     selectedCoupon: null,
 }
 
