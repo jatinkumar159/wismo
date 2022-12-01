@@ -7,8 +7,9 @@ export default function Sidebar() {
     const cartPayload = useAppSelector(selectCartPayload);
     return (
         <Box w={`100%`}>
-            <Text>Sidebar comes here.</Text>
-            {cartPayload};
+            { cartPayload && <Text>Sidebar comes here. {cartPayload.items.map((el: any, i: number) => 
+                <Text as="span" key={`${el.title}-${i}`}>{el['title']}</Text>
+            )} </Text> }
         </Box>
     )
 }

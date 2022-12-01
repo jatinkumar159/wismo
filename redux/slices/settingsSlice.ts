@@ -18,13 +18,13 @@ export const settingsSlice = createSlice({
         setOtpLength: (state, action: PayloadAction<number>) => {
             state.otpLength = action.payload;
         },
-        setCardPayload: (state, action: PayloadAction<any>) => {
+        setCartPayload: (state, action: PayloadAction<any>) => {
             state.cartPayload = action.payload;
         }
     }
 });
 
-export const {setOtpLength, setCardPayload } = settingsSlice.actions;
+export const {setOtpLength, setCartPayload } = settingsSlice.actions;
 
 export const selectOtpLength = (state: AppState) => state.settings.otpLength;
 export const selectCartPayload = (state: AppState) => state.settings.cartPayload;

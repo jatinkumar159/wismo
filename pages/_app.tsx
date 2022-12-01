@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../redux/hooks';
 import styles from './../styles/app.module.scss';
 import Sidebar from '../components/Sidebar/Sidebar';
-import { setCardPayload } from '../redux/slices/settingsSlice';
+import { setCartPayload } from '../redux/slices/settingsSlice';
 
 const queryClient = new QueryClient()
 
@@ -18,8 +18,9 @@ const InitialiseMessaging = () => {
 
   useEffect(() => {
     const handler = (message: MessageEvent) => {
-      if (message.type.indexOf('TURBO') == -1) return;
-      dispatch(setCardPayload(message.data.cartPayload));
+      if (message.data?.type?.indexOf('TURBO') === -1) return;
+      console.log("Received cart payload from parent.", message.data.cartPayload);
+      dispatch(setCartPayload(message.data.cartPayload));
     }
 
     window.addEventListener("message", handler);

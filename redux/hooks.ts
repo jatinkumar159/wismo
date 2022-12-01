@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
-import { setCardPayload } from "./slices/settingsSlice"
+import { setCartPayload } from "./slices/settingsSlice"
 import { AppDispatch, AppState } from "./store"
 
 export const useAppDispatch = () => useDispatch<AppDispatch>()
