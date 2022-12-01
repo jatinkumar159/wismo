@@ -37,7 +37,7 @@ export default function NewAddress() {
         onSubmit: (values) => {
             alert(JSON.stringify(values));
             // TODO: SAVE IN STORE
-            router.push('/addresses');
+            router.replace('/addresses');
         }
     });
 

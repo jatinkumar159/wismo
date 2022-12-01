@@ -72,7 +72,7 @@ export default function Profile() {
                     dispatch(setPhone(values.phone));
                     if (data.is_guest_user) {
                         dispatch(verifyProfile());
-                        router.push('/confirmation');
+                        router.push('/addresses');
                     }
                     else setOtpRequestId(data.otp_request_id);
                 }}
