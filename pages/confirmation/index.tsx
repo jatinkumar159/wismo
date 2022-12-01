@@ -1,25 +1,35 @@
-import { DeleteIcon, EditIcon, SmallAddIcon } from '@chakra-ui/icons';
+import { ArrowForwardIcon, DeleteIcon, EditIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
 import AddressCard from './../../components/AddressCard/AddressCard';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectPhone } from '../../redux/slices/profileSlice';
+import { selectPhone, unsetPhone, unverifyProfile } from '../../redux/slices/profileSlice';
 import styles from './confirmation.module.scss';
 import { selectSelectedAddress } from '../../redux/slices/addressSlice';
 import Link from 'next/link';
 import { selectedCoupon, unsetSelectedCoupon } from '../../redux/slices/confirmationSlice';
+import { useRouter } from 'next/router';
+import OrderItem from '../../components/OrderItem/OrderItem';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
     const coupon = useAppSelector(selectedCoupon);
     const dispatch = useAppDispatch();
     const selectedAddress = useAppSelector(selectSelectedAddress);
+    const router = useRouter();
+
+    const handleChangeMobile = () => {
+        dispatch(unsetPhone());
+        dispatch(unverifyProfile());
+        router.push('/new-address')
+    }
 
     return (
         <Box className={`${styles.container} confirmation`}>
             <Box className={styles.section}>
                 <div className={`mobile-section`}>
                     <p>Creating an order with <span className={styles.mobileNumber}>{phone}</span>
-                        <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} /></p>
+                        <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile} /></p>
                 </div>
             </Box>
 
@@ -61,45 +71,13 @@ export default function Confirmation() {
                 ) : <span>No Coupon Selected</span>}
             </Box>
 
-            <Box className={styles.section}>
+            <Box className={`${styles.section} ${styles.orderSummaryContainer}`}>
                 <Box className={`${styles.sectionContent} order-summary`} mb={4}>
                     <Text as="p" mt={2} mb={4}>Order Summary</Text>
 
-                    <Box justifyContent="space-between" flexDir="column">
-                        <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                            <Text as="strong" className="key">Rs. 3,298</Text>
-                            <Text as="span" className={`value ${styles.viewToggle}`} justifyContent={'flex-end'}> <SmallAddIcon /> View More</Text>
-                        </Flex>
-                    </Box>
 
-                    <Flex mt={4} mb={4} flexDir="row">
-                        <img src="https://m.media-amazon.com/images/I/81cB0YABm3L._SL1500_.jpg" width="25%"></img>
-                        <Flex grow="1" flexDir={"column"} alignItems={"flex-start"} justifyContent={'center'} pl={4}>
-                            <Text fontSize="lg" color="gray-800">Baggit Yellow - XL</Text>
-                            <Text>Quantity: 1</Text>
-                            <Text>MRP: Rs. 3,298</Text>
-                        </Flex>
-                    </Flex>
-
-                    <Box justifyContent="space-between" flexDir="column">
-
-                        <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                            <Text as="span" className="key">Subtotal</Text>
-                            <Text as="span" className="value" justifyContent={'flex-end'}>Rs. 3,298</Text>
-                        </Flex>
-                        <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                            <Text as="span" className="key">Coupon Discount</Text>
-                            <Text as="span" className="value">Rs. 0</Text>
-                        </Flex>
-                        <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                            <Text as="span" className="key">Shipping Fee</Text>
-                            <Text as="span" className="value">Rs. 0</Text>
-                        </Flex>
-                        <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                            <Text as="span" className="key">Grand Total</Text>
-                            <Text as="strong" className="value">Rs. 3,298</Text>
-                        </Flex>
-                    </Box>
+                    <OrderItem />
+                    <OrderSummary mode={'md'} />
                 </Box>
             </Box>
 
@@ -109,6 +87,19 @@ export default function Confirmation() {
                         <Text>Pay via</Text>
                     </Box>
                 </Box>
+                <Flex borderBottom={`1px solid var(--chakra-colors-gray-200)`} ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                    <Flex flexDir="column" justifyContent="space-between" >
+                        <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">Cash on Delivery</Text>
+                    </Flex>
+                    <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
+                </Flex>
+
+                <Flex ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                    <Flex flexDir="column" justifyContent="space-between" >
+                        <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">Credit / Debit Card</Text>
+                    </Flex>
+                    <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
+                </Flex>
 
             </Box>
         </Box>

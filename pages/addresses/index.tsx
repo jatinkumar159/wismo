@@ -1,9 +1,9 @@
-import { EditIcon } from "@chakra-ui/icons";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, IconButton, Progress, Spinner, Text, VStack, Center } from "@chakra-ui/react";
+import { ArrowForwardIcon, ArrowRightIcon, EditIcon, LockIcon, SmallAddIcon } from "@chakra-ui/icons";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, IconButton, Progress, Spinner, Text, VStack, Center, Link } from "@chakra-ui/react";
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectPhone } from "../../redux/slices/profileSlice";
+import { selectPhone, setPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getAddresses } from "../../apis/get";
 import Head from "next/head";
@@ -25,6 +25,16 @@ export default function AddressList() {
     const dispatch = useAppDispatch();
     const { isLoading, isError, data } = useQuery(['getAddresses'], () => getAddresses(phone))
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
+
+    const handleConfirmationRoute = () => {
+        router.push('/confirmation');
+    }
+
+    const handleChangeMobile = () => {
+        dispatch(unsetPhone());
+        dispatch(unverifyProfile());
+        router.push('/profile');
+    }
 
     useEffect(() => {
         const pageTransitionStart = () => setIsPageTransitionActive(true);
@@ -62,7 +72,7 @@ export default function AddressList() {
     return (
         <>
             {isPageTransitionActive ?
-                <Center>
+                <Center h={`100vh`}>
                     <Spinner />
                 </Center> : (
                     <>
@@ -71,7 +81,7 @@ export default function AddressList() {
                             <Box className={styles.section} ps={4} pe={4}>
                                 <div className={`${styles.sectionContent} mobile-section`}>
                                     <p>Creating an order with <span className={styles.mobileNumber}>{phone}</span>
-                                        <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} /></p>
+                                        <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile}/></p>
                                 </div>
                             </Box>
                             <Box ps={4} pe={4}>
@@ -104,9 +114,12 @@ export default function AddressList() {
                                     </Accordion>
                                 </>) : null}
                             </Box>
-                            <VStack mt={4}>
-                                <span>OR</span>
-                                <Button onClick={() => router.push('/new-address')}>Add New Address</Button>
+                            <VStack mt={4} mb={4} ps={4} pe={4} align={`flex-start`}>
+                                <Text mb={2} className={styles.newAddress}>
+                                    <Link href="/new-address"> <SmallAddIcon />Add new delivery address</Link>
+                                </Text>
+
+                                <Button onClick={handleConfirmationRoute} w={`100%`} bg={`black`} color={`white`} _hover={{background: `black`}}><LockIcon fontSize="xs" me={2}/> <Text as="span" fontSize="sm">Proceed to Payment <ArrowForwardIcon ms={2} /></Text></Button>
                             </VStack>
                         </Box>
                     </>

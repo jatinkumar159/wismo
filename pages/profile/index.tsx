@@ -201,8 +201,8 @@ export default function Profile() {
                 {({ values, isSubmitting, handleBlur, handleChange, submitForm }) => (
                     <Form>
                         <FormControl isInvalid={isOtpInvalid}>
-                            <FormLabel>Enter OTP sent to {phone}</FormLabel>
-                            <HStack>
+                            <FormLabel color={`gray.500`}>An OTP has been sent to {phone}</FormLabel>
+                            <HStack justifyContent={`center`} mt={4} mb={4}>
                                 <PinInput otp isDisabled={isSubmitting} placeholder=''>
                                     {inputs.map(name => {
                                         return (
@@ -214,13 +214,11 @@ export default function Profile() {
                             <FormErrorMessage>Invalid OTP</FormErrorMessage>
                         </FormControl>
 
-                        <HStack my={3}>
-                            <Button
-                                disabled={timer > 0}
-                                onClick={handleResendOTP}
-                            >Resend OTP</Button>
-                            {timer > 0 && <span>in {timer} seconds</span>}
-                        </HStack>
+                        <Button mt={6}
+                            hidden={timer > 0}
+                            onClick={handleResendOTP}
+                        >Resend OTP</Button>
+                        {timer > 0 && <Text as="span" color={`gray.500`}>You may resend an OTP in {timer} seconds</Text>}
                     </Form>
                 )}
             </Formik>
@@ -252,11 +250,11 @@ export default function Profile() {
                     <Spinner />
                 </Center>
                 : (
-                    <div className={styles.container}>
+                    <Center h={`100vh`} className={styles.container}>
                         {!phone && <EnterPhone />}
                         {phone && !isVerified && <EnterOTP />}
-                        {phone && isVerified && <DisplayPhone />}
-                    </div>
+                        {/* {phone && isVerified && <DisplayPhone />} */}
+                    </Center>
                 )}
         </>
     )

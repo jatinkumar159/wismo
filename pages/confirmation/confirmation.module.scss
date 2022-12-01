@@ -1,5 +1,8 @@
+@import './../../styles/common.scss';
+
 .container {
-    font-size:0.875rem;
+    @extend .pageContainer;
+    font-size: var(--chakra-fontSizes-sm);
 }
 
 .section {
@@ -37,14 +40,12 @@
     }
 }
 
-.viewToggle{
-    color: var(--chakra-colors-blue-400);
-    &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-}
-
 .view-more {
     color: var(--chakra-colors-blue-400);
+}
+
+.orderSummaryContainer {
+    @media all and (min-width: 768px){
+        display: none !important;
+    }
 }

@@ -1,4 +1,8 @@
 .container {
     font-size: var(--chakra-fontSizes-sm);
-    border-bottom: 1px solid var(--chakra-colors-gray-200);
+}
+
+.pageContainer {
+    max-height: calc(100vh - 40px);
+    overflow: scroll;
 }
