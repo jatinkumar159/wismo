@@ -1,5 +1,5 @@
 import { EditIcon } from "@chakra-ui/icons";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, IconButton, Progress, Text } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, IconButton, Progress, Text, VStack } from "@chakra-ui/react";
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -84,6 +84,10 @@ export default function AddressList() {
                         </Accordion>
                     </>) : null}
                 </Box>
+                <VStack mt={4}>
+                    <span>OR</span>
+                    <Button onClick={() => router.push('/new-address')}>Add New Address</Button>
+                </VStack>
             </Box>
         </>
     )
