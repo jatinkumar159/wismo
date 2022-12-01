@@ -1,4 +1,7 @@
+@import './../../styles/common.scss';
+
 .container {
+    @extend .pageContainer;
     font-size: var(--chakra-fontSizes-sm);
 }
 
