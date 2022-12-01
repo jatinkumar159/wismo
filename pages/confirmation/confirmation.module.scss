@@ -1,5 +1,8 @@
+@import './../../styles/common.scss';
+
 .container {
-    font-size:0.875rem;
+    @extend .pageContainer;
+    font-size: var(--chakra-fontSizes-sm);
 }
 
 .section {
