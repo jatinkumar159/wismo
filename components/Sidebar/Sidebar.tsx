@@ -1,15 +1,22 @@
-import { Text, Box } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCartPayload } from "../../redux/slices/settingsSlice";
+import OrderItem from "../OrderItem/OrderItem";
+import OrderSummary from "../OrderSummary/OrderSummary";
 import styles from './Sidebar.module.scss';
 
 export default function Sidebar() {
     const cartPayload = useAppSelector(selectCartPayload);
     return (
-        <Box w={`100%`}>
-            { cartPayload && <Text>Sidebar comes here. {cartPayload.items.map((el: any, i: number) => 
-                <Text as="span" key={`${el.title}-${i}`}>{el['title']}</Text>
-            )} </Text> }
-        </Box>
+        <Flex flexDir="column">
+            <Text as="h2">Order Summary</Text>
+            <Box>
+                { cartPayload && <Box> { cartPayload.items.map((orderItem: any, i: number) => 
+                        <OrderItem key={`${orderItem.title}-${i}`} mode="sm" orderItem={orderItem}/>
+                    )} </Box>
+                }
+            </Box>
+            <OrderSummary mode="sm"/>
+        </Flex>
     )
 }

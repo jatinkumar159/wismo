@@ -5,6 +5,7 @@
 .sidebar {
 
     min-width: 15rem;
+    max-width: 35%;
     border-left: 1px solid var(--chakra-colors-gray-200);
     @media all and (max-width: 768px) {
         display:none !important;

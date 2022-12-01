@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <Navigation />
               <Component {...pageProps} className={styles.pageContainer}/>
             </Flex>
-            <Flex className={styles.sidebar} bg={`gray.50`} p={4} pt={14}>
+            <Flex className={styles.sidebar} bg={`gray.50`} p={4} pt={4}>
               <Sidebar />
             </Flex>
           </Flex>
