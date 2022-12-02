@@ -22,7 +22,7 @@ export default function Navigation() {
     }
 
     const handleClose = () => {
-        window && window?.top.postMessage({type: "TURBO_EXIT", data: "close event"}, '*');
+        window.top!.postMessage({type: "TURBO_EXIT", data: "close event"}, '*')
     }
 
     return (

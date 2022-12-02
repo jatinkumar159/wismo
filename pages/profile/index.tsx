@@ -45,6 +45,11 @@ export default function Profile() {
         }
     }, [router]);
 
+    const handleOnClick = () => {
+        dispatch(unsetPhone());
+        dispatch(unverifyProfile());
+    }
+
     function showToast(data: any) {
         toast({
             title: `${data.error}`,
@@ -228,11 +233,7 @@ export default function Profile() {
         )
     }
 
-    function DisplayPhone() {
-        const handleOnClick = () => {
-            dispatch(unsetPhone());
-            dispatch(unverifyProfile());
-        }
+    function DisplayPhone() {    
         return (
             <VStack>
                 <span className={styles.preview}>{phone}</span>
