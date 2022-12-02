@@ -30,10 +30,6 @@ export default function AddressList() {
     const { isLoading, isError, data } = useQuery(['getAddresses'], () => getAddresses(phone))
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
 
-    const handleConfirmationRoute = () => {
-        router.push('/confirmation');
-    }
-
     const handleChangeMobile = () => {
         dispatch(unsetPhone());
         dispatch(unverifyProfile());
