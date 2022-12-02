@@ -13,11 +13,11 @@ export interface Address {
     address_line_1: string;
     address_line_2: string;
     city: string;
-    district: string;
+    district?: string;
     state: string;
     country: string;
     pincode: string;
-    address_type: string;
+    address_type?: string;
     selected: boolean;
 }
 

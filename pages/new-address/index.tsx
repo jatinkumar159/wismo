@@ -7,6 +7,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../redux/hooks";
+import { addAddress, setSelectedAddress } from "../../redux/slices/addressSlice";
 
 export default function NewAddress() {
     const router = useRouter();
@@ -50,8 +51,8 @@ export default function NewAddress() {
             mobile: Yup.string().length(10, 'Invalid Mobile Number').required('Required'),
         }),
         onSubmit: (values) => {
-            alert(JSON.stringify(values));
-            // TODO: SAVE IN STORE
+            dispatch(setSelectedAddress({ ...values, selected: true, address_id: "5" }));
+            dispatch(addAddress({ ...values, selected: true, address_id: "5" }));
             router.replace('/confirmation');
         }
     });

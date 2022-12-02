@@ -36,6 +36,9 @@ export const addressSlice = createSlice({
         unsetSelectedAddress: (state) => {
             state.selectedAddress = null;
         },
+        addAddress: (state, action: PayloadAction<Address>) => {
+            state.turboAddressList?.push(action.payload);
+        },
         setTurboAddressList: (state, action: PayloadAction<Address[]>) => {
             state.turboAddressList = action.payload;
         },
@@ -45,7 +48,7 @@ export const addressSlice = createSlice({
     }
 });
 
-export const { setSelectedAddress, unsetSelectedAddress, setTurboAddressList, setUnifillAddressList } = addressSlice.actions;
+export const { setSelectedAddress, unsetSelectedAddress, addAddress, setTurboAddressList, setUnifillAddressList } = addressSlice.actions;
 
 export const selectSelectedAddress = (state: AppState) => state.address.selectedAddress;
 export const selectTurboAddressList = (state: AppState) => state.address.turboAddressList;

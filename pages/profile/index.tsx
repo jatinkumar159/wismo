@@ -214,10 +214,13 @@ export default function Profile() {
                             <FormErrorMessage>Invalid OTP</FormErrorMessage>
                         </FormControl>
 
-                        <Button mt={6}
-                            hidden={timer > 0}
-                            onClick={handleResendOTP}
-                        >Resend OTP</Button>
+                        <Center>
+                            <Button
+                                mt={6}
+                                hidden={timer > 0}
+                                onClick={handleResendOTP}
+                            >Resend OTP</Button>
+                        </Center>
                         {timer > 0 && <Text as="span" color={`gray.500`}>You may resend an OTP in {timer} seconds</Text>}
                     </Form>
                 )}

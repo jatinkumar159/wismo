@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Flex flexDir="row" h={`100vh`}>
             <Flex className={styles.container} flexDir="column" grow={1}>
               <Navigation />
-              <Component {...pageProps} className={styles.pageContainer}/>
+              <Component {...pageProps} className={styles.pageContainer} />
             </Flex>
             <Flex className={styles.sidebar} bg={`gray.50`} p={4} pt={4}>
               <Sidebar />
