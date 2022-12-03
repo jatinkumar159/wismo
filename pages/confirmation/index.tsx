@@ -59,17 +59,18 @@ export default function Confirmation() {
                 </Flex>
             </Box>
 
-            <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
+           
                 {coupon ? (
-                    <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
-                        <Flex flexDir="column" justifyContent="space-between" >
-                            <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">{coupon.code}</Text>
-                            <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
+                    <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
+                        <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                            <Flex flexDir="column" justifyContent="space-between" >
+                                <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">{coupon.code}</Text>
+                                <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
+                            </Flex>
+                            <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
                         </Flex>
-                        <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
-                    </Flex>
-                ) : <span>No Coupon Selected</span>}
-            </Box>
+                    </Box>
+                ) : null}
 
             <Box className={`${styles.section} ${styles.orderSummaryContainer}`}>
                 <Box className={`${styles.sectionContent} order-summary`} mb={4}>

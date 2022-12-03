@@ -48,10 +48,12 @@ export default function Discounts() {
                                 <Button
                                     type='submit'
                                     borderRadius={4}
-                                    variant='outline'
-                                    colorScheme='teal'
+                                    bg={`black`}
+                                    _hover={{background: 'black'}}
+                                    color={`white`}
                                     disabled={!values.coupon}
-                                >Apply</Button>
+                                    fontSize={`sm`}
+                                >Proceed to payment</Button>
                             </Form>
                         </Box>
                     </Box>
