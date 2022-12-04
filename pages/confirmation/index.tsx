@@ -42,29 +42,31 @@ export default function Confirmation() {
                 </Box>
 
                 <Text mb={2} className={styles.moreAddresses}>
-                    <Link href="/addresses"><SmallAddIcon /> 2 more addresses</Link>
+                    <Link href="/addresses"><SmallAddIcon /> 2 more addresses found</Link>
                 </Text>
                 <Text mb={2} className={styles.newAddress}>
-                    <Link href="/new-address"> <SmallAddIcon />Add new delivery address</Link>
+                    <Link href="/new-address"> <SmallAddIcon /> Add new delivery address</Link>
                     {/* <Button size="xs" color="white" background="black" _hover={{bg:'black'}}> <SmallAddIcon />Add new delivery address</Button> */}
                 </Text>
             </Box>
 
-            <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
-                <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
-                    <Text lineHeight={2} alignItems="center">Have a coupon?</Text>
-                    <Link href='/discounts'>
-                        <Button borderRadius={4} size='sm' color="white" background="black" _hover={{ bg: 'black' }}>Apply</Button>
-                    </Link>
-                </Flex>
-            </Box>
+            {
+                !coupon && <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
+                    <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                        <Text lineHeight={2} alignItems="center">Have a coupon?</Text>
+                        <Link href='/discounts'>
+                            <Button borderRadius={4} size='sm' color="white" background="black" _hover={{ bg: 'black' }}>Apply</Button>
+                        </Link>
+                    </Flex>
+                </Box>
+            }
 
            
                 {coupon ? (
                     <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
                         <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
                             <Flex flexDir="column" justifyContent="space-between" >
-                                <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">{coupon.code}</Text>
+                                <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">{coupon.code}</Text>
                                 <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
                             </Flex>
                             <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />

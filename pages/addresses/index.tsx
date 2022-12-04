@@ -1,5 +1,5 @@
 import { ArrowForwardIcon, ArrowRightIcon, EditIcon, LockIcon, SmallAddIcon } from "@chakra-ui/icons";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, IconButton, Progress, Spinner, Text, VStack, Center, FormControl, Radio, RadioGroup } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, IconButton, Progress, Spinner, Text, VStack, Center, FormControl, Radio, RadioGroup, Flex } from "@chakra-ui/react";
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -88,7 +88,7 @@ export default function AddressList() {
                                         <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile} /></p>
                                 </div>
                             </Box>
-                            <Box ps={4} pe={4}>
+                            <Box >
                                 <Formik
                                     initialValues={{
                                         selectedAddress: '',
@@ -102,44 +102,50 @@ export default function AddressList() {
                                     }}
                                 >
                                     {({ values, errors, touched, handleBlur, handleChange }) => (
-                                        <Box className={styles.container} pt={2} pb={2}>
+                                        <Box className={styles.container}>
                                             <Form>
                                                 <FormControl>
                                                     <RadioGroup>
                                                         <VStack align='flex-start'>
                                                             {(!data.turbo_address_list?.length && data.unifill_address_list?.length) ? data.unifill_address_list.map(address => {
                                                                 return (
-                                                                    <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',U'}>
-                                                                        <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',U' === values.selectedAddress} />
-                                                                    </Radio>
+                                                                    <Box p={4}>
+                                                                        <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',U'}>
+                                                                            <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',U' === values.selectedAddress} />
+                                                                        </Radio>
+                                                                    </Box>
                                                                 );
                                                             }) : null}
                                                             {(!data.unifill_address_list?.length && data.turbo_address_list?.length) ? data.turbo_address_list.map(address => {
                                                                 return (
-                                                                    <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',T'}>
-                                                                        <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',T' === values.selectedAddress} />
-                                                                    </Radio>
+                                                                    <Box p={4}>
+                                                                        <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',T'}>
+                                                                            <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',T' === values.selectedAddress} />
+                                                                        </Radio>
+                                                                    </Box>
                                                                 );
                                                             }) : null}
                                                             {(data.unifill_address_list?.length && data.turbo_address_list?.length) ? (<>
                                                                 {data.turbo_address_list.map(address => {
                                                                     return (
-                                                                        <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',T'}>
-                                                                            <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',T' === values.selectedAddress} />
-                                                                        </Radio>
+                                                                        <Box p={4}>
+                                                                            <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',T'}>
+                                                                                <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',T' === values.selectedAddress} />
+                                                                            </Radio>
+                                                                        </Box>
                                                                     );
                                                                 })}
-                                                                <Accordion allowToggle>
+                                                                <Accordion allowToggle w={`100%`}>
                                                                     <AccordionItem border='none'>
                                                                         <h2>
                                                                             <AccordionButton>
-                                                                                <Box flex='1' textAlign='left'>
+                                                                                <Flex w={`100%`} textAlign='left'>
                                                                                     Load More
-                                                                                </Box>
+                                                                                </Flex>
                                                                                 <AccordionIcon />
                                                                             </AccordionButton>
                                                                         </h2>
-                                                                        <AccordionPanel pb={4}>
+                                                                        <AccordionPanel>
                                                                             {data.unifill_address_list.map(address => {
                                                                                 return (
                                                                                     <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',U'}>
@@ -155,8 +161,8 @@ export default function AddressList() {
                                                     </RadioGroup>
                                                 </FormControl>
 
-                                                <VStack mt={4} mb={4} ps={4} pe={4} align={`flex-start`}>
-                                                    <Text mb={2} className={styles.newAddress}>
+                                                <VStack p={4} align={`flex-start`}>
+                                                    <Text className={styles.newAddress} mb={2}>
                                                         <Link href="/new-address"> <SmallAddIcon />Add new delivery address</Link>
                                                     </Text>
 

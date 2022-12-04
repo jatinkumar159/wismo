@@ -1,5 +1,5 @@
-import { EditIcon } from "@chakra-ui/icons";
-import { Box, Button, FormControl, FormLabel, IconButton, Radio, RadioGroup, Text, VStack } from "@chakra-ui/react";
+import { ArrowForwardIcon, EditIcon, LockIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex, FormControl, FormLabel, HStack, IconButton, Radio, RadioGroup, Text, useRadio, useRadioGroup, VStack } from "@chakra-ui/react";
 import { Field, Form, Formik, useFormik } from "formik";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
@@ -13,6 +13,7 @@ export default function Discounts() {
     const dispatch = useAppDispatch();
     const coupons: Coupon[] = useAppSelector(availableCoupons);
 
+    
     return (
         <>
             <Formik
@@ -25,35 +26,35 @@ export default function Discounts() {
                 }}
             >
                 {({ values, errors, touched, handleBlur, handleChange }) => (
-                    <Box className={styles.container} pt={2} pb={2}>
-                        <Box className={styles.section} ps={4} pe={4}>
-                            <div className={`${styles.sectionContent} mobile-section`}>
-                                <Text as="span">Apply Discounts</Text>
-                            </div>
+                    <Box className={styles.container}>
+                        <Box className={styles.section}>
+                            <Box className={`${styles.sectionContent} mobile-section`} mt={2} mb={2}>
+                                <Text>Apply Discounts</Text>
+                            </Box>
                         </Box>
                         <Box p={4}>
                             <Form>
                                 <FormControl isInvalid={touched.coupon && !!errors.coupon} id='coupon'>
                                     <RadioGroup>
-                                        <VStack align='flex-start'>
-                                            {coupons.map(coupon => (
-                                                <Radio key={coupon.code} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='coupon' value={coupon.code}>
-                                                    <DiscountCard coupon={coupon} isSelected={values.coupon === coupon.code}></DiscountCard>
-                                                </Radio>
-                                            ))}
+                                        <VStack align='flex-start' w={`100%`}>
+                                            <RadioGroup w={`100%`}>
+                                            {
+                                                coupons.map(coupon => (
+                                                    <Box mb={4}>
+                                                        <Radio display={`inline-flex`} key={coupon.code} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='coupon' value={coupon.code} w={`100%`}>
+                                                            <Box flexGrow={1}>
+                                                                <DiscountCard coupon={coupon} isSelected={values.coupon === coupon.code}></DiscountCard>
+                                                            </Box>
+                                                        </Radio>
+                                                    </Box>
+                                                ))
+                                            }
+                                            </RadioGroup>
                                         </VStack>
                                     </RadioGroup>
                                 </FormControl>
 
-                                <Button
-                                    type='submit'
-                                    borderRadius={4}
-                                    bg={`black`}
-                                    _hover={{background: 'black'}}
-                                    color={`white`}
-                                    disabled={!values.coupon}
-                                    fontSize={`sm`}
-                                >Proceed to payment</Button>
+                                <Button isDisabled={!values.coupon} type="submit" w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }}><LockIcon fontSize="xs" me={2} /> <Text as="span" fontSize="sm">Proceed to Payment <ArrowForwardIcon ms={2} /></Text></Button>
                             </Form>
                         </Box>
                     </Box>

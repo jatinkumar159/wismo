@@ -15,13 +15,13 @@ export interface ConfirmationState {
 const initialState: ConfirmationState = {
     availableCoupons: [
         {
-            code: 'CouponA',
+            code: 'WORLDCUP2022',
             discountPercentage: 50,
             discountAmount: 500,
             maxDiscount: 500,
         },
         {
-            code: 'CouponB',
+            code: 'NEWYEAR_FIESTA',
             discountPercentage: 20,
             discountAmount: 200,
             maxDiscount: 200,

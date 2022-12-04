@@ -6,19 +6,14 @@ import styles from './DiscountCard.module.scss';
 interface Props {
     coupon: Coupon,
     isSelected: boolean,
+    key?: any
 }
 
 export default function DiscountCard({ coupon, isSelected }: Props) {
     return (
-        <Box p={4} className={`${styles.card} ${isSelected ? styles.selectedCard : ''}`} mb={4} minW='300'>
-            <Flex align={'flex-start'} gap={'0.5rem'}>
-                <Flex grow={1} flexDir={'column'}>
-                    <VStack mb={2} align='flex-start'>
-                        <Text className={styles.cardName} fontWeight='bold'>{coupon.code}</Text>
-                        <Text as="span" fontSize="xs">{coupon.discountPercentage}% off upto ₹{coupon.maxDiscount}</Text>
-                    </VStack>
-                </Flex>
-            </Flex>
+        <Box p={4} className={`discount-card ${styles.card} ${isSelected ? styles.selectedCard : ''}`}>
+            <Text as="h3" fontSize={'md'} fontWeight={`bold`} color={`green.400`} textTransform={`uppercase`} size={`md`}>{coupon.code}</Text>
+            <Text as="span" fontSize="xs">{coupon.discountPercentage}% off upto ₹{coupon.maxDiscount}</Text>
         </Box>
     )
 }
