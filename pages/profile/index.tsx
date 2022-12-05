@@ -236,6 +236,7 @@ export default function Profile() {
         return (
             <VStack>
                 <span className={styles.preview}>{phone}</span>
+                {/* TODO: RESET STORE DATA WHEN CHANGING MOBILE NUMBER */}
                 <Button colorScheme='teal' variant='outline' onClick={handleOnClick}>Edit</Button>
             </VStack>
         )
