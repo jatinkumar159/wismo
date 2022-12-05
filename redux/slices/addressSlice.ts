@@ -22,8 +22,8 @@ const initialState: AddressState = {
         address_type: "Home",
         selected: true
     },
-    turboAddressList: [],
-    unifillAddressList: [],
+    turboAddressList: null,
+    unifillAddressList: null,
 }
 
 export const addressSlice = createSlice({

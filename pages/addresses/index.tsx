@@ -9,7 +9,7 @@ import { getAddresses } from "../../apis/get";
 import Head from "next/head";
 import Link from "next/link";
 import Router, { useRouter } from "next/router";
-import { setSelectedAddress, setTurboAddressList, setUnifillAddressList } from "../../redux/slices/addressSlice";
+import { selectTurboAddressList, selectUnifillAddressList, setSelectedAddress, setTurboAddressList, setUnifillAddressList } from "../../redux/slices/addressSlice";
 import { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import DiscountCard from "../../components/DiscountCard/DiscountCard";
@@ -26,15 +26,20 @@ const AddressListHead = () => {
 export default function AddressList() {
     const router = useRouter();
     const phone = useAppSelector(selectPhone);
+    const turboAddressList = useAppSelector(selectTurboAddressList);
+    const unifillAddressList = useAppSelector(selectUnifillAddressList);
     const dispatch = useAppDispatch();
-    const { isLoading, isError, data } = useQuery(['getAddresses'], () => getAddresses(phone))
+    const { isLoading, isError, data } = useQuery([phone], () => getAddresses(phone), {
+        staleTime: Infinity
+    });
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
 
-    const handleChangeMobile = () => {
-        dispatch(unsetPhone());
-        dispatch(unverifyProfile());
-        router.push('/profile');
-    }
+    useEffect(() => {
+        if (data && !turboAddressList?.length && !unifillAddressList?.length) {
+            dispatch(setTurboAddressList(data.turbo_address_list));
+            dispatch(setUnifillAddressList(data.unifill_address_list));
+        }
+    }, [dispatch, data, turboAddressList, unifillAddressList]);
 
     useEffect(() => {
         const pageTransitionStart = () => setIsPageTransitionActive(true);
@@ -48,6 +53,12 @@ export default function AddressList() {
             router.events.off('routeChangeComplete', pageTransitionStop);
         }
     }, [router]);
+
+    const handleChangeMobile = () => {
+        dispatch(unsetPhone());
+        dispatch(unverifyProfile());
+        router.push('/profile');
+    }
 
     if (!phone) return <>
         <AddressListHead />
@@ -64,10 +75,7 @@ export default function AddressList() {
         <span>An error occurred, please try again later!</span>
     </>
 
-    dispatch(setTurboAddressList(data.turbo_address_list));
-    dispatch(setUnifillAddressList(data.unifill_address_list));
-
-    if (!data.turbo_address_list?.length && !data.unifill_address_list?.length) router.replace('/new-address');
+    if (!data.turbo_address_list?.length && !data.unifill_address_list?.length && !turboAddressList?.length && !unifillAddressList?.length) router.replace('/new-address');
 
     return (
         <>
@@ -91,8 +99,8 @@ export default function AddressList() {
                                     }}
                                     onSubmit={(values) => {
                                         const addressAndList = values.selectedAddress?.split(',');
-                                        const list = addressAndList[1] === 'T' ? data.turbo_address_list : data.unifill_address_list;
-                                        const selectedAddress = list.find(address => address.address_id === addressAndList[0]);
+                                        const list = addressAndList[1] === 'T' ? turboAddressList : unifillAddressList;
+                                        const selectedAddress = list?.find(address => address.address_id === addressAndList[0]);
                                         dispatch(setSelectedAddress(selectedAddress!));
                                         router.push('/confirmation');
                                     }}
@@ -103,22 +111,22 @@ export default function AddressList() {
                                                 <FormControl>
                                                     <RadioGroup>
                                                         <VStack align='flex-start'>
-                                                            {(!data.turbo_address_list?.length && data.unifill_address_list?.length) ? data.unifill_address_list.map(address => {
+                                                            {(!turboAddressList?.length && unifillAddressList?.length) ? unifillAddressList.map(address => {
                                                                 return (
                                                                     <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',U'}>
                                                                         <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',U' === values.selectedAddress} />
                                                                     </Radio>
                                                                 );
                                                             }) : null}
-                                                            {(!data.unifill_address_list?.length && data.turbo_address_list?.length) ? data.turbo_address_list.map(address => {
+                                                            {(!unifillAddressList?.length && turboAddressList?.length) ? turboAddressList.map(address => {
                                                                 return (
                                                                     <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',T'}>
                                                                         <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',T' === values.selectedAddress} />
                                                                     </Radio>
                                                                 );
                                                             }) : null}
-                                                            {(data.unifill_address_list?.length && data.turbo_address_list?.length) ? (<>
-                                                                {data.turbo_address_list.map(address => {
+                                                            {(unifillAddressList?.length && turboAddressList?.length) ? (<>
+                                                                {turboAddressList.map(address => {
                                                                     return (
                                                                         <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',T'}>
                                                                             <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',T' === values.selectedAddress} />
@@ -136,7 +144,7 @@ export default function AddressList() {
                                                                             </AccordionButton>
                                                                         </h2>
                                                                         <AccordionPanel pb={4}>
-                                                                            {data.unifill_address_list.map(address => {
+                                                                            {unifillAddressList.map(address => {
                                                                                 return (
                                                                                     <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',U'}>
                                                                                         <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',U' === values.selectedAddress} />

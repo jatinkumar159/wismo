@@ -6,14 +6,14 @@ import { selectPhone, unsetPhone, unverifyProfile } from '../../redux/slices/pro
 import styles from './confirmation.module.scss';
 import { selectSelectedAddress } from '../../redux/slices/addressSlice';
 import Link from 'next/link';
-import { selectedCoupon, unsetSelectedCoupon } from '../../redux/slices/confirmationSlice';
+import { selectSelectedCoupon, unsetSelectedCoupon } from '../../redux/slices/confirmationSlice';
 import { useRouter } from 'next/router';
 import OrderItem from '../../components/OrderItem/OrderItem';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
-    const coupon = useAppSelector(selectedCoupon);
+    const coupon = useAppSelector(selectSelectedCoupon);
     const dispatch = useAppDispatch();
     const selectedAddress = useAppSelector(selectSelectedAddress);
     const router = useRouter();

@@ -48,7 +48,7 @@ export const confirmationSlice = createSlice({
 
 export const {setAvailableCoupons, setSelectedCoupon, unsetSelectedCoupon } = confirmationSlice.actions;
 
-export const availableCoupons = (state: AppState) => state.confirmation.availableCoupons;
-export const selectedCoupon = (state: AppState) => state.confirmation.selectedCoupon;
+export const selectAvailableCoupons = (state: AppState) => state.confirmation.availableCoupons;
+export const selectSelectedCoupon = (state: AppState) => state.confirmation.selectedCoupon;
 
 export default confirmationSlice.reducer;

@@ -18,7 +18,7 @@ const InitialiseMessaging = () => {
 
   useEffect(() => {
     const handler = (message: MessageEvent) => {
-      if (message.data?.type?.indexOf('TURBO') === -1) return;
+      if (!message.data || !message.data.type || message.data.type.indexOf('TURBO') === -1) return;
       console.log("Received cart payload from parent.", message.data.cartPayload);
       dispatch(setCartPayload(message.data.cartPayload));
     }
