@@ -19,6 +19,7 @@ export interface Address {
     pincode: string;
     address_type?: string;
     selected: boolean;
+    email?: string;
 }
 
 export async function getAddresses(phone: string): Promise<Addresses> {

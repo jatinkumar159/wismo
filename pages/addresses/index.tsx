@@ -3,7 +3,7 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPane
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectPhone, setPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
+import { selectName, selectPhone, setName, setPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getAddresses } from "../../apis/get";
 import Head from "next/head";
@@ -26,6 +26,7 @@ const AddressListHead = () => {
 export default function AddressList() {
     const router = useRouter();
     const phone = useAppSelector(selectPhone);
+    const name = useAppSelector(selectName);
     const turboAddressList = useAppSelector(selectTurboAddressList);
     const unifillAddressList = useAppSelector(selectUnifillAddressList);
     const dispatch = useAppDispatch();
@@ -35,6 +36,11 @@ export default function AddressList() {
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
 
     useEffect(() => {
+        if (data?.turbo_address_list?.length) {
+            let userName = data.turbo_address_list.find(address => address.selected === true)?.name
+            if (!userName) userName = data.turbo_address_list[0].name;
+            dispatch(setName(userName));
+        }
         if (data && !turboAddressList?.length && !unifillAddressList?.length) {
             dispatch(setTurboAddressList(data.turbo_address_list));
             dispatch(setUnifillAddressList(data.unifill_address_list));
@@ -88,7 +94,7 @@ export default function AddressList() {
                         <Box className={styles.container}>
                             <Box className={styles.section} ps={4} pe={4}>
                                 <div className={`${styles.sectionContent} mobile-section`}>
-                                    <p>Creating an order with <span className={styles.mobileNumber}>{phone}</span>
+                                    <p>Creating an order with <span className={styles.mobileNumber}>{name ? name + ' - ' : ''}{phone}</span>
                                         <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile} /></p>
                                 </div>
                             </Box>

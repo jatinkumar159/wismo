@@ -6,11 +6,14 @@ import { Address, getPostalAddress } from "../../apis/get";
 import { ChangeEvent, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { addAddress, setSelectedAddress } from "../../redux/slices/addressSlice";
+import { selectName, selectPhone } from "../../redux/slices/profileSlice";
 
 export default function NewAddress() {
     const router = useRouter();
+    const phone = useAppSelector(selectPhone);
+    const name = useAppSelector(selectName);
     const dispatch = useAppDispatch();
 
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
@@ -30,7 +33,7 @@ export default function NewAddress() {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
+            name: name ?? '',
             address_line_1: '',
             address_line_2: '',
             city: '',
@@ -38,7 +41,8 @@ export default function NewAddress() {
             country: '',
             pincode: '',
             // address_type: '',
-            mobile: '',
+            mobile: phone,
+            email: '',
         },
         validationSchema: Yup.object({
             name: Yup.string().required('Required'),
@@ -49,6 +53,7 @@ export default function NewAddress() {
             pincode: Yup.string().required('Required'),
             // address_type: Yup.string().required('Required'),
             mobile: Yup.string().length(10, 'Invalid Mobile Number').required('Required'),
+            email: Yup.string().email('Invalid Email Format'),
         }),
         onSubmit: (values) => {
             dispatch(setSelectedAddress({ ...values, selected: true, address_id: "5" }));
@@ -113,6 +118,11 @@ export default function NewAddress() {
                                     <Input type="text" placeholder="Name" aria-placeholder="Name" {...formik.getFieldProps('name')}></Input>
                                     <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
                                 </FormControl>
+                                <FormControl mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
+                                    <FormLabel ps={4} htmlFor="email">Email</FormLabel>
+                                    <Input type="text" placeholder="Email" aria-placeholder="Email" {...formik.getFieldProps('email')}></Input>
+                                    <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                                </FormControl>
                                 <FormControl mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
                                     <FormLabel ps={4} htmlFor="name">Pincode</FormLabel>
                                     <Input type="text" placeholder="Pincode" aria-placeholder="Pincode" {...formik.getFieldProps('pincode')} onChange={handlePinCodeChange}></Input>
@@ -121,7 +131,7 @@ export default function NewAddress() {
                                 <Flex flexDir="row" justifyContent={`space-between`} gap={4} mb={4}>
                                     <FormControl isInvalid={formik.touched.city && formik.errors.city ? true : false}>
                                         <FormLabel ps={4} htmlFor="name">City</FormLabel>
-                                        <Input disabled type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
+                                        <Input type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
                                         <FormErrorMessage>{formik.errors.city}</FormErrorMessage>
                                     </FormControl>
                                     <FormControl isInvalid={formik.touched.state && formik.errors.state ? true : false}>

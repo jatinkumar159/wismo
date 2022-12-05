@@ -4,6 +4,7 @@ import { AppState } from "../store";
 
 export interface ProfileState {
     phone: string;
+    name: string | null;
     country: Country;
     isLoading: boolean;
     isVerified: boolean;
@@ -11,6 +12,7 @@ export interface ProfileState {
 
 const initialState: ProfileState = {
     phone: '',
+    name: null,
     country: { "name": "India", "flag": "🇮🇳", "code": "IN", "dial_code": "+91" },
     isLoading: false,
     isVerified: false,
@@ -25,6 +27,12 @@ export const profileSlice = createSlice({
         },
         unsetPhone: state => {
             state.phone = '';
+        },
+        setName: (state, action: PayloadAction<string>) => {
+            state.name = action.payload;
+        },
+        unsetName: state => {
+            state.name= null;
         },
         setCountry: (state, action: PayloadAction<Country>) => {
             state.country = action.payload;
@@ -44,9 +52,10 @@ export const profileSlice = createSlice({
     }
 });
 
-export const {setPhone, unsetPhone, setCountry, verifyProfile, unverifyProfile, profileAsyncTaskStart, profileAsyncTaskEnd } = profileSlice.actions;
+export const {setPhone, unsetPhone, setName, unsetName, setCountry, verifyProfile, unverifyProfile, profileAsyncTaskStart, profileAsyncTaskEnd } = profileSlice.actions;
 
 export const selectPhone = (state: AppState) => state.profile.phone;
+export const selectName = (state: AppState) => state.profile.name;
 export const selectCountry = (state: AppState) => state.profile.country;
 export const selectIsVerified = (state: AppState) => state.profile.isVerified;
 export const selectIsLoading = (state: AppState) => state.profile.isLoading;
