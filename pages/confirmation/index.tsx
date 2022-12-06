@@ -2,18 +2,19 @@ import { ArrowForwardIcon, DeleteIcon, EditIcon, SmallAddIcon } from '@chakra-ui
 import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
 import AddressCard from './../../components/AddressCard/AddressCard';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectPhone, unsetPhone, unverifyProfile } from '../../redux/slices/profileSlice';
+import { selectName, selectPhone, unsetPhone, unverifyProfile } from '../../redux/slices/profileSlice';
 import styles from './confirmation.module.scss';
 import { selectSelectedAddress } from '../../redux/slices/addressSlice';
 import Link from 'next/link';
-import { selectedCoupon, unsetSelectedCoupon } from '../../redux/slices/confirmationSlice';
+import { selectSelectedCoupon, unsetSelectedCoupon } from '../../redux/slices/confirmationSlice';
 import { useRouter } from 'next/router';
 import OrderItem from '../../components/OrderItem/OrderItem';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
-    const coupon = useAppSelector(selectedCoupon);
+    const name = useAppSelector(selectName);
+    const coupon = useAppSelector(selectSelectedCoupon);
     const dispatch = useAppDispatch();
     const selectedAddress = useAppSelector(selectSelectedAddress);
     const router = useRouter();
@@ -28,7 +29,7 @@ export default function Confirmation() {
         <Box className={`${styles.container} confirmation`}>
             <Box className={styles.section}>
                 <div className={`mobile-section`}>
-                    <p>Creating an order with <span className={styles.mobileNumber}>{phone}</span>
+                    <p>Creating an order with <span className={styles.mobileNumber}>{name ? name + ' - ' : ''}{phone}</span>
                         <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile} /></p>
                 </div>
             </Box>

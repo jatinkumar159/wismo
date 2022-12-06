@@ -4,14 +4,14 @@ import { Field, Form, Formik, useFormik } from "formik";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { availableCoupons, Coupon, setSelectedCoupon } from "../../redux/slices/confirmationSlice";
+import { selectAvailableCoupons, Coupon, setSelectedCoupon } from "../../redux/slices/confirmationSlice";
 import DiscountCard from "./../../components/DiscountCard/DiscountCard";
 import styles from './discounts.module.scss';
 
 export default function Discounts() {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const coupons: Coupon[] = useAppSelector(availableCoupons);
+    const coupons: Coupon[] = useAppSelector(selectAvailableCoupons);
 
     
     return (

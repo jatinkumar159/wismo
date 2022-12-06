@@ -22,13 +22,13 @@ export default function Navigation() {
     }
 
     const handleClose = () => {
-        window.top!.postMessage({type: "TURBO_EXIT", data: "close event"}, '*')
+        window?.top!.postMessage({ type: "TURBO_EXIT", data: "close event" }, '*');
     }
 
     return (
         <div className={styles.container}>
             <div className={styles.brand}>
-            {!(router.pathname === '/profile' && !phone) ? <IconButton aria-label="back" icon={<ArrowBackIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleBackNavigation} /> : <IconButton aria-label="close" icon={<SmallCloseIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleClose}/>}
+                {!(router.pathname === '/profile' && !phone) ? <IconButton aria-label="back" icon={<ArrowBackIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleBackNavigation} /> : <IconButton aria-label="close" icon={<SmallCloseIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleClose} />}
                 <Image src={'https://infowordpress.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/10/06114711/logo.webp'} alt="Logo" width='70' height='50' priority />
             </div>
             <div className={styles.attribution}>
