@@ -82,7 +82,7 @@ export default function AddressList() {
                     <>
                         <AddressListHead />
                         <Box className={styles.container}>
-                            <Box className={styles.section} ps={4} pe={4}>
+                            <Box className={styles.section} ps={4} pe={4} pt={2} pb={2}>
                                 <div className={`${styles.sectionContent} mobile-section`}>
                                     <p>Creating an order with <span className={styles.mobileNumber}>{phone}</span>
                                         <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile} /></p>

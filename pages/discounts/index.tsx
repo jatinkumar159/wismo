@@ -40,9 +40,9 @@ export default function Discounts() {
                                             <RadioGroup w={`100%`}>
                                             {
                                                 coupons.map(coupon => (
-                                                    <Box mb={4}>
-                                                        <Radio display={`inline-flex`} key={coupon.code} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='coupon' value={coupon.code} w={`100%`}>
-                                                            <Box flexGrow={1}>
+                                                    <Box mb={4} key={coupon.code}>
+                                                        <Radio display={`inline-flex`} w={`100%`} key={coupon.code} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='coupon' value={coupon.code} w={`100%`}>
+                                                            <Box w={`100%`} flexGrow={1}>
                                                                 <DiscountCard coupon={coupon} isSelected={values.coupon === coupon.code}></DiscountCard>
                                                             </Box>
                                                         </Radio>
