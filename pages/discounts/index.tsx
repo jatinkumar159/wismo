@@ -13,7 +13,6 @@ export default function Discounts() {
     const dispatch = useAppDispatch();
     const coupons: Coupon[] = useAppSelector(selectAvailableCoupons);
 
-    
     return (
         <>
             <Formik
@@ -38,17 +37,17 @@ export default function Discounts() {
                                     <RadioGroup>
                                         <VStack align='flex-start' w={`100%`}>
                                             <RadioGroup w={`100%`}>
-                                            {
-                                                coupons.map(coupon => (
-                                                    <Box mb={4} key={coupon.code}>
-                                                        <Radio display={`inline-flex`} w={`100%`} key={coupon.code} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='coupon' value={coupon.code} w={`100%`}>
-                                                            <Box w={`100%`} flexGrow={1}>
-                                                                <DiscountCard coupon={coupon} isSelected={values.coupon === coupon.code}></DiscountCard>
-                                                            </Box>
-                                                        </Radio>
-                                                    </Box>
-                                                ))
-                                            }
+                                                {
+                                                    coupons.map(coupon => (
+                                                        <Box mb={4} key={coupon.code}>
+                                                            <Radio display={`inline-flex`} w={`100%`} key={coupon.code} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='coupon' value={coupon.code}>
+                                                                <Box w={`100%`} flexGrow={1}>
+                                                                    <DiscountCard coupon={coupon} isSelected={values.coupon === coupon.code}></DiscountCard>
+                                                                </Box>
+                                                            </Radio>
+                                                        </Box>
+                                                    ))
+                                                }
                                             </RadioGroup>
                                         </VStack>
                                     </RadioGroup>
