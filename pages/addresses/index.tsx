@@ -5,7 +5,7 @@ import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectName, selectPhone, setName, setPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
-import { getAddresses } from "../../apis/get";
+import { getBuyerProfile } from "../../apis/get";
 import Head from "next/head";
 import Link from "next/link";
 import Router, { useRouter } from "next/router";
@@ -24,13 +24,14 @@ const AddressListHead = () => {
 }
 
 export default function AddressList() {
+    // TODO: CHECK IF USER IS A GUEST AND IF ANY ADDRESSES HAVE BEEN STORED
     const router = useRouter();
     const phone = useAppSelector(selectPhone);
     const name = useAppSelector(selectName);
     const turboAddressList = useAppSelector(selectTurboAddressList);
     const unifillAddressList = useAppSelector(selectUnifillAddressList);
     const dispatch = useAppDispatch();
-    const { isLoading, isError, data } = useQuery([phone], () => getAddresses(phone), {
+    const { isLoading, isError, data } = useQuery([phone], () => getBuyerProfile(localStorage.getItem('turbo')!), {
         staleTime: Infinity
     });
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
@@ -119,7 +120,7 @@ export default function AddressList() {
                                                         <VStack align='flex-start'>
                                                             {(!turboAddressList?.length && unifillAddressList?.length) ? unifillAddressList.map(address => {
                                                                 return (
-                                                                    <Box p={4}>
+                                                                    <Box key={address.address_id} p={4}>
                                                                         <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',U'}>
                                                                             <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',U' === values.selectedAddress} />
                                                                         </Radio>
@@ -128,7 +129,7 @@ export default function AddressList() {
                                                             }) : null}
                                                             {(!unifillAddressList?.length && turboAddressList?.length) ? turboAddressList.map(address => {
                                                                 return (
-                                                                    <Box p={4}>
+                                                                    <Box key={address.address_id} p={4}>
                                                                         <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',T'}>
                                                                             <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',T' === values.selectedAddress} />
                                                                         </Radio>
@@ -138,7 +139,7 @@ export default function AddressList() {
                                                             {(unifillAddressList?.length && turboAddressList?.length) ? (<>
                                                                 {turboAddressList.map(address => {
                                                                     return (
-                                                                        <Box p={4}>
+                                                                        <Box key={address.address_id} p={4}>
                                                                             <Radio key={address.address_id} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id + ',T'}>
                                                                                 <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',T' === values.selectedAddress} />
                                                                             </Radio>

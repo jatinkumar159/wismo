@@ -19,7 +19,6 @@ import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { selectOtpLength } from '../../redux/slices/settingsSlice'
 
 export default function Profile() {
-
     const dispatch = useAppDispatch()
     const phone = useAppSelector(selectPhone);
     const country = useAppSelector(selectCountry);
@@ -27,9 +26,10 @@ export default function Profile() {
     const isVerified = useAppSelector(selectIsVerified);
     const toast = useToast();
     const router = useRouter();
+    const { query: { OTP_REQUEST_ID } } = router;
     // const { isOpen, onToggle, onClose } = useDisclosure();
 
-    const [otpRequestId, setOtpRequestId] = useState('');
+    const [otpRequestId, setOtpRequestId] = useState<string>(OTP_REQUEST_ID ? OTP_REQUEST_ID as string : '');
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
 
     useEffect(() => {
@@ -92,6 +92,7 @@ export default function Profile() {
 
                     dispatch(setPhone(values.phone));
                     if (data.is_guest_user) {
+                        localStorage.setItem('turbo', data.token);
                         dispatch(verifyProfile());
                         router.push('/addresses');
                     }
@@ -166,7 +167,7 @@ export default function Profile() {
         }
 
         const handleResendOTP = async () => {
-            const res = await resendOTP(phone);
+            const res = await resendOTP(otpRequestId);
             const data = await res.json();
 
             if (res.status !== 200) {
@@ -194,7 +195,7 @@ export default function Profile() {
                     }
 
                     if (data.token) {
-                        // Store token to local storage? 
+                        localStorage.setItem('turbo', data.token);
                         setIsOtpInvalid(false);
                         dispatch(verifyProfile());
                         router.push('/addresses');
@@ -233,7 +234,7 @@ export default function Profile() {
         )
     }
 
-    function DisplayPhone() {    
+    function DisplayPhone() {
         return (
             <VStack>
                 <span className={styles.preview}>{phone}</span>

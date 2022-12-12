@@ -1,4 +1,5 @@
 const baseUrl = 'http://localhost:4000';
+// const baseUrl = 'http://turbo-dev.unicommerce.infra:8080/turbo'
 // const baseUrl = 'https://unifill.unicommerce.co.in'
 
 export interface Addresses {
@@ -22,8 +23,12 @@ export interface Address {
     email?: string;
 }
 
-export async function getAddresses(phone: string): Promise<Addresses> {
-    const res = await fetch(`${baseUrl}/buyer/v1/profile?mobile=${phone}`);
+export async function getBuyerProfile(token: string): Promise<Addresses> {
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);
+    const res = await fetch(`${baseUrl}/buyer/v1/profile`, {
+        headers
+    });
     return res.json();
 }
 
