@@ -1,15 +1,17 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import {
-    Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
+    Box, Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
     InputLeftElement,
     Text,
     Spinner,
     Center,
+    Link,
+    Flex,
 } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { resendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
-import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
+import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile, selectName } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
 import Head from 'next/head'
 import styles from './profile.module.scss'
@@ -21,6 +23,7 @@ import { selectOtpLength } from '../../redux/slices/settingsSlice'
 export default function Profile() {
     const dispatch = useAppDispatch()
     const phone = useAppSelector(selectPhone);
+    const name = useAppSelector(selectName);
     const country = useAppSelector(selectCountry);
     // const isLoading = useAppSelector(selectIsLoading);
     const isVerified = useAppSelector(selectIsVerified);
@@ -45,7 +48,7 @@ export default function Profile() {
         }
     }, [router]);
 
-    const handleOnClick = () => {
+    const handleResetProfile = () => {
         dispatch(unsetPhone());
         dispatch(unverifyProfile());
     }
@@ -239,7 +242,7 @@ export default function Profile() {
             <VStack>
                 <span className={styles.preview}>{phone}</span>
                 {/* TODO: RESET STORE DATA WHEN CHANGING MOBILE NUMBER */}
-                <Button colorScheme='teal' variant='outline' onClick={handleOnClick}>Edit</Button>
+                <Button colorScheme='teal' variant='outline' onClick={handleResetProfile}>Edit</Button>
             </VStack>
         )
     }
@@ -259,6 +262,20 @@ export default function Profile() {
                     <Center h={`100vh`} className={styles.container}>
                         {!phone && <EnterPhone />}
                         {phone && !isVerified && <EnterOTP />}
+
+                            {phone && isVerified && <>
+                                    <Center h={`calc(100vh - 40px)`}>
+                                        <Flex flexDir="column" align={`center`}>
+                                            <Box m={2}>
+                                                <Text as="h3">Hi, {name ? name : phone}</Text>
+                                            </Box>
+                                            <Box m={2}>
+                                                <Text as="span">Not you? <Link onClick={handleResetProfile}>Click here.</Link></Text>
+                                            </Box>
+                                        </Flex>
+                                    </Center>
+                                </>
+                            }
                         {/* {phone && isVerified && <DisplayPhone />} */}
                     </Center>
                 )}
