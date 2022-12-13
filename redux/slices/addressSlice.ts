@@ -11,9 +11,10 @@ export interface AddressState {
 const initialState: AddressState = {
     selectedAddress: {
         address_id: "1",
+        mobile: "8171505570",
         name: "Utkarsh Saxena",
-        address_line_1: "G-342 A, G Block",
-        address_line_2: "Sector 57, Near Hong Kong Bazaar",
+        address_line1: "G-342 A, G Block",
+        address_line2: "Sector 57, Near Hong Kong Bazaar",
         city: "Gurugram",
         district: "Gurugram",
         state: "Harayana",

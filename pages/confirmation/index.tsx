@@ -4,7 +4,7 @@ import AddressCard from './../../components/AddressCard/AddressCard';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectName, selectPhone, unsetPhone, unverifyProfile } from '../../redux/slices/profileSlice';
 import styles from './confirmation.module.scss';
-import { selectSelectedAddress } from '../../redux/slices/addressSlice';
+import { selectSelectedAddress, selectTurboAddressList, selectUnifillAddressList } from '../../redux/slices/addressSlice';
 import Link from 'next/link';
 import { selectSelectedCoupon, unsetSelectedCoupon } from '../../redux/slices/confirmationSlice';
 import { useRouter } from 'next/router';
@@ -17,6 +17,8 @@ export default function Confirmation() {
     const coupon = useAppSelector(selectSelectedCoupon);
     const dispatch = useAppDispatch();
     const selectedAddress = useAppSelector(selectSelectedAddress);
+    const turboAddressList = useAppSelector(selectTurboAddressList);
+    const unifillAddressList = useAppSelector(selectUnifillAddressList);
     const router = useRouter();
 
     const handleChangeMobile = () => {
@@ -43,7 +45,7 @@ export default function Confirmation() {
                 </Box>
 
                 <Text mb={2} className={styles.moreAddresses}>
-                    <Link href="/addresses"><SmallAddIcon /> 2 more addresses found</Link>
+                    <Link href="/addresses"><SmallAddIcon /> {(turboAddressList?.length || 0) + (unifillAddressList?.length || 0) - (selectedAddress ? 1 : 0)} more addresses found</Link>
                 </Text>
                 <Text mb={2} className={styles.newAddress}>
                     <Link href="/new-address"> <SmallAddIcon /> Add new delivery address</Link>
@@ -62,18 +64,18 @@ export default function Confirmation() {
                 </Box>
             }
 
-           
-                {coupon ? (
-                    <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
-                        <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
-                            <Flex flexDir="column" justifyContent="space-between" >
-                                <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">{coupon.code}</Text>
-                                <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
-                            </Flex>
-                            <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
+
+            {coupon ? (
+                <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
+                    <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                        <Flex flexDir="column" justifyContent="space-between" >
+                            <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">{coupon.code}</Text>
+                            <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
                         </Flex>
-                    </Box>
-                ) : null}
+                        <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
+                    </Flex>
+                </Box>
+            ) : null}
 
             <Box className={`${styles.section} ${styles.orderSummaryContainer}`}>
                 <Box className={`${styles.sectionContent} order-summary`} mb={4}>
@@ -108,8 +110,8 @@ export default function Confirmation() {
 
                 <Flex ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
                     <Flex flexDir="column" justifyContent="space-between" >
-                    <Text fontWeight="bold" color={`gray.500`} fontSize="sm">Prepaid</Text>
-                    <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">Net Banking, Credit/Debit Card</Text>
+                        <Text fontWeight="bold" color={`gray.500`} fontSize="sm">Prepaid</Text>
+                        <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">Net Banking, Credit/Debit Card</Text>
                     </Flex>
                     <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
                 </Flex>

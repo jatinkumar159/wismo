@@ -26,12 +26,12 @@ export default function AddressCard({ address, selected, isInForm }: Props) {
                                 <Text as="span" className={styles.cardChip}>{address.address_type}</Text>
                             </Text>
                         </Flex>
-                        ) :  <Text className={styles.cardName} flexGrow={1}>
-                                <Text as="span" fontSize={'md'}>{address.name}</Text>
-                                <Text as="span" className={styles.cardChip}>{address.address_type}</Text>
-                            </Text>}
+                    ) : <Text className={styles.cardName} flexGrow={1}>
+                        <Text as="span" fontSize={'md'}>{address.name}</Text>
+                        <Text as="span" className={styles.cardChip}>{address.address_type}</Text>
+                    </Text>}
                     <Box mt={2}>
-                        <Text>{`${address.address_line_1 + ', ' + (address.address_line_2 ? address.address_line_2 + ', ' : '') + address.city + ', ' + (address.district ? address.district + ', ' : '') + address.state + ' - ' + address.pincode}`}</Text>
+                        <Text>{`${address.address_line1 + ', ' + (address.address_line2 ? address.address_line2 + ', ' : '') + address.city + ', ' + (address.district ? address.district + ', ' : '') + address.state + ' - ' + address.pincode}`}</Text>
                     </Box>
                 </Flex>
             </Flex>

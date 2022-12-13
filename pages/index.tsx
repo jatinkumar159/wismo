@@ -10,7 +10,7 @@ interface Token {
     is_guest_user: boolean;
     iat: number;
     exp: number;
-    mobile: string;
+    sub: string;
 }
 
 export default function Home() {
@@ -59,12 +59,12 @@ export default function Home() {
                     },
                 }, '/profile')
             }
-            getBuyerInfo(decodedToken.mobile);
+            getBuyerInfo(decodedToken.sub);
             return;
         }
 
         // TOKEN IS NOT EXPIRED
-        dispatch(setPhone(decodedToken.mobile));
+        dispatch(setPhone(decodedToken.sub));
         dispatch(verifyProfile());
         router.replace('/addresses');
     });

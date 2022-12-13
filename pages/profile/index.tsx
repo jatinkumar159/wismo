@@ -52,7 +52,7 @@ export default function Profile() {
 
     function showToast(data: any) {
         toast({
-            title: `${data.error}`,
+            title: `${data.error_code}`,
             description: `${data.message}`,
             status: 'error',
             variant: 'left-accent',
@@ -91,7 +91,7 @@ export default function Profile() {
                     }
 
                     dispatch(setPhone(values.phone));
-                    if (data.is_guest_user) {
+                    if (data.guest_user) {
                         localStorage.setItem('turbo', data.token);
                         dispatch(verifyProfile());
                         router.push('/addresses');
@@ -187,20 +187,24 @@ export default function Profile() {
                 onSubmit={async (values) => {
                     const otp = inputs.reduce((acc, curr) => acc + values[curr] ?? '', '');
                     const res = await verifyOTP(otpRequestId, otp);
-                    const data = await res.json();
+                    try {
+                        const data = await res.json();
 
-                    if (res.status !== 200) {
-                        showToast(data);
-                        return;
-                    }
+                        if (res.status !== 200) {
+                            showToast(data.api_error);
+                            return;
+                        }
 
-                    if (data.token) {
-                        localStorage.setItem('turbo', data.token);
-                        setIsOtpInvalid(false);
-                        dispatch(verifyProfile());
-                        router.push('/addresses');
-                    } else {
-                        setIsOtpInvalid(true);
+                        if (data.token) {
+                            localStorage.setItem('turbo', data.token);
+                            setIsOtpInvalid(false);
+                            dispatch(verifyProfile());
+                            router.push('/addresses');
+                        } else {
+                            setIsOtpInvalid(true);
+                        }
+                    } catch {
+                        showToast({ error_code: 'Server Error', message: `Status Code: ${res.status}` })
                     }
                 }}
             >

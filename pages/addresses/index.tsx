@@ -31,22 +31,33 @@ export default function AddressList() {
     const turboAddressList = useAppSelector(selectTurboAddressList);
     const unifillAddressList = useAppSelector(selectUnifillAddressList);
     const dispatch = useAppDispatch();
-    const { isLoading, isError, data } = useQuery([phone], () => getBuyerProfile(localStorage.getItem('turbo')!), {
-        staleTime: Infinity
-    });
+    const { isLoading, isError, data } = useQuery([phone], () => getBuyerProfile(localStorage.getItem('turbo')!));
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
 
+    // UNCOMMENT TO MAKE LOCAL DATA THE SOURCE OF TRUTH, ADD STALE TIME INIFINITY TO QUERY, AND ADD DISPATCH EVENTS ON NEW ADDRESS PAGE
+    // useEffect(() => {
+    //     if (data?.turbo_address_list?.length) {
+    //         let userName = data.turbo_address_list.find(address => address.selected === true)?.name
+    //         if (!userName) userName = data.turbo_address_list[0].name;
+    //         dispatch(setName(userName));
+    //     }
+    //     if (data && !turboAddressList?.length && !unifillAddressList?.length) {
+    //         dispatch(setTurboAddressList(data.turbo_address_list));
+    //         dispatch(setUnifillAddressList(data.unifill_address_list));
+    //     }
+    // }, [dispatch, data, turboAddressList, unifillAddressList]);
+
     useEffect(() => {
-        if (data?.turbo_address_list?.length) {
-            let userName = data.turbo_address_list.find(address => address.selected === true)?.name
-            if (!userName) userName = data.turbo_address_list[0].name;
-            dispatch(setName(userName));
-        }
-        if (data && !turboAddressList?.length && !unifillAddressList?.length) {
+        if (data) {
+            if (data?.turbo_address_list?.length) {
+                let userName = data.turbo_address_list.find(address => address.selected === true)?.name
+                if (!userName) userName = data.turbo_address_list[0].name;
+                dispatch(setName(userName));
+            }
             dispatch(setTurboAddressList(data.turbo_address_list));
             dispatch(setUnifillAddressList(data.unifill_address_list));
         }
-    }, [dispatch, data, turboAddressList, unifillAddressList]);
+    }, [data, dispatch])
 
     useEffect(() => {
         const pageTransitionStart = () => setIsPageTransitionActive(true);
