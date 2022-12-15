@@ -16,7 +16,6 @@ interface Token {
 
 export default function Home() {
     const dispatch = useAppDispatch();
-    const toast = useToast();
     const router = useRouter();
 
     useEffect(() => {
@@ -33,39 +32,14 @@ export default function Home() {
         console.log(decodedToken);
 
         // TOKEN IS EXPIRED
-        if (Date.now() > decodedToken.exp) {
-            const getBuyerInfo = async (phone: string) => {
-                if (!phone || phone.length !== 10) {
-                    router.push('/profile');
-                    return;
-                }
-
-                try {
-                    const res = await verifyBuyer(phone);
-                    const data = await res.json();
-
-                    if (res.status !== 200) {
-                        router.replace('/profile');
-                        return;
-                    }
-
-                    dispatch(setPhone(phone));
-                    if (data.is_guest_user) {
-                        dispatch(verifyProfile());
-                        // MIGHT HAVE TO ADD CASE FOR BACK BUTTON TO NOT CLOSE MODAL & INSTEAD GO BACK TO PROFILE
-                        router.replace('/addresses');
-                    }
-                    else router.push({
-                        pathname: '/profile',
-                        query: {
-                            OTP_REQUEST_ID: data.otp_request_id,
-                        },
-                    }, '/profile')
-                } catch {
-                    showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
-                }
-            }
-            getBuyerInfo(decodedToken.sub);
+        if (Date.now() > (decodedToken.exp * 1000)) {
+            const phone = decodedToken.sub;
+            router.replace({
+                pathname: '/profile',
+                query: {
+                    PHONE: phone
+                },
+            }, 'profile');
             return;
         }
 

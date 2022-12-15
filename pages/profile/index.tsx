@@ -8,7 +8,7 @@ import {
     Center,
 } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { resendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
+import { resendOTP, sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
 import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
 import Head from 'next/head'
@@ -18,6 +18,7 @@ import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { selectOtpLength } from '../../redux/slices/settingsSlice'
 import { showErrorToast } from '../../utils/toasts'
+import { getBuyerProfile } from '../../apis/get'
 
 export default function Profile() {
     const dispatch = useAppDispatch()
@@ -27,10 +28,10 @@ export default function Profile() {
     const isVerified = useAppSelector(selectIsVerified);
     const toast = useToast();
     const router = useRouter();
-    const { query: { OTP_REQUEST_ID } } = router;
+    const { query: { PHONE } } = router;
     // const { isOpen, onToggle, onClose } = useDisclosure();
 
-    const [otpRequestId, setOtpRequestId] = useState<string>(OTP_REQUEST_ID ? OTP_REQUEST_ID as string : '');
+    const [otpRequestId, setOtpRequestId] = useState<string>('');
     const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
 
     useEffect(() => {
@@ -64,7 +65,7 @@ export default function Profile() {
         return (
             <Formik
                 initialValues={{
-                    phone: ''
+                    phone: PHONE ? PHONE as string : '',
                 }}
                 validationSchema={Yup.object({
                     phone: Yup.string().length(10, 'Invalid Mobile Number').required('Required'),
@@ -82,6 +83,16 @@ export default function Profile() {
 
                         dispatch(setPhone(values.phone));
                         if (data.guest_user) {
+                            const getBuyerProfileData = await getBuyerProfile(data.token);
+
+                            if (getBuyerProfileData?.unifill_address_list?.length !== 0) {
+                                const sendOtpRes = await sendOTP(values.phone, 'LOGIN');
+                                const sendOtpData = await sendOtpRes.json();
+
+                                setOtpRequestId(sendOtpData.otp_request_id);
+                                return;
+                            }
+
                             localStorage.setItem('turbo', data.token);
                             dispatch(verifyProfile());
                             router.push('/addresses');
