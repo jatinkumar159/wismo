@@ -86,16 +86,6 @@ export default function Profile() {
 
                         dispatch(setPhone(values.phone));
                         if (data.guest_user) {
-                            const getBuyerProfileData = await getBuyerProfile(data.token);
-
-                            if (getBuyerProfileData?.unifill_address_list?.length !== 0) {
-                                const sendOtpRes = await sendOTP(values.phone, 'LOGIN');
-                                const sendOtpData = await sendOtpRes.json();
-
-                                setOtpRequestId(sendOtpData.otp_request_id);
-                                return;
-                            }
-
                             localStorage.setItem('turbo', data.token);
                             dispatch(verifyProfile());
                             router.push('/addresses');
