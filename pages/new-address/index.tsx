@@ -81,7 +81,7 @@ export default function NewAddress() {
         if (e.target.value?.length === 6) {
             try {
                 const data: any = await getPostalAddress(e.target.value);
-                if (data[0]['Status'] === 'Error') {
+                if (data.hasOwnProperty('api_error')) {
                     formik.setErrors({
                         pincode: 'Invalid Pincode'
                     });
@@ -90,9 +90,9 @@ export default function NewAddress() {
                 formik.setValues({
                     ...formik.values,
                     pincode: e.target.value,
-                    city: data[0]['PostOffice'][0]['District'],
-                    country: data[0]['PostOffice'][0]['Country'],
-                    state: data[0]['PostOffice'][0]['State'],
+                    city: data['city'],
+                    country: data['country'],
+                    state: data['state'],
                 })
             } catch {
                 showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });

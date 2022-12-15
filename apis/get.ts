@@ -34,6 +34,10 @@ export async function getBuyerProfile(token: string): Promise<Addresses> {
 }
 
 export async function getPostalAddress(pincode: string): Promise<any> {
-    const res = await fetch (`https://api.postalpincode.in/pincode/${pincode}`);
+    const res = await fetch (`${baseUrl}/v1/pincode/${pincode}`, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('turbo')}`,
+        }
+    });
     return res.json();
 }
