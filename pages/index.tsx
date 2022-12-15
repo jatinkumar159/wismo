@@ -4,7 +4,8 @@ import jwt_decode from "jwt-decode";
 import { useAppDispatch } from "../redux/hooks";
 import { setPhone, verifyProfile } from "../redux/slices/profileSlice";
 import { verifyBuyer } from "../apis/post";
-import { Center, Spinner } from "@chakra-ui/react";
+import { Center, Spinner, useToast } from "@chakra-ui/react";
+import { showErrorToast } from "../utils/toasts";
 
 interface Token {
     is_guest_user: boolean;
@@ -15,6 +16,7 @@ interface Token {
 
 export default function Home() {
     const dispatch = useAppDispatch();
+    const toast = useToast();
     const router = useRouter();
 
     useEffect(() => {
@@ -38,26 +40,30 @@ export default function Home() {
                     return;
                 }
 
-                const res = await verifyBuyer(phone);
-                const data = await res.json();
+                try {
+                    const res = await verifyBuyer(phone);
+                    const data = await res.json();
 
-                if (res.status !== 200) {
-                    router.replace('/profile');
-                    return;
-                }
+                    if (res.status !== 200) {
+                        router.replace('/profile');
+                        return;
+                    }
 
-                dispatch(setPhone(phone));
-                if (data.is_guest_user) {
-                    dispatch(verifyProfile());
-                    // MIGHT HAVE TO ADD CASE FOR BACK BUTTON TO NOT CLOSE MODAL & INSTEAD GO BACK TO PROFILE
-                    router.replace('/addresses');
+                    dispatch(setPhone(phone));
+                    if (data.is_guest_user) {
+                        dispatch(verifyProfile());
+                        // MIGHT HAVE TO ADD CASE FOR BACK BUTTON TO NOT CLOSE MODAL & INSTEAD GO BACK TO PROFILE
+                        router.replace('/addresses');
+                    }
+                    else router.push({
+                        pathname: '/profile',
+                        query: {
+                            OTP_REQUEST_ID: data.otp_request_id,
+                        },
+                    }, '/profile')
+                } catch {
+                    showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
                 }
-                else router.push({
-                    pathname: '/profile',
-                    query: {
-                        OTP_REQUEST_ID: data.otp_request_id,
-                    },
-                }, '/profile')
             }
             getBuyerInfo(decodedToken.sub);
             return;

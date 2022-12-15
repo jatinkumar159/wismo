@@ -17,6 +17,7 @@ import { useRouter } from 'next/router'
 import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { selectOtpLength } from '../../redux/slices/settingsSlice'
+import { showErrorToast } from '../../utils/toasts'
 
 export default function Profile() {
     const dispatch = useAppDispatch()
@@ -50,18 +51,6 @@ export default function Profile() {
         dispatch(unverifyProfile());
     }
 
-    function showToast(data: any) {
-        toast({
-            title: `${data.error_code}`,
-            description: `${data.message}`,
-            status: 'error',
-            variant: 'left-accent',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-        });
-    }
-
     function EnterPhone() {
         const handleOnChange = (e: ChangeEvent<HTMLInputElement>, handleChange: Function, submitForm: Function) => {
             handleChange(e);
@@ -82,21 +71,25 @@ export default function Profile() {
                 })}
                 validateOnBlur={false}
                 onSubmit={async (values) => {
-                    const res = await verifyBuyer(values.phone);
-                    const data = await res.json();
+                    try {
+                        const res = await verifyBuyer(values.phone);
+                        const data = await res.json();
 
-                    if (res.status !== 200) {
-                        showToast(data);
-                        return;
-                    }
+                        if (res.status !== 200) {
+                            showErrorToast(toast, data);
+                            return;
+                        }
 
-                    dispatch(setPhone(values.phone));
-                    if (data.guest_user) {
-                        localStorage.setItem('turbo', data.token);
-                        dispatch(verifyProfile());
-                        router.push('/addresses');
+                        dispatch(setPhone(values.phone));
+                        if (data.guest_user) {
+                            localStorage.setItem('turbo', data.token);
+                            dispatch(verifyProfile());
+                            router.push('/addresses');
+                        }
+                        else setOtpRequestId(data.otp_request_id);
+                    } catch {
+                        showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
                     }
-                    else setOtpRequestId(data.otp_request_id);
                 }}
             >
                 {({ values, errors, touched, isSubmitting, handleBlur, handleChange, submitForm }) => (
@@ -167,16 +160,20 @@ export default function Profile() {
         }
 
         const handleResendOTP = async () => {
-            const res = await resendOTP(otpRequestId);
-            const data = await res.json();
+            try {
+                const res = await resendOTP(otpRequestId);
+                const data = await res.json();
 
-            if (res.status !== 200) {
-                showToast(data);
-                return;
+                if (res.status !== 200) {
+                    showErrorToast(toast, data);
+                    return;
+                }
+
+                setOtpRequestId(data.otp_request_id);
+                setTimer(60);
+            } catch {
+                showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
             }
-
-            setOtpRequestId(data.otp_request_id);
-            setTimer(60);
         }
 
         return (
@@ -186,12 +183,12 @@ export default function Profile() {
                 validateOnMount={true}
                 onSubmit={async (values) => {
                     const otp = inputs.reduce((acc, curr) => acc + values[curr] ?? '', '');
-                    const res = await verifyOTP(otpRequestId, otp);
                     try {
+                        const res = await verifyOTP(otpRequestId, otp);
                         const data = await res.json();
 
                         if (res.status !== 200) {
-                            showToast(data.api_error);
+                            showErrorToast(toast, data.api_error);
                             return;
                         }
 
@@ -204,7 +201,7 @@ export default function Profile() {
                             setIsOtpInvalid(true);
                         }
                     } catch {
-                        showToast({ error_code: 'Server Error', message: `Status Code: ${res.status}` })
+                        showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
                     }
                 }}
             >

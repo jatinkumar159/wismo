@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { addAddress, setSelectedAddress } from "../../redux/slices/addressSlice";
 import { selectName, selectPhone } from "../../redux/slices/profileSlice";
 import { addNewAddress } from "../../apis/post";
+import { showErrorToast } from "../../utils/toasts";
 
 export default function NewAddress() {
     const router = useRouter();
@@ -32,18 +33,6 @@ export default function NewAddress() {
             router.events.off('routeChangeComplete', pageTransitionStop);
         }
     }, [router]);
-
-    function showToast(data: any) {
-        toast({
-            title: `${data.error_code}`,
-            description: `${data.message}`,
-            status: 'error',
-            variant: 'left-accent',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-        });
-    }
 
     const formik = useFormik({
         initialValues: {
@@ -70,20 +59,19 @@ export default function NewAddress() {
             email: Yup.string().email('Invalid Email Format'),
         }),
         onSubmit: async (values) => {
-
-            const res = await addNewAddress({ ...values, district: 'Gurgaon' });
             try {
+                const res = await addNewAddress({ ...values, district: 'Gurgaon' });
                 const data = await res.json();
 
                 if (res.status !== 201) {
-                    showToast(data.api_error);
+                    showErrorToast(toast, data.api_error);
                     return;
                 }
 
                 dispatch(setSelectedAddress({ ...values, district: 'Gurgaon', address_type: 'Home', selected: true, address_id: data.address_id }));
                 router.replace('/confirmation');
             } catch {
-                showToast({ error_code: 'Server Error', message: `Status Code: ${res.status}` });
+                showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
             }
         }
     });
@@ -91,20 +79,24 @@ export default function NewAddress() {
     const handlePinCodeChange = async (e: ChangeEvent<HTMLInputElement>) => {
         formik.handleChange(e);
         if (e.target.value?.length === 6) {
-            const data: any = await getPostalAddress(e.target.value);
-            if (data[0]['Status'] === 'Error') {
-                formik.setErrors({
-                    pincode: 'Invalid Pincode'
-                });
-                return;
+            try {
+                const data: any = await getPostalAddress(e.target.value);
+                if (data[0]['Status'] === 'Error') {
+                    formik.setErrors({
+                        pincode: 'Invalid Pincode'
+                    });
+                    return;
+                }
+                formik.setValues({
+                    ...formik.values,
+                    pincode: e.target.value,
+                    city: data[0]['PostOffice'][0]['District'],
+                    country: data[0]['PostOffice'][0]['Country'],
+                    state: data[0]['PostOffice'][0]['State'],
+                })
+            } catch {
+                showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
             }
-            formik.setValues({
-                ...formik.values,
-                pincode: e.target.value,
-                city: data[0]['PostOffice'][0]['District'],
-                country: data[0]['PostOffice'][0]['Country'],
-                state: data[0]['PostOffice'][0]['State'],
-            })
         } else {
             formik.setValues({
                 ...formik.values,
