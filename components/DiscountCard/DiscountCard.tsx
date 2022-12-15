@@ -5,13 +5,12 @@ import styles from './DiscountCard.module.scss';
 
 interface Props {
     coupon: Coupon,
-    isSelected: boolean,
     key?: any
 }
 
-export default function DiscountCard({ coupon, isSelected }: Props) {
+export default function DiscountCard({ coupon }: Props) {
     return (
-        <Box p={4} className={`discount-card ${styles.card} ${isSelected ? styles.selectedCard : ''}`}>
+        <Box p={4} className={`discount-card`}>
             <Text as="h3" fontSize={'md'} fontWeight={`bold`} color={`green.400`} textTransform={`uppercase`} size={`md`}>{coupon.code}</Text>
             <Text as="span" fontSize="xs">{coupon.discountPercentage}% off upto ₹{coupon.maxDiscount}</Text>
         </Box>
