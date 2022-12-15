@@ -169,7 +169,7 @@ export default function Profile() {
                 const data = await res.json();
 
                 if (res.status !== 200) {
-                    showErrorToast(toast, data);
+                    showErrorToast(toast, data.api_error);
                     return;
                 }
 

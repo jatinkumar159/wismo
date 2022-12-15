@@ -141,7 +141,7 @@ export default function AddressList({ isInForm }: Props) {
                                             <Form>
                                                 <FormControl>
                                                     <RadioGroup>
-                                                        <VStack align='flex-start'>
+                                                        <VStack align='flex-start' mt={4}>
                                                             {(!turboAddressList?.length && unifillAddressList?.length) ? unifillAddressList.map(address => {
                                                                 return (
                                                                     <Box key={address.address_id} p={4} mr={4} ml={4} className={`${styles.card} ${(!isInForm || (!(address.address_id + ',U' === values.selectedAddress) && selected)) ? styles.selectedCard : ''}`}>
@@ -182,7 +182,7 @@ export default function AddressList({ isInForm }: Props) {
                                                                         </h2>
                                                                         {unifillAddressList.map(address => {
                                                                             return (
-                                                                                <AccordionPanel key={address.address_id} pb={4} mr={4} ml={4} className={`${styles.card} ${(!isInForm || (address.address_id + ',U' === values.selectedAddress)) ? styles.selectedCard : ''}`}>
+                                                                                <AccordionPanel key={address.address_id} mt={4} mr={4} ml={4} className={`${styles.card} ${(!isInForm || (address.address_id + ',U' === values.selectedAddress)) ? styles.selectedCard : ''}`}>
                                                                                     <Radio colorScheme='green' onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, handleChange)} name='selectedAddress' value={address.address_id + ',U'} className={`${styles.radio}`}>
                                                                                         <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id + ',U' === values.selectedAddress} />
                                                                                     </Radio>

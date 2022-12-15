@@ -40,7 +40,7 @@ export default function Confirmation() {
                 <Box className={`${styles.sectionContent} delivery-section`} mb={4}>
                     <p>Delivery Address</p>
                 </Box>
-                <Box mb={4}>
+                <Box className={styles.card} mb={4}>
                     <AddressCard address={selectedAddress} isInForm={false} />
                 </Box>
 
