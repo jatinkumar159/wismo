@@ -7,12 +7,21 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectAvailableCoupons, Coupon, setSelectedCoupon } from "../../redux/slices/confirmationSlice";
 import DiscountCard from "./../../components/DiscountCard/DiscountCard";
 import styles from './discounts.module.scss';
+import {useState} from 'react';
+
 
 export default function Discounts() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const coupons: Coupon[] = useAppSelector(selectAvailableCoupons);
-
+    const [isSelected, setIsSelected] = useState<Boolean>(false);
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>, handleChange: Function) => {
+        // e.preventDefault();
+        // e.stopPropagation();
+        handleChange(e);
+        setIsSelected(e.target.checked);
+        
+    }
     return (
         <>
             <Formik
@@ -39,10 +48,10 @@ export default function Discounts() {
                                             <RadioGroup w={`100%`}>
                                                 {
                                                     coupons.map(coupon => (
-                                                        <Box mb={4} key={coupon.code}>
-                                                            <Radio display={`inline-flex`} w={`100%`} key={coupon.code} colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='coupon' value={coupon.code}>
+                                                        <Box mb={4} key={coupon.code} className={`discount-card ${styles.card} ${values.coupon === coupon.code && isSelected ? styles.selectedCard : ''}`}>
+                                                            <Radio display={`inline-flex`} w={`100%`} key={coupon.code} colorScheme='green' onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) =>handleOnChange(e, handleChange)} name='coupon' value={coupon.code} className={`${styles.radio}`}>
                                                                 <Box w={`100%`} flexGrow={1}>
-                                                                    <DiscountCard coupon={coupon} isSelected={values.coupon === coupon.code}></DiscountCard>
+                                                                    <DiscountCard coupon={coupon}></DiscountCard>
                                                                 </Box>
                                                             </Radio>
                                                         </Box>

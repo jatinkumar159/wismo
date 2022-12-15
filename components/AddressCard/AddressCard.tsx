@@ -13,7 +13,7 @@ export default function AddressCard({ address, selected, isInForm }: Props) {
     if (!address) return <></>;
 
     return (
-        <Box p={4} className={`${styles.card} ${(!isInForm || selected) ? styles.selectedCard : ''}`} mb={2} mt={2}>
+        <Box p={4} mb={2} mt={2}>
             <Flex align={'flex-start'} gap={'0.5rem'}>
                 <Flex grow={1} flexDir={'column'}>
                     {!isInForm ? (
