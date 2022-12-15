@@ -1,5 +1,6 @@
-import { CheckCircleIcon } from '@chakra-ui/icons';
-import { Box, Flex, Radio, Text } from '@chakra-ui/react';
+import { CheckCircleIcon, EditIcon } from '@chakra-ui/icons';
+import { Box, Flex, IconButton, Radio, Text } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { Address } from '../../apis/get';
 import styles from './AddressCard.module.scss';
 
@@ -10,7 +11,17 @@ interface Props {
 }
 
 export default function AddressCard({ address, selected, isInForm }: Props) {
+    const router = useRouter();
     if (!address) return <></>;
+
+    const handleAddressClick = () => {
+        router.push({
+            pathname: '/edit-address',
+            query: {
+                address_id: address.address_id,
+            }
+        }, 'edit-address');
+    }
 
     return (
         <Box p={4} mb={2} mt={2}>
@@ -29,6 +40,13 @@ export default function AddressCard({ address, selected, isInForm }: Props) {
                     ) : <Text className={styles.cardName} flexGrow={1}>
                         <Text as="span" fontSize={'md'}>{address.name}</Text>
                         <Text as="span" className={styles.cardChip}>{address.address_type}</Text>
+                        <IconButton
+                            variant='ghost'
+                            colorScheme='teal'
+                            aria-label='Edit Address'
+                            onClick={handleAddressClick}
+                            icon={<EditIcon />}
+                        ></IconButton>
                     </Text>}
                     <Box mt={2}>
                         <Text>{`${address.address_line1 + ', ' + (address.address_line2 ? address.address_line2 + ', ' : '') + address.city + ', ' + (address.district ? address.district + ', ' : '') + address.state + ' - ' + address.pincode}`}</Text>
