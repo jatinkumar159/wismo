@@ -10,10 +10,14 @@ import { useAppDispatch } from '../redux/hooks';
 import styles from './../styles/app.module.scss';
 import Sidebar from '../components/Sidebar/Sidebar';
 import { setCartPayload } from '../redux/slices/settingsSlice';
+import NProgress from 'nprogress';
+import { useRouter } from 'next/router';
+import 'nprogress/nprogress.css';
 
 const queryClient = new QueryClient()
 
 const InitialiseMessaging = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -23,9 +27,23 @@ const InitialiseMessaging = () => {
       dispatch(setCartPayload(message.data.cartPayload));
     }
 
+    const handleRouteStart = () => {
+      debugger;
+      NProgress.start();
+    }
+    const handleRouteDone = () => NProgress.done();
     window.addEventListener("message", handler);
-    return () => window.removeEventListener('message', handler);
-  })
+    router.events.on('routeChangeStart', handleRouteStart);
+    router.events.on('routeChangeComplete', handleRouteDone);
+    router.events.on('routeChangeError', handleRouteDone);
+
+    return () => {
+      window.removeEventListener('message', handler);
+      router.events.off('routeChangeStart', handleRouteStart);
+      router.events.off('routeChangeComplete', handleRouteDone);
+      router.events.off('routeChangeError', handleRouteDone);
+    }
+  }, []);
   return null;
 }
 
