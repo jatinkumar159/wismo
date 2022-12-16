@@ -19,7 +19,7 @@ interface EditAddress {
     email?: string;
 }
 
-export async function editAddress(address: any) {
+export async function editAddress(address: any): Promise<Response> {
     const res = await fetch(`${baseUrl}/buyer/v1/address`, {
         method: 'PUT',
         headers: {

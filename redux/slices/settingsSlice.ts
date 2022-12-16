@@ -4,11 +4,13 @@ import { AppState } from "../store";
 export interface SettingsState {
     otpLength: number;
     cartPayload: any;
+    cart: any;
 }
 
 const initialState: SettingsState = {
     otpLength: 4,
     cartPayload: undefined,
+    cart: undefined,
 }
 
 export const settingsSlice = createSlice({
@@ -20,13 +22,17 @@ export const settingsSlice = createSlice({
         },
         setCartPayload: (state, action: PayloadAction<any>) => {
             state.cartPayload = action.payload;
+        },
+        setCart: (state, action: PayloadAction<any>) => {
+            state.cart = action.payload;
         }
     }
 });
 
-export const {setOtpLength, setCartPayload } = settingsSlice.actions;
+export const {setOtpLength, setCartPayload, setCart} = settingsSlice.actions;
 
 export const selectOtpLength = (state: AppState) => state.settings.otpLength;
 export const selectCartPayload = (state: AppState) => state.settings.cartPayload;
+export const selectCart = (state: AppState) => state.settings.cart;
 
 export default settingsSlice.reducer;

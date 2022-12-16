@@ -10,7 +10,7 @@ import {
     Flex,
 } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { resendOTP, sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
+import { createCart, resendOTP, sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
 import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile, selectName } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
 import Head from 'next/head'
@@ -18,7 +18,7 @@ import styles from './profile.module.scss'
 import { useRouter } from 'next/router'
 import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import { selectOtpLength } from '../../redux/slices/settingsSlice'
+import { selectCartPayload, selectOtpLength, setCart } from '../../redux/slices/settingsSlice'
 import { showErrorToast } from '../../utils/toasts'
 import { getBuyerProfile } from '../../apis/get'
 
@@ -26,8 +26,9 @@ export default function Profile() {
     const dispatch = useAppDispatch()
     const phone = useAppSelector(selectPhone);
     const name = useAppSelector(selectName);
-    const country = useAppSelector(selectCountry);
+    // const country = useAppSelector(selectCountry);
     // const isLoading = useAppSelector(selectIsLoading);
+    const cartPayload = useAppSelector(selectCartPayload);
     const isVerified = useAppSelector(selectIsVerified);
     const toast = useToast();
     const router = useRouter();
@@ -49,6 +50,15 @@ export default function Profile() {
             router.events.off('routeChangeComplete', pageTransitionStop);
         }
     }, [router]);
+
+    const handleCreateCart = async (phone: string) => {
+        const res = await createCart('SHOPIFY', '638d85e405faf1498a5adf2s', phone, cartPayload, undefined);
+        const data = await res.json();
+
+        if (data.hasOwnProperty('cart')) {
+            dispatch(setCart(data.cart));
+        }
+    }
 
     const handleResetProfile = () => {
         dispatch(unsetPhone());
@@ -85,6 +95,7 @@ export default function Profile() {
                         }
 
                         dispatch(setPhone(values.phone));
+                        handleCreateCart(values.phone);
                         if (data.guest_user) {
                             localStorage.setItem('turbo', data.token);
                             dispatch(verifyProfile());

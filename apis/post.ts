@@ -62,3 +62,20 @@ export async function addNewAddress(address: NewAddress): Promise<Response> {
     });
     return res;
 }
+
+export async function createCart(platform: string, merchantId: string, mobileNumber: string, platformCart?: any, address?: any): Promise<Response> {
+    const res = await fetch(`${baseUrl}/v1/cart`, {
+        method: 'POST',
+        body: JSON.stringify({
+            platform: platform,
+            merchant_id: merchantId,
+            mobile_number: mobileNumber,
+            platform_cart: platformCart,
+            address: address,
+        }),
+        headers: {
+            'Content-type': 'application/json',
+        }
+    });
+    return res;
+}
