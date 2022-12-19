@@ -18,6 +18,7 @@ import { selectCart, selectCartPayload, setCart } from "../../redux/slices/setti
 import { updateCart } from "../../apis/patch";
 import { createCart } from "../../apis/post";
 import { FaChevronDown, FaChevronRight, FaChevronUp } from 'react-icons/fa';
+
 const AddressListHead = () => {
     return <Head>
         <title>Addresses</title>
@@ -198,9 +199,9 @@ export default function AddressList() {
                                                 {
                                                     showAllAddresses && unifillAddressList.map(address => {
                                                         return (
-                                                            <Box mb={2} p={4} className={`${styles.card} ${(address.address_id === values.selectedAddress) ? styles.selectedCard : ''}`}>
+                                                            <Box key={address.address_id} mb={2} p={4} className={`${styles.card} ${(address.address_id === values.selectedAddress) ? styles.selectedCard : ''}`}>
                                                                 <Radio colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id} className={`${styles.radio}`}>
-                                                                    <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id === values.selectedAddress} />
+                                                                    <AddressCard isInForm={true} address={address} selected={address.address_id === values.selectedAddress} />
                                                                 </Radio>
                                                             </Box>
                                                         );
@@ -252,7 +253,7 @@ export default function AddressList() {
                             Add new Address
                         </Button>
                     </Link>
-                    <Text mt={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{textDecor: 'underline'}}>TURBO</Link></Text>
+                    <Text mt={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>TURBO</Link></Text>
                 </Box>
             </Flex>
         </>

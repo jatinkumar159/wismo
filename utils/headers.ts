@@ -5,9 +5,8 @@ export function getHeaders(): Headers {
 
     let platformInfo: any = {};
 
-    if(navigator.hasOwnProperty('userAgentData')) 
-    {
-        platformInfo.platform = navigator!.userAgentData!.platform, platformInfo.isMobile = navigator!.userAgentData!.mobile;
+    if(navigator.hasOwnProperty('userAgentData')) {
+        platformInfo.platform = navigator.userAgentData.platform, platformInfo.isMobile = navigator.userAgentData.mobile;
     }
     else {
         platformInfo.platform = getPlatformData();
