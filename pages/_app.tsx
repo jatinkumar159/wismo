@@ -13,8 +13,13 @@ import { setCartPayload } from '../redux/slices/settingsSlice';
 import NProgress from 'nprogress';
 import { useRouter } from 'next/router';
 import 'nprogress/nprogress.css';
+import PromoBar from '../components/PromoBar/PromoBar';
+import { Mulish } from '@next/font/google';
 
 const queryClient = new QueryClient()
+
+
+const mulish = Mulish({ weight: '400', style: ['normal'], subsets: ['latin']})
 
 const InitialiseMessaging = () => {
   const dispatch = useAppDispatch();
@@ -63,9 +68,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <ChakraProvider>
         <QueryClientProvider client={queryClient}>
           <InitialiseMessaging />
-          <Flex flexDir="row" h={`100vh`}>
+          <Flex flexDir="row" h={`100vh`} className={mulish.className}>
             <Flex className={styles.container} flexDir="column" grow={1}>
               <Navigation />
+              <PromoBar />
               {isPageTransitionActive ?
                 <Center h={`calc(100vh - 40px)`}><Spinner /></Center> :
                 <Component {...pageProps} className={styles.pageContainer} />

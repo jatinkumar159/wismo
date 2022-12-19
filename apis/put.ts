@@ -1,3 +1,4 @@
+import gateway from "./gateway";
 import { Address } from "./get";
 
 // const baseUrl = 'http://localhost:4000';
@@ -20,14 +21,6 @@ interface EditAddress {
 }
 
 export async function editAddress(address: any): Promise<Response> {
-    const res = await fetch(`${baseUrl}/buyer/v1/address`, {
-        method: 'PUT',
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('turbo')}`,
-        },
-        body: JSON.stringify(address),
-    });
-
+    const res = await gateway(`${baseUrl}/buyer/v1/address`, `PUT`, JSON.stringify(address));
     return res;
 }

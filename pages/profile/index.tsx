@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, KeyboardEventHandler, useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import {
     Box, Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, PinInput, PinInputField, Progress, useToast, VStack, useDisclosure,
@@ -17,7 +17,7 @@ import Head from 'next/head'
 import styles from './profile.module.scss'
 import { useRouter } from 'next/router'
 import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
+import { ArrowForwardIcon, ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { selectCartPayload, selectOtpLength, setCart } from '../../redux/slices/settingsSlice'
 import { showErrorToast } from '../../utils/toasts'
 import { getBuyerProfile } from '../../apis/get'
@@ -57,7 +57,7 @@ export default function Profile() {
             if (e.target.value.length === 10) {
                 setTimeout(() => {
                     submitForm();
-                }, 0)
+                }, 0);
             }
         }
 
@@ -67,7 +67,7 @@ export default function Profile() {
                     phone: PHONE ? PHONE as string : '',
                 }}
                 validationSchema={Yup.object({
-                    phone: Yup.string().length(10, 'Invalid Mobile Number').required('Required'),
+                    phone: Yup.string().length(10, 'Please enter a valid 10 digit mobile number.').required('Required'),
                 })}
                 validateOnBlur={false}
                 onSubmit={async (values) => {
@@ -94,41 +94,53 @@ export default function Profile() {
                 }}
             >
                 {({ values, errors, touched, isSubmitting, handleBlur, handleChange, submitForm }) => (
-                    <>
-                        <Form>
-                            <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
-                                <FormLabel htmlFor="Mobile" fontSize="sm" ps={4}>Mobile</FormLabel>
-                                <InputGroup>
-                                    {/* <InputLeftElement width="3em" cursor="pointer" onClick={onToggle}>
-                                        <Text as='span'>
-                                            {country.flag}
-                                        </Text>
-                                        {isOpen ? (
-                                            <ChevronUpIcon boxSize={6} color="gray.500" />
-                                        ) : (
-                                            <ChevronDownIcon boxSize={6} color="gray.500" />
-                                        )}
+                    <Flex flexDir={`column`} justifyContent={`space-between`} h={`100%`}>
+                        <Box w={`100%`}>
+                            <Form>
+                                <FormControl isInvalid={touched.phone && errors.phone?.length ? true : false} isDisabled={isSubmitting}>
+                                    {/* <FormLabel htmlFor="Mobile" fontSize="sm" ps={4}>Mobile</FormLabel> */}
+                                    <Text as="h2" mb={4} textAlign={`center`} fontSize={`20px`}>Please enter your mobile number</Text>
+                                    <InputGroup>
+                                        {/* <InputLeftElement width="3em" cursor="pointer" onClick={onToggle}>
+                                            <Text as='span'>
+                                                {country.flag}
+                                            </Text>
+                                            {isOpen ? (
+                                                <ChevronUpIcon boxSize={6} color="gray.500" />
+                                            ) : (
+                                                <ChevronDownIcon boxSize={6} color="gray.500" />
+                                            )}
 
-                                    </InputLeftElement> */}
-                                    <InputLeftAddon>
-                                        +91
-                                    </InputLeftAddon>
-                                    <Input
-                                        id='phone'
-                                        type='number'
-                                        placeholder='Phone Number'
-                                        errorBorderColor='red.300'
-                                        autoFocus
-                                        value={values.phone}
-                                        onBlur={handleBlur}
-                                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, handleChange, submitForm)}
-                                    />
-                                </InputGroup>
-                                <FormErrorMessage>{errors.phone}</FormErrorMessage>
-                            </FormControl>
-                        </Form>
-                        {/* {isOpen && <SearchCountry onClose={onClose} />} */}
-                    </>
+                                        </InputLeftElement> */}
+                                        <InputLeftAddon p={2} background={`none`} borderRight={0} className={styles.profileLeftAddress}>
+                                            +91
+                                        </InputLeftAddon>
+                                        <Input
+                                            id='phone'
+                                            type='number'
+                                            placeholder='Phone Number'
+                                            errorBorderColor='red.300'
+                                            autoFocus
+                                            value={values.phone}
+                                            onBlur={handleBlur}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, handleChange, submitForm)}
+                                            borderLeft={0}
+                                        />
+                                    </InputGroup>
+                                    <FormErrorMessage>{errors.phone}</FormErrorMessage>
+                                </FormControl>
+                                <Box mt={8}>
+                                    <Text fontSize={`sm`} textAlign={`center`}>By continuing, I agree to the <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{textDecor: 'underline'}}>Terms of Use </Link> & <Link color={`blue.300`} _hover={{textDecor: 'underline'}}>Privacy Policy</Link></Text>
+                                </Box>
+                            </Form>
+                            {/* {isOpen && <SearchCountry onClose={onClose} />} */}
+                        </Box>
+                        <Box>
+                        <Button type="submit" isDisabled={String(values.phone).length !== 10} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2}>
+                            <Text as="span" fontSize="sm" textTransform={`uppercase`}>Continue <ChevronRightIcon ms={2} fontSize={`lg`}/></Text></Button>
+                            <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{textDecor: 'underline'}}>TURBO</Link></Text>
+                        </Box>
+                    </Flex>
                 )}
             </Formik>
         );
@@ -263,7 +275,7 @@ export default function Profile() {
             <Center h={`calc(100vh - 40px)`} className={styles.container}>
                 {!phone && <EnterPhone />}
                 {phone && !isVerified && <EnterOTP />}
-                {phone && isVerified && <DisplayPhone />}
+                {phone && isVerified && <Center h={`calc(100vh - 40px)`}><Spinner /></Center>}
             </Center>
         </>
     )

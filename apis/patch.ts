@@ -2,15 +2,13 @@
 const baseUrl = 'https://turbo-dev.unicommerce.co.in/turbo'
 // const baseUrl = 'https://unifill.unicommerce.co.in'
 
+import gateway from './gateway';
+
 export async function updateCart(cartId: string, type: string, data: any): Promise<Response> {
-    const res = await fetch(`${baseUrl}/v1/cart/${cartId}`, {
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
+    const res = await gateway(`${baseUrl}/v1/cart/${cartId}`, `PATCH`, JSON.stringify({
             type,
-            data,
+            data
         })
-    });
+    )
     return res;
 }
