@@ -253,7 +253,7 @@ export default function AddressList() {
                             Add new Address
                         </Button>
                     </Link>
-                    <Text mt={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>TURBO</Link></Text>
+                    <Text mt={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`}>TURBO</Link></Text>
                 </Box>
             </Flex>
         </>

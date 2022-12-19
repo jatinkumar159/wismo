@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Address } from "../../apis/get";
 import { AppState } from "../store";
+
+import { Address } from "./../../utils/interfaces";
 
 export interface AddressState {
     selectedAddress: Address | null;

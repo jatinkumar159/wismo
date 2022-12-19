@@ -2,7 +2,7 @@ import { Box, Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, In
 import { useFormik } from "formik";
 import styles from './edit-address.module.scss';
 import * as Yup from 'yup';
-import { Address, getPostalAddress } from "../../apis/get";
+import { getPostalAddress } from "../../apis/get";
 import { ChangeEvent, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { addAddress, selectTurboAddressList, selectUnifillAddressList, setSelectedAddress } from "../../redux/slices/addressSlice";
 import { showErrorToast } from "../../utils/toasts";
 import { editAddress } from "../../apis/put";
+import { Address } from "../../utils/interfaces";
 
 export default function EditAddress() {
     const router = useRouter();

@@ -1,8 +1,8 @@
 import { CheckCircleIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, Flex, IconButton, Radio, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { Address } from '../../apis/get';
 import styles from './AddressCard.module.scss';
+import { Address } from "./../../utils/interfaces";
 
 interface Props {
     address: Address | undefined | null;

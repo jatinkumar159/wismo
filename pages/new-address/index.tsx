@@ -2,15 +2,16 @@ import { Box, Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, In
 import { useFormik } from "formik";
 import styles from './new-address.module.scss';
 import * as Yup from 'yup';
-import { Address, getPostalAddress } from "../../apis/get";
+import { getPostalAddress } from "../../apis/get";
 import { ChangeEvent, useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { addAddress, setSelectedAddress } from "../../redux/slices/addressSlice";
+import { setSelectedAddress } from "../../redux/slices/addressSlice";
 import { selectName, selectPhone } from "../../redux/slices/profileSlice";
 import { addNewAddress } from "../../apis/post";
 import { showErrorToast } from "../../utils/toasts";
+import { Address } from "./../../utils/interfaces";
 
 export default function NewAddress() {
     const router = useRouter();
