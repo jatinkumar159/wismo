@@ -36,20 +36,6 @@ export default function Profile() {
     // const { isOpen, onToggle, onClose } = useDisclosure();
 
     const [otpRequestId, setOtpRequestId] = useState<string>('');
-    const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
-
-    useEffect(() => {
-        const pageTransitionStart = () => setIsPageTransitionActive(true);
-        const pageTransitionStop = () => setIsPageTransitionActive(false);
-
-        router.events.on('routeChangeStart', pageTransitionStart)
-        router.events.on('routeChangeComplete', pageTransitionStop);
-
-        return () => {
-            router.events.off('routeChangeStart', pageTransitionStart);
-            router.events.off('routeChangeComplete', pageTransitionStop);
-        }
-    }, [router]);
 
     const handleCreateCart = async (phone: string) => {
         const res = await createCart('SHOPIFY', '638d85e405faf1498a5adf2s', phone, cartPayload, undefined);
@@ -252,11 +238,18 @@ export default function Profile() {
 
     function DisplayPhone() {
         return (
-            <VStack>
-                <span className={styles.preview}>{phone}</span>
-                {/* TODO: RESET STORE DATA WHEN CHANGING MOBILE NUMBER */}
-                <Button colorScheme='teal' variant='outline' onClick={handleResetProfile}>Edit</Button>
-            </VStack>
+            <>
+                <Center h={`calc(100vh - 40px)`}>
+                    <Flex flexDir="column" align={`center`}>
+                        <Box m={2}>
+                            <Text as="h3">Hi, {name ? name : phone}</Text>
+                        </Box>
+                        <Box m={2}>
+                            <Text as="span">Not you? <Link onClick={handleResetProfile}>Click here.</Link></Text>
+                        </Box>
+                    </Flex>
+                </Center>
+            </>
         )
     }
 
@@ -267,31 +260,11 @@ export default function Profile() {
                 <meta name="description" content="Turbo Merchant Experience" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {isPageTransitionActive ?
-                <Center h='100vh'>
-                    <Spinner />
-                </Center>
-                : (
-                    <Center h={`100vh`} className={styles.container}>
-                        {!phone && <EnterPhone />}
-                        {phone && !isVerified && <EnterOTP />}
-
-                        {phone && isVerified && <>
-                            <Center h={`calc(100vh - 40px)`}>
-                                <Flex flexDir="column" align={`center`}>
-                                    <Box m={2}>
-                                        <Text as="h3">Hi, {name ? name : phone}</Text>
-                                    </Box>
-                                    <Box m={2}>
-                                        <Text as="span">Not you? <Link onClick={handleResetProfile}>Click here.</Link></Text>
-                                    </Box>
-                                </Flex>
-                            </Center>
-                        </>
-                        }
-                        {/* {phone && isVerified && <DisplayPhone />} */}
-                    </Center>
-                )}
+            <Center h={`calc(100vh - 40px)`} className={styles.container}>
+                {!phone && <EnterPhone />}
+                {phone && !isVerified && <EnterOTP />}
+                {phone && isVerified && <DisplayPhone />}
+            </Center>
         </>
     )
 }

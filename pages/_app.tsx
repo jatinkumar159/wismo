@@ -1,11 +1,11 @@
 import { Provider } from 'react-redux';
-import { Flex, ChakraProvider } from '@chakra-ui/react'
+import { Flex, ChakraProvider, Center, Spinner } from '@chakra-ui/react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
 import store from '../redux/store'
 import Navigation from '../components/Navigation/Navigation';
 import '../styles/globals.css'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../redux/hooks';
 import styles from './../styles/app.module.scss';
 import Sidebar from '../components/Sidebar/Sidebar';
@@ -17,7 +17,6 @@ import 'nprogress/nprogress.css';
 const queryClient = new QueryClient()
 
 const InitialiseMessaging = () => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -27,27 +26,38 @@ const InitialiseMessaging = () => {
       dispatch(setCartPayload(message.data.cartPayload));
     }
 
-    const handleRouteStart = () => {
-      debugger;
-      NProgress.start();
-    }
-    const handleRouteDone = () => NProgress.done();
     window.addEventListener("message", handler);
+
+    return () => window.removeEventListener('message', handler);
+  });
+  return null;
+}
+
+export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleRouteStart = () => {
+      NProgress.start();
+      setIsPageTransitionActive(true);
+    }
+    const handleRouteDone = () => {
+      NProgress.done();
+      setIsPageTransitionActive(false);
+    };
+
     router.events.on('routeChangeStart', handleRouteStart);
     router.events.on('routeChangeComplete', handleRouteDone);
     router.events.on('routeChangeError', handleRouteDone);
 
     return () => {
-      window.removeEventListener('message', handler);
       router.events.off('routeChangeStart', handleRouteStart);
       router.events.off('routeChangeComplete', handleRouteDone);
       router.events.off('routeChangeError', handleRouteDone);
     }
-  }, []);
-  return null;
-}
+  })
 
-export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider>
@@ -56,7 +66,10 @@ export default function App({ Component, pageProps }: AppProps) {
           <Flex flexDir="row" h={`100vh`}>
             <Flex className={styles.container} flexDir="column" grow={1}>
               <Navigation />
-              <Component {...pageProps} className={styles.pageContainer} />
+              {isPageTransitionActive ?
+                <Center h={`calc(100vh - 40px)`}><Spinner /></Center> :
+                <Component {...pageProps} className={styles.pageContainer} />
+              }
             </Flex>
             <Flex className={styles.sidebar} bg={`gray.50`} p={4} pt={4}>
               <Sidebar />
