@@ -1,22 +1,16 @@
 import { Addresses } from "../utils/interfaces";
+import gateway from './gateway';
 
+// const baseUrl = 'http://localhost:4000';
 const baseUrl = 'https://turbo-dev.unicommerce.co.in/turbo'
 
 /********************************************** BUYER ***********************************************************/
 export async function getBuyerProfile(token: string): Promise<Addresses> {
-    const res = await fetch(`${baseUrl}/buyer/v1/profile`, {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        }
-    });
+    const res = await gateway(`${baseUrl}/buyer/v1/profile`, 'GET');
     return res.json();
 }
 
 export async function getPostalAddress(pincode: string): Promise<any> {
-    const res = await fetch (`${baseUrl}/v1/pincode/${pincode}`, {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('turbo')}`,
-        }
-    });
+    const res = await gateway(`${baseUrl}/v1/pincode/${pincode}`, 'GET');
     return res.json();
 }
