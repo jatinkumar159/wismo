@@ -209,13 +209,13 @@ export default function NewAddress() {
                             </Flex>
                         </FormControl>
                         <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
-                            <Checkbox _mediaReduceMotion={true} spacing="0.5rem"><Text fontSize="xs">Make this the default shipping address</Text></Checkbox>
+                            <Checkbox spacing="0.5rem"><Text fontSize="xs">Make this the default shipping address</Text></Checkbox>
                         </FormControl>
                         {/* <Button type='submit'>Submit</Button> */}
                     </form>
                 </Box>
                 <Box p={4}>
-                    <Button type="submit" isDisabled={!formik.isValid} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2} onClick={(e) => formik.handleSubmit}>
+                    <Button type="submit" isDisabled={!formik.isValid} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2} onClick={formik.handleSubmit}>
                         <Text as="span" fontSize="sm" textTransform={`uppercase`}>Proceed to Buy <ChevronRightIcon ms={2} fontSize={`lg`} /></Text>
                     </Button>
                     <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>TURBO</Link></Text>
