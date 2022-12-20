@@ -1,6 +1,6 @@
 import { getPlatformData } from "./platform";
 
-export function getHeaders(): Headers {
+export function getHeaders(method: string): Headers {
     const headers = new Headers();
 
     let platformInfo: any = {};
@@ -17,7 +17,7 @@ export function getHeaders(): Headers {
     headers.append('X-NMerchantId', `merchant-01`);
     headers.append('user-agent', `${navigator.userAgent}`);
     headers.append('X-NPlatformInfo', JSON.stringify(platformInfo));
-    headers.append('Content-type', 'application/json');
+    if(method === 'POST') headers.append('Content-type', 'application/json');
 
     return headers;
 }
