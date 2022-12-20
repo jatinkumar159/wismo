@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { Flex, ChakraProvider, Center, Spinner } from '@chakra-ui/react'
+import { Flex, ChakraProvider, Center, Spinner, extendTheme} from '@chakra-ui/react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
 import store from '../redux/store'
@@ -16,8 +16,45 @@ import 'nprogress/nprogress.css';
 import PromoBar from '../components/PromoBar/PromoBar';
 import { Mulish } from '@next/font/google';
 
-const queryClient = new QueryClient()
+const activeLabelStyles = {
+  transform: 'scale(0.85) translateY(-24px)',
+}
 
+export const theme = extendTheme({
+  components: {
+    Form: {
+      variants: {
+        floating: {
+          container: {
+            _focusWithin: {
+              label: {
+                ...activeLabelStyles,
+              },
+            },
+            'input:not(:placeholder-shown) + label, .chakra-select__wrapper + label':
+              {
+                ...activeLabelStyles,
+              },
+            label: {
+              top: 0,
+              left: 0,
+              zIndex: 2,
+              position: 'absolute',
+              backgroundColor: 'white',
+              pointerEvents: 'none',
+              mx: 3,
+              px: 1,
+              my: 2,
+              transformOrigin: 'left top'
+            },
+          },
+        },
+      },
+    },
+  },
+})
+
+const queryClient = new QueryClient()
 
 const mulish = Mulish({ weight: '400', style: ['normal'], subsets: ['latin']})
 
@@ -65,7 +102,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <InitialiseMessaging />
           <Flex flexDir="row" h={`100vh`} className={mulish.className}>

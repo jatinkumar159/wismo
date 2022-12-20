@@ -46,6 +46,10 @@ export default function Profile() {
         }
     }
 
+    const handleChangePhone = () => {
+        dispatch(unsetPhone());
+    }
+
     const handleResetProfile = () => {
         dispatch(unsetPhone());
         dispatch(unverifyProfile());
@@ -112,7 +116,7 @@ export default function Profile() {
                                             )}
 
                                         </InputLeftElement> */}
-                                        <InputLeftAddon p={2} background={`none`} borderRight={0} className={styles.profileLeftAddress}>
+                                        <InputLeftAddon p={2} background={`none`} className={styles.profileLeftAddress}>
                                             +91
                                         </InputLeftAddon>
                                         <Input
@@ -130,15 +134,15 @@ export default function Profile() {
                                     <FormErrorMessage>{errors.phone}</FormErrorMessage>
                                 </FormControl>
                                 <Box mt={8}>
-                                    <Text fontSize={`sm`} textAlign={`center`}>By continuing, I agree to the <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{textDecor: 'underline'}}>Terms of Use </Link> & <Link color={`blue.300`} _hover={{textDecor: 'underline'}}>Privacy Policy</Link></Text>
+                                    <Text fontSize={`sm`} textAlign={`center`}>By continuing, I agree to the <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>Terms of Use </Link> & <Link color={`blue.300`} _hover={{ textDecor: 'underline' }}>Privacy Policy</Link></Text>
                                 </Box>
                             </Form>
                             {/* {isOpen && <SearchCountry onClose={onClose} />} */}
                         </Box>
                         <Box>
-                        <Button type="submit" isDisabled={String(values.phone).length !== 10} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2}>
-                            <Text as="span" fontSize="sm" textTransform={`uppercase`}>Continue <ChevronRightIcon ms={2} fontSize={`lg`}/></Text></Button>
-                            <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{textDecor: 'underline'}}>TURBO</Link></Text>
+                            <Button type="submit" isDisabled={String(values.phone).length !== 10} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2}>
+                                <Text as="span" fontSize="sm" textTransform={`uppercase`}>Continue <ChevronRightIcon ms={2} fontSize={`lg`} /></Text></Button>
+                            <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>TURBO</Link></Text>
                         </Box>
                     </Flex>
                 )}
@@ -147,7 +151,7 @@ export default function Profile() {
     }
 
     function EnterOTP() {
-        const [timer, setTimer] = useState<number>(60);
+        const [timer, setTimer] = useState<number>(3);
         const [isOtpInvalid, setIsOtpInvalid] = useState<boolean | undefined>(undefined);
 
         useEffect(() => {
@@ -183,7 +187,7 @@ export default function Profile() {
                 }
 
                 setOtpRequestId(data.otp_request_id);
-                setTimer(60);
+                setTimer(30);
             } catch {
                 showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
             }
@@ -202,6 +206,7 @@ export default function Profile() {
 
                         if (res.status !== 200) {
                             showErrorToast(toast, data.api_error);
+                            setIsOtpInvalid(true);
                             return;
                         }
 
@@ -219,30 +224,36 @@ export default function Profile() {
                 }}
             >
                 {({ values, isSubmitting, handleBlur, handleChange, submitForm }) => (
-                    <Form>
-                        <FormControl isInvalid={isOtpInvalid}>
-                            <FormLabel color={`gray.500`}>An OTP has been sent to {phone}</FormLabel>
-                            <HStack justifyContent={`center`} mt={4} mb={4}>
-                                <PinInput otp isDisabled={isSubmitting} placeholder=''>
-                                    {inputs.map(name => {
-                                        return (
-                                            <PinInputField key={name} maxLength={1} name={name} autoFocus={name === 'digit1'} value={values[name]} onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, values, handleChange, submitForm)} />
-                                        );
-                                    })}
-                                </PinInput>
-                            </HStack>
-                            <FormErrorMessage>Invalid OTP</FormErrorMessage>
-                        </FormControl>
+                    <Flex flexDir={`column`} justifyContent={`space-between`} h={`100%`}>
+                        <Form>
+                        <Text as="h2" mb={4} textAlign={`center`} fontSize={`20px`}>Verify your mobile number</Text>
+                            <FormControl isInvalid={isOtpInvalid}>
+                                <Text color={`gray.500`} textAlign={`center`}>Enter the OTP we just sent on <br/></Text>
+                                <Flex align={`center`} justify={`center`} gap={`0.5rem`}>
+                                    {phone}<Text as="span" onClick={handleChangePhone}className={styles.changeNumber} verticalAlign={`middle`}>Change</Text>
+                                </Flex>
+                                <HStack justifyContent={`center`} mt={4} mb={4}>
+                                    <PinInput otp isDisabled={isSubmitting} placeholder=''>
+                                        {inputs.map(name => {
+                                            return (
+                                                <PinInputField key={name} maxLength={1} name={name} autoFocus={name === 'digit1'} value={values[name]} onBlur={handleBlur} onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, values, handleChange, submitForm)} />
+                                            );
+                                        })}
+                                    </PinInput>
+                                </HStack>
+                                <FormErrorMessage><Flex mb={4} justifyContent={`center`}>Invalid OTP. Please try again.</Flex></FormErrorMessage>
+                            </FormControl>
 
-                        <Center>
-                            <Button
-                                mt={6}
-                                hidden={timer > 0}
-                                onClick={handleResendOTP}
-                            >Resend OTP</Button>
-                        </Center>
-                        {timer > 0 && <Text as="span" color={`gray.500`}>You may resend an OTP in {timer} seconds</Text>}
-                    </Form>
+                            <Center>
+                                <Text
+                                    hidden={timer > 0}
+                                    onClick={handleResendOTP}
+                                    className={styles.resendLink}
+                                >Resend OTP</Text>
+                            </Center>
+                            {timer > 0 && <Text as="span" color={`gray.500`}>Didn’t receive the OTP? Resend in <Text as="span" fontWeight={`bold`} color={`#212121`}>{timer} seconds</Text></Text>}
+                        </Form>
+                    </Flex>
                 )}
             </Formik>
         )
