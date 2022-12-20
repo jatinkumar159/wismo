@@ -34,14 +34,14 @@ export default function NewAddress() {
             address_type: '',
         },
         validationSchema: Yup.object({
-            name: Yup.string().required('Required'),
-            address_line1: Yup.string().required('Required'),
-            city: Yup.string().required('Required'),
-            state: Yup.string().required('Required'),
-            country: Yup.string().required('Required'),
-            pincode: Yup.string().required('Required'),
-            address_type: Yup.string().required('Required'),
-            mobile: Yup.string().length(10, 'Invalid Mobile Number').required('Required'),
+            name: Yup.string().required('This is a mandatory field.'),
+            address_line1: Yup.string().required('This is a mandatory field.'),
+            city: Yup.string().required('This is a mandatory field.'),
+            state: Yup.string().required('This is a mandatory field.'),
+            country: Yup.string().required('This is a mandatory field.'),
+            pincode: Yup.string().required('This is a mandatory field.'),
+            address_type: Yup.string().required('This is a mandatory field.'),
+            mobile: Yup.string().length(10, 'Invalid Mobile Number').required('This is a mandatory field.'),
             email: Yup.string().email('Invalid Email Format'),
         }),
         onSubmit: async (values) => {
@@ -80,6 +80,7 @@ export default function NewAddress() {
                     country: data['country'],
                     state: data['state'],
                 })
+                formik.setTouched({...formik.touched,['state']: true, ['pincode']: true, ['city']: true });
             } catch {
                 showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
             }
@@ -104,51 +105,51 @@ export default function NewAddress() {
 
             <Box className={styles.container} mb={2}>
                 <form onSubmit={formik.handleSubmit}>
-                    <FormControl mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
-                        <FormLabel ps={4} htmlFor="mobile">Mobile</FormLabel>
+                    <FormControl className={styles.leftAddonGroup} variant={`floating`} mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
                         <InputGroup>
-                            <InputLeftAddon>+91</InputLeftAddon>
-                            <Input type="number" placeholder={`Mobile`} {...formik.getFieldProps('mobile')}></Input>
+                            <InputLeftAddon p={2} background={`none`}>+91</InputLeftAddon>
+                            <Input borderLeft={0} type="number" placeholder={`Mobile`} {...formik.getFieldProps('mobile')}></Input>
+                            <FormLabel ps={4} htmlFor="mobile" className={styles.leftAddonLabel}>Mobile</FormLabel>
                         </InputGroup>
-                        <FormErrorMessage>{formik.errors.mobile}</FormErrorMessage>
+                        <FormErrorMessage fontSize={`xs`}>{formik.errors.mobile}</FormErrorMessage>
                     </FormControl>
-                    <FormControl mb={4} isInvalid={formik.touched.name && formik.errors.name ? true : false}>
+                    <FormControl variant="floating" mb={4} isInvalid={formik.touched.name && formik.errors.name ? true : false}>
                         <FormLabel ps={4} htmlFor="name">Name</FormLabel>
                         <Input type="text" placeholder="Name" aria-placeholder="Name" {...formik.getFieldProps('name')}></Input>
-                        <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
+                        <FormErrorMessage fontSize={`xs`}>{formik.errors.name}</FormErrorMessage>
                     </FormControl>
-                    <FormControl mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
+                    <FormControl variant="floating" mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
                         <FormLabel ps={4} htmlFor="email">Email</FormLabel>
-                        <Input type="text" placeholder="email" aria-placeholder="Email" {...formik.getFieldProps('email')}></Input>
-                        <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                        <Input type="text" placeholder="Email" aria-placeholder="Email" {...formik.getFieldProps('email')}></Input>
+                        <FormErrorMessage fontSize={`xs`}>{formik.errors.email}</FormErrorMessage>
                     </FormControl>
-                    <FormControl mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
+                    <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
                         <FormLabel ps={4} htmlFor="name">Pincode</FormLabel>
-                        <Input type="text" placeholder="pincode" aria-placeholder="Pincode" {...formik.getFieldProps('pincode')} onChange={handlePinCodeChange}></Input>
-                        <FormErrorMessage>{formik.errors.pincode}</FormErrorMessage>
+                        <Input type="text" placeholder="Pincode" aria-placeholder="Pincode" {...formik.getFieldProps('pincode')} onChange={handlePinCodeChange}></Input>
+                        <FormErrorMessage fontSize={`xs`}>{formik.errors.pincode}</FormErrorMessage>
                     </FormControl>
                     <Flex flexDir="row" justifyContent={`space-between`} gap={4} mb={4}>
-                        <FormControl isInvalid={formik.touched.city && formik.errors.city ? true : false}>
+                        <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" isInvalid={formik.touched.city && formik.errors.city ? true : false}>
                             <FormLabel ps={4} htmlFor="city">City</FormLabel>
                             <Input type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
-                            <FormErrorMessage>{formik.errors.city}</FormErrorMessage>
+                            <FormErrorMessage fontSize={`xs`}>{formik.errors.city}</FormErrorMessage>
                         </FormControl>
-                        <FormControl isInvalid={formik.touched.state && formik.errors.state ? true : false}>
+                        <FormControl className={`${formik.touched.state ? styles.touched : null} ${styles.disabledFormField}`} variant="floating" isInvalid={formik.touched.state && formik.errors.state ? true : false}>
                             <FormLabel ps={4} htmlFor="state">State</FormLabel>
                             <Input disabled type="text" placeholder="State" aria-placeholder="State" {...formik.getFieldProps('state')}></Input>
-                            <FormErrorMessage>{formik.errors.state}</FormErrorMessage>
+                            <FormErrorMessage fontSize={`xs`}>{formik.errors.state}</FormErrorMessage>
                         </FormControl>
                     </Flex>
-                    <FormControl mb={4} isInvalid={formik.touched.address_line1 && formik.errors.address_line1 ? true : false}>
+                    <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_line1 && formik.errors.address_line1 ? true : false}>
                         <FormLabel ps={4} htmlFor="address_line1">Address Line 1</FormLabel>
-                        <Input type="text" placeholder="House, road" aria-placeholder="house, road" {...formik.getFieldProps('address_line1')}></Input>
-                        <FormErrorMessage>{formik.errors.address_line1}</FormErrorMessage>
+                        <Input type="text" placeholder="House no." aria-placeholder="house, road" {...formik.getFieldProps('address_line1')}></Input>
+                        <FormErrorMessage fontSize={`xs`}>{formik.errors.address_line1}</FormErrorMessage>
                     </FormControl>
-                    <FormControl mb={4} isInvalid={formik.touched.address_line2 && formik.errors.address_line2 ? true : false}>
+                    <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_line2 && formik.errors.address_line2 ? true : false}>
                         <FormLabel ps={4} htmlFor="address_line2">Address Line 2</FormLabel>
-                        <Input type="text" placeholder="Locality, Landmark" aria-placeholder="Locality, Landmark" {...formik.getFieldProps('address_line2')}></Input>
+                        <Input type="text" placeholder="Locality" aria-placeholder="Locality, Landmark" {...formik.getFieldProps('address_line2')}></Input>
                     </FormControl>
-                    <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
+                    <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
                         <FormLabel ps={4} htmlFor="address_type">Address Type</FormLabel>
                         <RadioGroup>
                             <Radio colorScheme='green' {...formik.getFieldProps('address_type')} value='HOME' mr={4}>
