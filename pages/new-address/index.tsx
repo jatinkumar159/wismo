@@ -62,38 +62,26 @@ export default function NewAddress() {
         }
     });
 
-    const handlePinCodeChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        formik.handleChange(e);
-        if (e.target.value?.length === 6) {
-            try {
-                const data: any = await getPostalAddress(e.target.value);
-                if (data.hasOwnProperty('api_error')) {
-                    formik.setErrors({
-                        pincode: 'Invalid Pincode'
-                    });
-                    return;
-                }
-                formik.setValues({
-                    ...formik.values,
-                    pincode: e.target.value,
-                    city: data['city'],
-                    country: data['country'],
-                    state: data['state'],
-                })
-                formik.setTouched({...formik.touched,['state']: true, ['pincode']: true, ['city']: true });
-            } catch {
-                showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
-            }
-        } else {
-            formik.setValues({
-                ...formik.values,
-                pincode: e.target.value,
-                city: '',
-                country: '',
-                state: '',
-            })
+    const fillPostalData = async (pincode: string) => {
+        const data: any = await getPostalAddress(pincode);
+        if (data.hasOwnProperty('api_error')) {
+            formik.setErrors({
+                pincode: 'Invalid Pincode'
+            });
+            return;
         }
+        await formik.setTouched({ ...formik.touched, city: true, state: true, country: true }, false);
+        await formik.setValues({ ...formik.values, city: data['city'], state: data['state'], country: data['country'] });
+
     }
+
+    useEffect(() => {
+        if (formik.values.pincode?.length === 6) {
+            fillPostalData(formik.values.pincode);
+        } else {
+            formik.setValues({ ...formik.values, city: '', state: '', country: '' });
+        }
+    }, [formik.values.pincode])
 
     return (
         <>
@@ -125,7 +113,7 @@ export default function NewAddress() {
                     </FormControl>
                     <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
                         <FormLabel ps={4} htmlFor="name">Pincode</FormLabel>
-                        <Input type="text" placeholder="Pincode" aria-placeholder="Pincode" {...formik.getFieldProps('pincode')} onChange={handlePinCodeChange}></Input>
+                        <Input type="text" placeholder="Pincode" aria-placeholder="Pincode" {...formik.getFieldProps('pincode')}></Input>
                         <FormErrorMessage fontSize={`xs`}>{formik.errors.pincode}</FormErrorMessage>
                     </FormControl>
                     <Flex flexDir="row" justifyContent={`space-between`} gap={4} mb={4}>
