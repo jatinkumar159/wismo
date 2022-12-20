@@ -157,7 +157,7 @@ export default function NewAddress() {
 
                 <Box className={styles.formContainer} p={4}>
                     <form onSubmit={formik.handleSubmit}>
-                        <FormControl className={styles.leftAddonGroup} variant={`floating`} mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
+                        <FormControl className={`${formik.touched.state ? styles.touched : null} styles.leftAddonGroup `} variant={`floating`} mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
                             <InputGroup>
                                 <InputLeftAddon p={2} background={`none`}>+91</InputLeftAddon>
                                 <Input borderLeft={0} type="number" placeholder={`Mobile`} {...formik.getFieldProps('mobile')}></Input>
@@ -165,12 +165,12 @@ export default function NewAddress() {
                             </InputGroup>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.mobile}</FormErrorMessage>
                         </FormControl>
-                        <FormControl variant="floating" mb={4} isInvalid={formik.touched.name && formik.errors.name ? true : false}>
+                        <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" mb={4} isInvalid={formik.touched.name && formik.errors.name ? true : false}>
                             <FormLabel ps={4} htmlFor="name">Name</FormLabel>
                             <Input type="text" placeholder="Name" aria-placeholder="Name" {...formik.getFieldProps('name')}></Input>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.name}</FormErrorMessage>
                         </FormControl>
-                        <FormControl variant="floating" mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
+                        <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
                             <FormLabel ps={4} htmlFor="email">Email</FormLabel>
                             <Input type="text" placeholder="Email" aria-placeholder="Email" {...formik.getFieldProps('email')}></Input>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.email}</FormErrorMessage>
