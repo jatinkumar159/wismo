@@ -4,7 +4,6 @@ import styles from './edit-address.module.scss';
 import * as Yup from 'yup';
 import { getPostalAddress } from "../../apis/get";
 import { ChangeEvent, useEffect, useState } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { addAddress, selectTurboAddressList, selectUnifillAddressList, setSelectedAddress } from "../../redux/slices/addressSlice";
@@ -99,12 +98,6 @@ export default function EditAddress() {
         <>
             {
                 address ? (<>
-                    <Head>
-                        <title>Edit Address</title>
-                        <meta name="description" content="Turbo Merchant Experience" />
-                        <link rel="icon" href="/favicon.ico" />
-                    </Head>
-
                     <Box className={styles.container} mb={2}>
                         <form onSubmit={formik.handleSubmit}>
                             <FormControl mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>

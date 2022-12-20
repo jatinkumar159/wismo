@@ -1,10 +1,9 @@
-import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, Radio, RadioGroup, Spinner, Text, useRadio, useRadioGroup, useToast } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, Link, Radio, RadioGroup, Spinner, Text, useRadio, useRadioGroup, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import styles from './new-address.module.scss';
 import * as Yup from 'yup';
 import { getPostalAddress } from "../../apis/get";
-import { ChangeEvent, useEffect, useState } from "react";
-import Head from "next/head";
+import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setSelectedAddress } from "../../redux/slices/addressSlice";
@@ -13,6 +12,7 @@ import { addNewAddress } from "../../apis/post";
 import { showErrorToast } from "../../utils/toasts";
 import { Address } from "./../../utils/interfaces";
 import { FaChevronRight } from "react-icons/fa";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 
 function RadioCard(props: any) {
     const { getInputProps, getCheckboxProps } = useRadio(props)
@@ -80,7 +80,7 @@ export default function NewAddress() {
             address_line1: '',
             address_line2: '',
             country: '',
-            address_type: '',
+            address_type: 'home',
         },
         validationSchema: Yup.object({
             name: Yup.string().required('This is a mandatory field.'),
@@ -120,7 +120,7 @@ export default function NewAddress() {
             });
             return;
         }
-        await formik.setTouched({ ...formik.touched, city: true, state: true, country: true }, false);
+        // await formik.setTouched({ ...formik.touched, city: true, state: true, country: true }, false);
         await formik.setValues({ ...formik.values, city: data['city'], state: data['state'], country: data['country'] });
 
     }
@@ -135,13 +135,7 @@ export default function NewAddress() {
 
     return (
         <>
-            <Head>
-                <title>Add New Address</title>
-                <meta name="description" content="Turbo Merchant Experience" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <Flex className={styles.container} flexDir={`column`}>
+            <Flex className={styles.container} flexDir={`column`} h={`100%`}>
                 <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                     <Box className={`${styles.sectionContent}`} flexGrow={1}>
                         <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`normal`}>{phone}</Text></Text>
@@ -155,51 +149,51 @@ export default function NewAddress() {
                     <Text fontWeight={`bold`}>Deliver to</Text>
                 </Flex>
 
-                <Box className={styles.formContainer} p={4}>
+                <Box className={styles.formContainer} p={4} flexGrow={1}>
                     <form onSubmit={formik.handleSubmit}>
-                        <FormControl className={`${formik.touched.state ? styles.touched : null} styles.leftAddonGroup `} variant={`floating`} mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
+                        <FormControl className={`${formik.touched.state ? styles.touched : null} ${styles.leftAddonGroup}`} variant={`floating`} mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
                             <InputGroup>
-                                <InputLeftAddon p={2} background={`none`}>+91</InputLeftAddon>
+                                <InputLeftAddon p={2} fontSize="sm" background={`none`}>+91</InputLeftAddon>
                                 <Input borderLeft={0} type="number" placeholder={`Mobile`} {...formik.getFieldProps('mobile')}></Input>
                                 <FormLabel ps={4} htmlFor="mobile" className={styles.leftAddonLabel}>Mobile</FormLabel>
                             </InputGroup>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.mobile}</FormErrorMessage>
                         </FormControl>
-                        <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" mb={4} isInvalid={formik.touched.name && formik.errors.name ? true : false}>
-                            <FormLabel ps={4} htmlFor="name">Name</FormLabel>
+                        <FormControl variant="floating" mb={4} isInvalid={formik.touched.name && formik.errors.name ? true : false}>
                             <Input type="text" placeholder="Name" aria-placeholder="Name" {...formik.getFieldProps('name')}></Input>
+                            <FormLabel ps={4} htmlFor="name">Name</FormLabel>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.name}</FormErrorMessage>
                         </FormControl>
-                        <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
-                            <FormLabel ps={4} htmlFor="email">Email</FormLabel>
+                        <FormControl variant="floating" mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
                             <Input type="text" placeholder="Email" aria-placeholder="Email" {...formik.getFieldProps('email')}></Input>
+                            <FormLabel ps={4} htmlFor="email">Email</FormLabel>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.email}</FormErrorMessage>
                         </FormControl>
-                        <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
-                            <FormLabel ps={4} htmlFor="name">Pincode</FormLabel>
+                        <FormControl  variant="floating" mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
                             <Input type="text" placeholder="Pincode" aria-placeholder="Pincode" {...formik.getFieldProps('pincode')}></Input>
+                            <FormLabel ps={4} htmlFor="name">Pincode</FormLabel>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.pincode}</FormErrorMessage>
                         </FormControl>
                         <Flex flexDir="row" justifyContent={`space-between`} gap={4} mb={4}>
-                            <FormControl className={`${formik.touched.state ? styles.touched : null}`} variant="floating" isInvalid={formik.touched.city && formik.errors.city ? true : false}>
-                                <FormLabel ps={4} htmlFor="city">City</FormLabel>
+                            <FormControl  variant="floating" isInvalid={formik.touched.city && formik.errors.city ? true : false}>
                                 <Input type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
+                                <FormLabel ps={4} htmlFor="city">City</FormLabel>
                                 <FormErrorMessage fontSize={`xs`}>{formik.errors.city}</FormErrorMessage>
                             </FormControl>
-                            <FormControl className={`${formik.touched.state ? styles.touched : null} ${styles.disabledFormField}`} variant="floating" isInvalid={formik.touched.state && formik.errors.state ? true : false}>
-                                <FormLabel ps={4} htmlFor="state">State</FormLabel>
+                            <FormControl className={`${styles.disabledFormField}`} variant="floating" isInvalid={formik.touched.state && formik.errors.state ? true : false}>
                                 <Input disabled type="text" placeholder="State" aria-placeholder="State" {...formik.getFieldProps('state')}></Input>
+                                <FormLabel ps={4} htmlFor="state">State</FormLabel>
                                 <FormErrorMessage fontSize={`xs`}>{formik.errors.state}</FormErrorMessage>
                             </FormControl>
                         </Flex>
                         <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_line1 && formik.errors.address_line1 ? true : false}>
-                            <FormLabel ps={4} htmlFor="address_line1">Address Line 1</FormLabel>
                             <Input type="text" placeholder="House no." aria-placeholder="house, road" {...formik.getFieldProps('address_line1')}></Input>
+                            <FormLabel ps={4} htmlFor="address_line1">Address Line 1</FormLabel>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.address_line1}</FormErrorMessage>
                         </FormControl>
                         <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_line2 && formik.errors.address_line2 ? true : false}>
-                            <FormLabel ps={4} htmlFor="address_line2">Address Line 2</FormLabel>
                             <Input type="text" placeholder="Locality" aria-placeholder="Locality, Landmark" {...formik.getFieldProps('address_line2')}></Input>
+                            <FormLabel ps={4} htmlFor="address_line2">Address Line 2</FormLabel>
                         </FormControl>
                         <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
                             <FormLabel htmlFor="address_type">Save address as </FormLabel>
@@ -215,10 +209,16 @@ export default function NewAddress() {
                             </Flex>
                         </FormControl>
                         <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
-                            <Checkbox spacing="0.5rem"><Text fontSize="xs">Make this the default shipping address</Text></Checkbox>
+                            <Checkbox _mediaReduceMotion={true} spacing="0.5rem"><Text fontSize="xs">Make this the default shipping address</Text></Checkbox>
                         </FormControl>
-                        <Button type='submit'>Submit</Button>
+                        {/* <Button type='submit'>Submit</Button> */}
                     </form>
+                </Box>
+                <Box p={4}>
+                    <Button type="submit" isDisabled={!formik.isValid} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2} onClick={(e) => formik.handleSubmit}>
+                        <Text as="span" fontSize="sm" textTransform={`uppercase`}>Proceed to Buy <ChevronRightIcon ms={2} fontSize={`lg`} /></Text>
+                    </Button>
+                    <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>TURBO</Link></Text>
                 </Box>
             </Flex>
 

@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectName, selectPhone, setName, setPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getBuyerProfile } from "../../apis/get";
-import Head from "next/head";
 import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import { selectSelectedAddress, selectTurboAddressList, selectUnifillAddressList, setSelectedAddress, setTurboAddressList, setUnifillAddressList } from "../../redux/slices/addressSlice";
@@ -18,14 +17,6 @@ import { selectCart, selectCartPayload, setCart } from "../../redux/slices/setti
 import { updateCart } from "../../apis/patch";
 import { createCart } from "../../apis/post";
 import { FaChevronDown, FaChevronRight, FaChevronUp } from 'react-icons/fa';
-
-const AddressListHead = () => {
-    return <Head>
-        <title>Addresses</title>
-        <meta name="description" content="Turbo Merchant Experience" />
-        <link rel="icon" href="/favicon.ico" />
-    </Head>
-}
 
 export default function AddressList() {
     // TODO: CHECK IF USER IS A GUEST AND IF ANY ADDRESSES HAVE BEEN STORED
@@ -113,17 +104,14 @@ export default function AddressList() {
     // }
 
     if (!phone) return <>
-        <AddressListHead />
         <span>Please enter a valid phone number to continue!</span>
     </>
 
     if (isLoading) return <>
-        <AddressListHead />
         <Progress size='xs' colorScheme='teal' isIndeterminate />
     </>
 
     if (isError) return <>
-        <AddressListHead />
         <span>An error occurred, please try again later!</span>
     </>
 
@@ -131,7 +119,6 @@ export default function AddressList() {
 
     return (
         <>
-            <AddressListHead />
             <Flex className={styles.container} flexDir={`column`} h={`100%`}>
                 <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                     <Box className={`${styles.sectionContent}`} flexGrow={1}>

@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import 'nprogress/nprogress.css';
 import PromoBar from '../components/PromoBar/PromoBar';
 import { Mulish } from '@next/font/google';
+import Head from 'next/head';
 
 const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-24px)',
@@ -42,6 +43,7 @@ export const theme = extendTheme({
               position: 'absolute',
               backgroundColor: 'white',
               pointerEvents: 'none',
+              lineHeight: 1.7,
               mx: 3,
               px: 1,
               my: 2,
@@ -101,25 +103,30 @@ export default function App({ Component, pageProps }: AppProps) {
   })
 
   return (
-    <Provider store={store}>
-      <ChakraProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <InitialiseMessaging />
-          <Flex flexDir="row" h={`100vh`} className={mulish.className}>
-            <Flex className={styles.container} flexDir="column" grow={1}>
-              <Navigation />
-              <PromoBar />
-              {isPageTransitionActive ?
-                <Center h={`calc(100vh - 40px)`}><Spinner /></Center> :
-                <Component {...pageProps} className={styles.pageContainer} />
-              }
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      </Head>
+      <Provider store={store}>
+        <ChakraProvider theme={theme}>
+          <QueryClientProvider client={queryClient}>
+            <InitialiseMessaging />
+            <Flex flexDir="row" h={`100vh`} className={mulish.className}>
+              <Flex className={styles.container} flexDir="column" grow={1}>
+                <Navigation />
+                <PromoBar />
+                {isPageTransitionActive ?
+                  <Center h={`calc(100vh - 40px)`}><Spinner /></Center> :
+                  <Component {...pageProps} className={styles.pageContainer} />
+                }
+              </Flex>
+              <Flex className={styles.sidebar} bg={`gray.50`} p={4} pt={4}>
+                <Sidebar />
+              </Flex>
             </Flex>
-            <Flex className={styles.sidebar} bg={`gray.50`} p={4} pt={4}>
-              <Sidebar />
-            </Flex>
-          </Flex>
-        </QueryClientProvider>
-      </ChakraProvider>
-    </Provider>
+          </QueryClientProvider>
+        </ChakraProvider>
+      </Provider>
+    </>
   )
 }

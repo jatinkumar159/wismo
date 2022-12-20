@@ -13,7 +13,6 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { createCart, resendOTP, sendOTP, verifyBuyer, verifyOTP } from '../../apis/post'
 import { profileAsyncTaskEnd, profileAsyncTaskStart, selectIsLoading, selectIsVerified, selectPhone, selectCountry, setPhone, unsetPhone, unverifyProfile, verifyProfile, selectName } from '../../redux/slices/profileSlice'
 import * as Yup from 'yup'
-import Head from 'next/head'
 import styles from './profile.module.scss'
 import { useRouter } from 'next/router'
 import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
@@ -278,11 +277,6 @@ export default function Profile() {
 
     return (
         <>
-            <Head>
-                <title>Profile</title>
-                <meta name="description" content="Turbo Merchant Experience" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
             <Center h={`calc(100vh - 40px)`} className={styles.container}>
                 {!phone && <EnterPhone />}
                 {phone && !isVerified && <EnterOTP />}
