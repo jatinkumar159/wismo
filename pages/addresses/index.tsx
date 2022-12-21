@@ -34,18 +34,6 @@ export default function AddressList() {
     });
 
     const [showAllAddresses, setShowAllAddresses] = useState(false);
-    // UNCOMMENT TO MAKE LOCAL DATA THE SOURCE OF TRUTH, ADD STALE TIME INIFINITY TO QUERY, AND ADD DISPATCH EVENTS ON NEW ADDRESS PAGE
-    // useEffect(() => {
-    //     if (data?.turbo_address_list?.length) {
-    //         let userName = data.turbo_address_list.find(address => address.selected === true)?.name
-    //         if (!userName) userName = data.turbo_address_list[0].name;
-    //         dispatch(setName(userName));
-    //     }
-    //     if (data && !turboAddressList?.length && !unifillAddressList?.length) {
-    //         dispatch(setTurboAddressList(data.turbo_address_list));
-    //         dispatch(setUnifillAddressList(data.unifill_address_list));
-    //     }
-    // }, [dispatch, data, turboAddressList, unifillAddressList]);
 
     const handleUpdateCart = async (id: string, type: string, data: any) => {
         try {
@@ -89,19 +77,9 @@ export default function AddressList() {
         }
     }, [data])
 
-    const handleChangeMobile = () => {
-        dispatch(unsetPhone());
-        dispatch(unverifyProfile());
-        router.push('/profile');
-    }
-
     const handleAddressToggle = () => {
         setShowAllAddresses(!showAllAddresses);
     }
-
-    // const handleOnChange = (e: ChangeEvent<HTMLInputElement>, handleChange: Function) => {
-    //     handleChange(e);
-    // }
 
     if (!phone) return <>
         <span>Please enter a valid phone number to continue!</span>
@@ -123,8 +101,6 @@ export default function AddressList() {
                 <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                     <Box className={`${styles.sectionContent}`} flexGrow={1}>
                         <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`normal`}>{phone}</Text></Text>
-                        {/* <p> <span className={styles.mobileNumber}>{name ? name + ' - ' : ''}</span>
-                            <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile} /></p> */}
                     </Box>
                     <Box>
                         <Text><FaChevronRight /></Text>
@@ -195,40 +171,12 @@ export default function AddressList() {
                                                     })
                                                 }
 
-                                                <Flex flexDir={`row`} justifyContent={`center`} alignItems={`center`} gap={`0.25rem`} className={styles.addressToggle} p={2} fontSize={`xs`} textAlign={`center`} w={`100%`} onClick={handleAddressToggle}>Show {showAllAddresses ? `less ` : `all`} {showAllAddresses ? <FaChevronUp /> : <FaChevronDown />}</Flex>
-
-                                                {/* <Accordion allowToggle w={`100%`} reduceMotion={true} p={0}>
-                                                    <AccordionItem border='none'>
-                                                        <h2>
-                                                            <AccordionButton>
-                                                                <Flex w={`100%`} textAlign='left'>
-                                                                    <Text fontSize={`xs`} textAlign={`center`} w={`100%`}>Show all <ChevronDownIcon /></Text>
-                                                                </Flex>
-                                                            </AccordionButton>
-                                                        </h2>
-                                                        {unifillAddressList.map(address => {
-                                                            return (
-                                                                <AccordionPanel key={address.address_id} className={`${(address.address_id === values.selectedAddress) ? styles.selectedCard : ''}`} p={0}>
-                                                                    <Box mb={2} p={4} className={`${styles.card} ${(address.address_id === values.selectedAddress) ? styles.selectedCard : ''}`}>
-                                                                        <Radio colorScheme='green' onBlur={handleBlur} onChange={handleChange} name='selectedAddress' value={address.address_id} className={`${styles.radio}`}>
-                                                                            <AddressCard key={address.address_id} isInForm={true} address={address} selected={address.address_id === values.selectedAddress} />
-                                                                        </Radio>
-                                                                    </Box>
-                                                                </AccordionPanel>
-                                                            );
-                                                        })}
-                                                    </AccordionItem>
-                                                </Accordion> */}
+                                                <Flex flexDir={`row`} justifyContent={`center`} alignItems={`center`} gap={`0.25rem`} className={styles.addressToggle} p={2} fontSize={`xs`} textAlign={`center`} w={`100%`} onClick={handleAddressToggle}>
+                                                    Show {showAllAddresses ? `less ` : `all`} {showAllAddresses ? <FaChevronUp /> : <FaChevronDown />}
+                                                </Flex>
                                             </>) : null}
                                         </RadioGroup>
-
                                     </FormControl>
-
-                                    {/* <VStack p={4} align={`flex-start`}>
-                                        <Text className={styles.newAddress} mb={2}>
-                                            <Link href="/new-address"> <SmallAddIcon />Add new delivery address</Link>
-                                        </Text>
-                                    </VStack> */}
                                 </Form>
                             </Box>
                         )}
