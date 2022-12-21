@@ -169,13 +169,13 @@ export default function NewAddress() {
                             <FormLabel ps={4} htmlFor="email">Email</FormLabel>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.email}</FormErrorMessage>
                         </FormControl>
-                        <FormControl  variant="floating" mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
+                        <FormControl variant="floating" mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
                             <Input type="text" placeholder="Pincode" aria-placeholder="Pincode" {...formik.getFieldProps('pincode')}></Input>
                             <FormLabel ps={4} htmlFor="name">Pincode</FormLabel>
                             <FormErrorMessage fontSize={`xs`}>{formik.errors.pincode}</FormErrorMessage>
                         </FormControl>
                         <Flex flexDir="row" justifyContent={`space-between`} gap={4} mb={4}>
-                            <FormControl  variant="floating" isInvalid={formik.touched.city && formik.errors.city ? true : false}>
+                            <FormControl variant="floating" isInvalid={formik.touched.city && formik.errors.city ? true : false}>
                                 <Input type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
                                 <FormLabel ps={4} htmlFor="city">City</FormLabel>
                                 <FormErrorMessage fontSize={`xs`}>{formik.errors.city}</FormErrorMessage>
@@ -215,7 +215,7 @@ export default function NewAddress() {
                     </form>
                 </Box>
                 <Box p={4}>
-                    <Button type="submit" isDisabled={!formik.isValid} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2} onClick={formik.handleSubmit}>
+                    <Button type="submit" isDisabled={!formik.isValid} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2}>
                         <Text as="span" fontSize="sm" textTransform={`uppercase`}>Proceed to Buy <ChevronRightIcon ms={2} fontSize={`lg`} /></Text>
                     </Button>
                     <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>TURBO</Link></Text>

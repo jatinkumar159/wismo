@@ -3,6 +3,7 @@ import profileReducer from "./slices/profileSlice";
 import settingsReducer from "./slices/settingsSlice";
 import addressReducer from "./slices/addressSlice";
 import confirmationReducer from "./slices/confirmationSlice";
+import navigationReducer from "./slices/navigationSlice";
 
 export function makeStore() {
     return configureStore({
@@ -11,6 +12,7 @@ export function makeStore() {
             settings: settingsReducer,
             address: addressReducer,
             confirmation: confirmationReducer,
+            navigation: navigationReducer,
         }
     })
 }

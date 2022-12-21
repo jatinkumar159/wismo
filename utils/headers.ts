@@ -17,7 +17,7 @@ export function getHeaders(method: string): Headers {
     headers.append('X-NMerchantId', `merchant-01`);
     headers.append('user-agent', `${navigator.userAgent}`);
     headers.append('X-NPlatformInfo', JSON.stringify(platformInfo));
-    if(method === 'POST') headers.append('Content-type', 'application/json');
+    if(method === 'POST' || method === 'PATCH') headers.append('Content-type', 'application/json');
 
     return headers;
 }

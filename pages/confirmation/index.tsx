@@ -10,6 +10,7 @@ import { selectSelectedCoupon, unsetSelectedCoupon } from '../../redux/slices/co
 import { useRouter } from 'next/router';
 import OrderItem from '../../components/OrderItem/OrderItem';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import { setFirstLoad } from '../../redux/slices/navigationSlice';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
@@ -24,7 +25,12 @@ export default function Confirmation() {
     const handleChangeMobile = () => {
         dispatch(unsetPhone());
         dispatch(unverifyProfile());
-        router.push('/new-address')
+        router.push('/new-address');
+    }
+
+    const redirectToAddresses = () => {
+        dispatch(setFirstLoad('addresses'));
+        router.push('/addresses');
     }
 
     return (
@@ -44,8 +50,9 @@ export default function Confirmation() {
                     <AddressCard address={selectedAddress} isInForm={false} />
                 </Box>
 
-                <Text mb={2} className={styles.moreAddresses}>
-                    <Link href="/addresses"><SmallAddIcon /> {(turboAddressList?.length || 0) + (unifillAddressList?.length || 0) - (selectedAddress ? 1 : 0)} more addresses found</Link>
+                <Text mb={2} className={styles.moreAddresses} onClick={redirectToAddresses} cursor='pointer'>
+                    <SmallAddIcon /> {(turboAddressList?.length || 0) + (unifillAddressList?.length || 0) - (selectedAddress ? 1 : 0)} more addresses found
+                    {/* <Link href="/addresses"><SmallAddIcon /> </Link> */}
                 </Text>
                 <Text mb={2} className={styles.newAddress}>
                     <Link href="/new-address"> <SmallAddIcon /> Add new delivery address</Link>
