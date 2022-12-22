@@ -32,7 +32,7 @@ export default function Navigation() {
         <div className={styles.container}>
             <div className={styles.brand}>
                 {!(router.pathname === '/profile' && !phone) ? <IconButton aria-label="back" icon={<ArrowBackIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleBackNavigation} /> : <IconButton aria-label="close" icon={<SmallCloseIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleClose} />}
-                <Text as="span" fontSize="sm" fontWeight="bold">{flowMap[router.pathname].title}</Text>
+                <Text as="span" fontSize="sm" fontWeight="bold">{flowMap[router.pathname]?.title}</Text>
             </div>
             <div className={styles.attribution}>
                 <Image src={'https://infowordpress.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/10/06114711/logo.webp'} alt="Logo" width='70' height='50' priority />
