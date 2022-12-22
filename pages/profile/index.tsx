@@ -37,7 +37,7 @@ export default function Profile() {
     const [otpRequestId, setOtpRequestId] = useState<string>('');
 
     const handleCreateCart = async (phone: string) => {
-        const res = await createCart('SHOPIFY', '638d85e405faf1498a5adf2s', phone, cartPayload, undefined);
+        const res = await createCart('SHOPIFY', 'mid4', phone, cartPayload, undefined);
         const data = await res.json();
 
         if (data.hasOwnProperty('cart')) {
@@ -225,11 +225,11 @@ export default function Profile() {
                 {({ values, isSubmitting, handleBlur, handleChange, submitForm }) => (
                     <Flex flexDir={`column`} justifyContent={`space-between`} h={`100%`}>
                         <Form>
-                        <Text as="h2" mb={4} textAlign={`center`} fontSize={`20px`}>Verify your mobile number</Text>
+                            <Text as="h2" mb={4} textAlign={`center`} fontSize={`20px`}>Verify your mobile number</Text>
                             <FormControl isInvalid={isOtpInvalid}>
-                                <Text color={`gray.500`} textAlign={`center`}>Enter the OTP we just sent on <br/></Text>
+                                <Text color={`gray.500`} textAlign={`center`}>Enter the OTP we just sent on <br /></Text>
                                 <Flex align={`center`} justify={`center`} gap={`0.5rem`}>
-                                    {phone}<Text as="span" onClick={handleChangePhone}className={styles.changeNumber} verticalAlign={`middle`}>Change</Text>
+                                    {phone}<Text as="span" onClick={handleChangePhone} className={styles.changeNumber} verticalAlign={`middle`}>Change</Text>
                                 </Flex>
                                 <HStack justifyContent={`center`} mt={4} mb={4}>
                                     <PinInput otp isDisabled={isSubmitting} placeholder=''>

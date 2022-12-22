@@ -1,7 +1,6 @@
 import { Addresses } from "../utils/interfaces";
 import gateway from './gateway';
 
-// const baseUrl = 'http://localhost:4000';
 const baseUrl = 'https://turbo-dev.unicommerce.co.in/turbo'
 
 /********************************************** BUYER ***********************************************************/
