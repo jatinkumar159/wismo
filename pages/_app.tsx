@@ -16,6 +16,7 @@ import 'nprogress/nprogress.css';
 import PromoBar from '../components/PromoBar/PromoBar';
 import { Mulish } from '@next/font/google';
 import Head from 'next/head';
+import { ActionModalTheme } from '../components/theme/action-modal/actionModal';
 
 const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-24px)',
@@ -23,6 +24,7 @@ const activeLabelStyles = {
 
 export const theme = extendTheme({
   components: {
+    Modal: ActionModalTheme,
     Form: {
       variants: {
         floating: {

@@ -196,7 +196,7 @@ export default function NewAddress() {
                             <FormLabel ps={4} htmlFor="address_line2">Address Line 2</FormLabel>
                         </FormControl>
                         <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
-                            <FormLabel htmlFor="address_type">Save address as </FormLabel>
+                            <FormLabel htmlFor="address_type" className={styles.inlineLabel} display="inline" fontWeight="normal">Save address as </FormLabel>
                             <Flex {...group} flexDir={`row`} display={`inline-flex`} gap={4}>
                                 {options.map((value) => {
                                     const radio = getRadioProps({ value })

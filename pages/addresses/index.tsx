@@ -3,7 +3,7 @@ import { Box, Button, Progress, Text, FormControl, Radio, RadioGroup, Flex, Cent
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectPhone, setName } from "../../redux/slices/profileSlice";
+import { selectPhone, setName, unsetPhone } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getBuyerProfile } from "../../apis/get";
 import Link from "next/link";
@@ -39,6 +39,12 @@ export default function AddressList() {
         } catch {
             console.error('Error while updating cart');
         }
+    }
+
+    const handleChangeNumber = () => {
+        dispatch(unsetPhone());
+        router.push("/profile");
+        
     }
 
     const formik = useFormik({
@@ -91,14 +97,16 @@ export default function AddressList() {
     return (
         <>
             <Flex className={styles.container} flexDir={`column`} h={`100%`}>
-                <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
-                    <Box className={`${styles.sectionContent}`} flexGrow={1}>
-                        <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`normal`}>{phone}</Text></Text>
-                    </Box>
-                    <Box>
-                        <Text><FaChevronRight /></Text>
-                    </Box>
-                </Flex>
+                <Link onClick={handleChangeNumber}>
+                    <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
+                        <Box className={`${styles.sectionContent}`} flexGrow={1}>
+                            <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`normal`}>{phone}</Text></Text>
+                        </Box>
+                        <Box>
+                            <Text><FaChevronRight /></Text>
+                        </Box>
+                    </Flex>
+                </Link>
                 <Flex className={styles.pageTitle} mb={2} ps={4} pe={4}>
                     <Text fontWeight={`bold`}>Deliver to</Text>
                 </Flex>
