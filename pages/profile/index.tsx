@@ -20,8 +20,7 @@ import { ArrowForwardIcon, ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } fr
 import { selectCart, selectCartPayload, selectOtpLength, setCart } from '../../redux/slices/settingsSlice'
 import { showErrorToast } from '../../utils/toasts'
 import { getBuyerProfile } from '../../apis/get'
-import jwtDecode from 'jwt-decode'
-import { Token } from '../../utils/interfaces'
+import jwtDecode from 'jwt-decode';
 
 export default function Profile() {
     const dispatch = useAppDispatch()
@@ -275,7 +274,7 @@ export default function Profile() {
 
     return (
         <>
-            <Center h={`calc(100vh - 40px)`} className={styles.container}>
+            <Center className={styles.container}>
                 {(phone && !isVerified) ? <EnterOTP /> : <EnterPhone />}
             </Center>
         </>

@@ -168,7 +168,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={upi} alt="upi" />UPI</Text>
-                            <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
+                            <Text mt={1} fontSize={`xs`} color={`green.400`} ml={6}>Additional 10% off</Text>
                         </Box>
                         <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
@@ -182,7 +182,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cards} alt="cards" />Cards/Net Banking/Wallets/Pay Later</Text>
-                            <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
+                            <Text mt={1} fontSize={`xs`} color={`green.400`} ml={6}>Additional 10% off</Text>
                         </Box>
                         {/* <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
@@ -196,7 +196,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cash} alt="cash" />Cash on Delivery</Text>
-                            <Text mt={1} fontSize={`xs`} color={`gray.800`}>Extra charge ₹20</Text>
+                            <Text mt={1} fontSize={`xs`} color={`gray.800`} ml={6}>Extra charge ₹20</Text>
                         </Box>
                         {/* <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />

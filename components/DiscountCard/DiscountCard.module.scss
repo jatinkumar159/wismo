@@ -16,6 +16,16 @@
     }
 }
 
+.cardSubtitle {
+    font-weight: 500;
+    color: #757575;
+}
+
+.viewDetails {
+    color: #757575;
+    font-weight: 700;
+}
+
 .selectedCard {
     border-width: 1px;
     border-color: var(--chakra-colors-green-400);
@@ -23,4 +33,28 @@
 
 .selectedDiscount {
     color: var(--chakra-colors-green-400);
+}
+
+.discountCard {
+    background-color: var(--chakra-colors-white);
+}
+
+.cardFooter {
+    border-top: 1px dashed var(--chakra-colors-gray-200);
+}
+
+.cardNudge {
+    font-weight: 700;
+}
+
+.viewDetailLink {
+    color: #757575;
+}
+
+.success {
+    color: #549112;
+}
+
+.error {
+    color: #B71C1C;
 }

@@ -1,5 +1,5 @@
 import { ArrowForwardIcon, EditIcon, LockIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, FormControl, FormLabel, HStack, IconButton, Radio, RadioGroup, Text, useRadio, useRadioGroup, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, FormControl, FormLabel, HStack, IconButton, Radio, RadioGroup, Spinner, Text, useRadio, useRadioGroup, VStack } from "@chakra-ui/react";
 import { Field, Form, Formik, useFormik } from "formik";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
@@ -10,7 +10,14 @@ import styles from './discounts.module.scss';
 import {useState} from 'react';
 import { FaChevronRight } from "react-icons/fa";
 import { selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
+import { useQuery } from "@tanstack/react-query";
+import { getDiscounts } from "../../apis/get";
+import { Mulish } from "@next/font/google";
 
+const mulish = Mulish({
+    weight: ["400", "600", "700"],
+    subsets: ["latin"]
+})
 
 export default function Discounts() {
     const router = useRouter();
@@ -18,6 +25,16 @@ export default function Discounts() {
     const dispatch = useAppDispatch();
     const coupons: Coupon[] = useAppSelector(selectAvailableCoupons);
     const [isSelected, setIsSelected] = useState<Boolean>(false);
+
+    // const { isLoading, isError, data } = useQuery(['discounts'], () => getDiscounts());
+    // if(isLoading) {
+    //     return <Center h={`100%`}><Spinner /></Center>
+    // }
+
+    // if(isError) {
+    //     return <Text>Error Loading Data.</Text>
+    // }
+
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>, handleChange: Function) => {
         // e.preventDefault();
         // e.stopPropagation();
@@ -36,13 +53,15 @@ export default function Discounts() {
             <Box onClick={handleChangeNumber}>
                 <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                     <Box className={`${styles.sectionContent}`} flexGrow={1}>
-                        <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`bold`}>{phone}</Text></Text>
+                        <Text className={mulish.className} fontWeight={`700`}>Your number <Text as="span" ms={4} fontWeight={`bold`}>{phone}</Text></Text>
                     </Box>
                     <Box>
                         <Text><FaChevronRight /></Text>
                     </Box>
                 </Flex>
             </Box>
+            
+            <DiscountCard />
 
             {/* <Formik
                 initialValues={{

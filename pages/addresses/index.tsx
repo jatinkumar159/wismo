@@ -90,7 +90,7 @@ export default function AddressList() {
     </>
 
     if (isLoading) return <>
-        <Center h={`calc(100vh - 40px)`}><Spinner /></Center> :
+        <Center h={`calc(100vh - 80px)`}><Spinner /></Center> :
     </>
 
     if (isError) return <>
@@ -171,7 +171,7 @@ export default function AddressList() {
                         </form>
                     </Box>
                 </Box>
-                <Box p={4} className={styles.pageFooter}>
+                <Box py={2} px={4} className={styles.pageFooter}>
                     <Link href="/new-address">
                         <Button fontSize={`sm`} variant={`outline`} type="submit" w={`100%`} colorScheme={`black`} textTransform={`uppercase`}>
                             Add new Address
