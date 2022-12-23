@@ -58,6 +58,12 @@ export const theme = extendTheme({
   },
 })
 
+const mulish = Mulish({
+  weight: ["400", "600", "700"],
+  subsets: ["latin"],
+  style: ["normal"]
+})
+
 const queryClient = new QueryClient()
 
 // const mulish = Mulish({ weight: '400', style: ['normal'], subsets: ['latin']})
@@ -113,7 +119,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <ChakraProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <InitialiseMessaging />
-            <Flex flexDir="row" h={`100vh`}>
+            <Flex flexDir="row" h={`100vh`} className={mulish.className}>
               <Flex className={styles.container} flexDir="column" grow={1}>
                 <Navigation />
                 <PromoBar />
