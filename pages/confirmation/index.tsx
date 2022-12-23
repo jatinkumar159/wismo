@@ -48,6 +48,7 @@ export default function Confirmation() {
 
     const handleChangeNumber = () => {
         dispatch(unsetPhone());
+        dispatch(unverifyProfile());
         router.push("/profile");
     }
 
@@ -134,7 +135,7 @@ export default function Confirmation() {
                         <AvatarGroup size="sm" max={2}>
                             {
                                 cartPayload.items.map((avatar: any, avatarIdx: any) => {
-                                    return <Avatar icon={<BsBagCheckFill fontSize={`14px`}/>} fontSize='1.5rem' key={`avatar-${avatarIdx}`} src={avatar.image || null} />
+                                    return <Avatar icon={<BsBagCheckFill fontSize={`14px`} />} fontSize='1.5rem' key={`avatar-${avatarIdx}`} src={avatar.image || null} />
                                 })
                             }
                         </AvatarGroup>
@@ -144,7 +145,7 @@ export default function Confirmation() {
                     </Box>
                 </Flex>
                 <Box className={styles.sectionBody}>
-                    { showItemDetails ? <OrderItemsList /> : null}
+                    {showItemDetails ? <OrderItemsList /> : null}
                 </Box>
                 <Box className={styles.sectionBody}>
                     <OrderSummary mode={'sm'} />
@@ -166,7 +167,7 @@ export default function Confirmation() {
                 <Box px={4} py={2}>
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
-                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={upi} alt="upi"/>UPI</Text>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={upi} alt="upi" />UPI</Text>
                             <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
                         </Box>
                         <Box>
@@ -180,7 +181,7 @@ export default function Confirmation() {
                 <Box px={4} py={2}>
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
-                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cards} alt="cards"/>Cards/Net Banking/Wallets/Pay Later</Text>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cards} alt="cards" />Cards/Net Banking/Wallets/Pay Later</Text>
                             <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
                         </Box>
                         {/* <Box>
@@ -194,7 +195,7 @@ export default function Confirmation() {
                 <Box px={4} py={2}>
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
-                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cash} alt="cash"/>Cash on Delivery</Text>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cash} alt="cash" />Cash on Delivery</Text>
                             <Text mt={1} fontSize={`xs`} color={`gray.800`}>Extra charge ₹20</Text>
                         </Box>
                         {/* <Box>

@@ -17,7 +17,7 @@ import styles from './profile.module.scss'
 import { useRouter } from 'next/router'
 import { SearchCountry } from '../../components/SearchCountry/SearchCountry'
 import { ArrowForwardIcon, ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import { selectCartPayload, selectOtpLength, setCart } from '../../redux/slices/settingsSlice'
+import { selectCart, selectCartPayload, selectOtpLength, setCart } from '../../redux/slices/settingsSlice'
 import { showErrorToast } from '../../utils/toasts'
 import { getBuyerProfile } from '../../apis/get'
 import jwtDecode from 'jwt-decode'
@@ -25,16 +25,14 @@ import { Token } from '../../utils/interfaces'
 
 export default function Profile() {
     const dispatch = useAppDispatch()
+    const router = useRouter();
+
     const phone = useAppSelector(selectPhone);
-    const name = useAppSelector(selectName);
-    // const country = useAppSelector(selectCountry);
-    // const isLoading = useAppSelector(selectIsLoading);
+    const cart = useAppSelector(selectCart);
     const cartPayload = useAppSelector(selectCartPayload);
     const isVerified = useAppSelector(selectIsVerified);
     const toast = useToast();
-    const router = useRouter();
     const { query: { PHONE } } = router;
-    // const { isOpen, onToggle, onClose } = useDisclosure();
 
     const [otpRequestId, setOtpRequestId] = useState<string>('');
 
@@ -81,7 +79,10 @@ export default function Profile() {
                         const token = localStorage.getItem('turbo');
                         if (token) {
                             const decodedToken: Token = jwtDecode(token);
-                            if (decodedToken.sub === values.phone && Date.now() < (decodedToken.exp * 1000)) {
+                            debugger;
+                            if ((decodedToken.sub === '+91' + values.phone) && Date.now() < (decodedToken.exp * 1000)) {
+                                dispatch(setPhone(values.phone));
+                                if (!cart) handleCreateCart(values.phone);
                                 dispatch(verifyProfile());
                                 router.push('/addresses');
                                 return;
