@@ -15,6 +15,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { CiDiscount1 } from 'react-icons/ci';
 import Image from 'next/image';
 import discountImageSrc from "../../public/discounts.png";
+import { useState } from 'react';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
@@ -25,6 +26,7 @@ export default function Confirmation() {
     const turboAddressList = useAppSelector(selectTurboAddressList);
     const unifillAddressList = useAppSelector(selectUnifillAddressList);
     const router = useRouter();
+    const [showItemDetails, setShowItemDetails] = useState(false);
 
     const handleChangeMobile = () => {
         dispatch(unsetPhone());
@@ -40,6 +42,10 @@ export default function Confirmation() {
     const handleChangeNumber = () => {
         dispatch(unsetPhone());
         router.push("/profile");
+    }
+
+    const handleToggleItemDetails = () => {
+        setShowItemDetails(!showItemDetails);
     }
 
     return (
@@ -80,46 +86,51 @@ export default function Confirmation() {
                 </Text> */}
             </Box>
 
-            { !coupon ? <Box className={styles.section} mt={2} p={4}>
-                        <Link href='/discounts'>
-                            <Flex flexDir="row" className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
-                                <Box flexGrow={1}>
-                                    <Text w="100%" alignItems="center" lineHeight="1">
-                                        <Flex flexDir="row" alignItems="center">
-                                            <Image className={styles.discountIcon} src={discountImageSrc} alt={'discount'} />
-                                            <Text as="span" fontWeight="bold" ms={2}>Apply Coupon</Text>
-                                        </Flex>
-                                    </Text>
-                                </Box>
-
-                                <Box>
-                                    <Text><FaChevronRight /></Text>
-                                </Box>
+            {!coupon ? <Box className={styles.section} mt={2} p={4}>
+                <Link href='/discounts'>
+                    <Flex flexDir="row" className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                        <Box flexGrow={1}>
+                            <Flex flexDir="row" alignItems="center">
+                                <Text w="100%" alignItems="center" lineHeight="1">
+                                    <Image className={styles.discountIcon} src={discountImageSrc} alt={'discount'} />
+                                    <Text as="span" fontWeight="bold" ms={2}>Apply Coupon</Text>
+                                </Text>
                             </Flex>
-                        </Link>
-                    </Box> : null
+                        </Box>
+
+                        <Box>
+                            <Text><FaChevronRight /></Text>
+                        </Box>
+                    </Flex>
+                </Link>
+            </Box> : null
             }
 
-            { coupon ? <Box className={styles.section} mt={2} p={4}>
-                        <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
-                            <Flex flexDir="column" justifyContent="space-between" >
-                                <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">{coupon.code}</Text>
-                                <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
-                            </Flex>
-                            <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
-                        </Flex>
-                    </Box> : null
+            {coupon ? <Box className={styles.section} mt={2} p={4}>
+                <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
+                    <Flex flexDir="column" justifyContent="space-between" >
+                        <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">{coupon.code}</Text>
+                        <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
+                    </Flex>
+                    <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
+                </Flex>
+            </Box> : null
             }
 
             <Box className={styles.section} mt={2}>
                 <Flex className={styles.sectionTitle} flexDir="row" alignItems="center" justifyContent="space-between" p={4}>
-                    <Text as="span" fontWeight="bold">Price Details</Text>
+                    <Box>
+                        <Text as="span" fontWeight="bold">Price Details</Text>
+                    </Box>
+                    <Box onClick={handleToggleItemDetails}>
+                        <Text as="span" fontWeight="700" fontSize="xs" color="pink.400">{showItemDetails ? 'Hide Items' : 'View Items'}</Text>
+                    </Box>
                 </Flex>
                 <Flex w="100%" className={styles.sectionBody} flexDir="row">
-                    <OrderItem />
+                    { showItemDetails ? <OrderItem /> : null}
                 </Flex>
                 <Flex className={styles.sectionBody} flexDir="row" w={`100%`}>
-                    <OrderSummary mode={'sm'}/>
+                    <OrderSummary mode={'sm'} />
                 </Flex>
             </Box>
 
