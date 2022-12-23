@@ -99,7 +99,7 @@ export default function AddressList() {
 
     return (
         <>
-            <Flex className={styles.container} flexDir={`column`} h={`100%`}>
+            <Flex className={styles.container} flexDir={`column`}>
                 <Box onClick={handleChangeNumber}>
                     <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                         <Box className={`${styles.sectionContent}`} flexGrow={1}>

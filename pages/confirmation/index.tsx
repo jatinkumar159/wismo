@@ -56,7 +56,7 @@ export default function Confirmation() {
     }
 
     return (
-        <Flex className={`${styles.container} confirmation`} flexDir="column" height={`100%`}>
+        <Flex className={`${styles.container} confirmation`} flexDir="column">
             <Box onClick={handleChangeNumber}>
                 <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`}>
                     <Box className={`${styles.sectionContent}`} flexGrow={1}>
@@ -74,8 +74,8 @@ export default function Confirmation() {
                         <Box flexGrow={1}>
                             <Text>Deliver to <Text as="span" fontWeight="bold">{selectedAddress?.name}, {selectedAddress?.pincode || ''}</Text></Text>
                             <Text mt={2} fontSize="xs">{selectedAddress?.address_line1}</Text>
-                            <Text fontSize="xs" mt={2}>{selectedAddress?.address_line2}</Text>
-                            {selectedAddress?.mobile ? <Text fontSize="xs">Mobile: +91 {selectedAddress?.mobile}</Text> : null}
+                            <Text fontSize="xs" >{selectedAddress?.address_line2}</Text>
+                            {selectedAddress?.mobile ? <Text mt={2} fontSize="xs">Mobile: +91 {selectedAddress?.mobile}</Text> : null}
                         </Box>
                         <Box>
                             <Text onClick={redirectToAddresses} as="span" fontSize="xs" fontWeight="bold" color="pink.400" cursor={`pointer`}>Change</Text>
