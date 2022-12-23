@@ -60,14 +60,12 @@ export default function Confirmation() {
                     <Flex flexDir="row" w="100%" align="flex-start">
                         <Box flexGrow={1}>
                             <Text>Deliver to <Text as="span" fontWeight="bold">{selectedAddress?.name}, {selectedAddress?.pincode || ''}</Text></Text>
-                            <Text>{selectedAddress?.address_line1}</Text>
-                            <Text>{selectedAddress?.address_line2}</Text>
-                            {selectedAddress?.mobile ? <Text mt={2}>Mobile: +91 {selectedAddress?.mobile}</Text> : null}
+                            <Text mt={2} fontSize="xs">{selectedAddress?.address_line1}</Text>
+                            <Text fontSize="xs" mt={2}>{selectedAddress?.address_line2}</Text>
+                            {selectedAddress?.mobile ? <Text fontSize="xs">Mobile: +91 {selectedAddress?.mobile}</Text> : null}
                         </Box>
                         <Box>
-                            <Link href="/addresses">
-                                <Text as="span" fontSize="xs" fontWeight="bold" color="pink.400" cursor={`pointer`}>Change</Text>
-                            </Link>
+                            <Text onClick={redirectToAddresses} as="span" fontSize="xs" fontWeight="bold" color="pink.400" cursor={`pointer`}>Change</Text>
                         </Box>
                     </Flex>
                 </Box>
@@ -82,16 +80,14 @@ export default function Confirmation() {
                 </Text> */}
             </Box>
 
-            <Box className={styles.section} mt={2}>
-                {
-                    !coupon && <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
+            { !coupon ? <Box className={styles.section} mt={2} p={4}>
                         <Link href='/discounts'>
                             <Flex flexDir="row" className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
                                 <Box flexGrow={1}>
                                     <Text w="100%" alignItems="center" lineHeight="1">
-                                        <Flex flexDir="row" align="center">
-                                                <Image className={styles.discountIcon} src={discountImageSrc} alt={'discount'} />
-                                                <Text as="span" fontWeight="bold" ms={2}>Apply Coupon</Text>
+                                        <Flex flexDir="row" alignItems="center">
+                                            <Image className={styles.discountIcon} src={discountImageSrc} alt={'discount'} />
+                                            <Text as="span" fontWeight="bold" ms={2}>Apply Coupon</Text>
                                         </Flex>
                                     </Text>
                                 </Box>
@@ -100,13 +96,11 @@ export default function Confirmation() {
                                     <Text><FaChevronRight /></Text>
                                 </Box>
                             </Flex>
-
                         </Link>
-                    </Box>
-                }
+                    </Box> : null
+            }
 
-                {coupon ? (
-                    <Box className={styles.section} pt={3} pb={3} pl={4} pr={4}>
+            { coupon ? <Box className={styles.section} mt={2} p={4}>
                         <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
                             <Flex flexDir="column" justifyContent="space-between" >
                                 <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">{coupon.code}</Text>
@@ -114,25 +108,27 @@ export default function Confirmation() {
                             </Flex>
                             <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
                         </Flex>
-                    </Box>
-                ) : null}
-            </Box>
+                    </Box> : null
+            }
 
             <Box className={styles.section} mt={2}>
                 <Flex className={styles.sectionTitle} flexDir="row" alignItems="center" justifyContent="space-between" p={4}>
                     <Text as="span" fontWeight="bold">Price Details</Text>
                 </Flex>
+                <Flex w="100%" className={styles.sectionBody} flexDir="row">
+                    <OrderItem />
+                </Flex>
+                <Flex className={styles.sectionBody} flexDir="row" w={`100%`}>
+                    <OrderSummary mode={'sm'}/>
+                </Flex>
             </Box>
 
-            <Box className={`${styles.section} ${styles.orderSummaryContainer}`} mt={2}>
+            {/* <Box className={`${styles.section} ${styles.orderSummaryContainer}`} mt={2}>
                 <Box className={`${styles.sectionContent} order-summary`} mb={4}>
-                    <Text as="p" mt={2} mb={4}>Order Summary</Text>
-
-
                     <OrderItem />
                     <OrderSummary mode={'md'} />
                 </Box>
-            </Box>
+            </Box> */}
 
             <Box>
                 <Box className={styles.section}>

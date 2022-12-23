@@ -1,5 +1,9 @@
 .container {
     font-size: var(--chakra-fontSizes-sm);
+
+    * {
+        box-sizing: border-box;
+    }
 }
 
 .pageContainer {
