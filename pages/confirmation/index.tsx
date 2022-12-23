@@ -202,40 +202,10 @@ export default function Confirmation() {
                     </Flex>
                 </Box>
             </Box>
-
-            <Box className={styles.pageFooter}>
-                <Text mt={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`}>TURBO</Link></Text>
+            <Box flexGrow={1}></Box>
+            <Box className={styles.pageFooter} mt={2}>
+                <Text p={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`blue.300`}>TURBO</Text></Link></Text>
             </Box>
-            {/* <Box>
-                {/* <Box className={styles.section}>
-                    <Box className={`${styles.sectionContent} mobile-section`} mt={2} mb={2}>
-                        <Text>Pay via</Text>
-                    </Box>
-                </Box> 
-                <Flex borderBottom={`1px solid var(--chakra-colors-gray-200)`} ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
-                    <Flex flexDir="column" justifyContent="space-between" >
-                        <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">Cash on Delivery</Text>
-                    </Flex>
-                    <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
-                </Flex>
-
-                <Flex borderBottom={`1px solid var(--chakra-colors-gray-200)`} ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
-                    <Flex flexDir="column" justifyContent="space-between" >
-                        <Text fontWeight="bold" color={`gray.500`} fontSize="sm">UPI</Text>
-                        <Text as="span" fontWeight="bold" color={`green.400`} fontSize="xs">5% off using UPI</Text>
-                    </Flex>
-                    <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
-                </Flex>
-
-                <Flex ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
-                    <Flex flexDir="column" justifyContent="space-between" >
-                        <Text fontWeight="bold" color={`gray.500`} fontSize="sm">Prepaid</Text>
-                        <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="xs">Net Banking, Credit/Debit Card</Text>
-                    </Flex>
-                    <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
-                </Flex>
-
-            </Box> */}
         </Flex>
     )
 }
