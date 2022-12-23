@@ -97,7 +97,7 @@ export default function AddressList() {
     return (
         <>
             <Flex className={styles.container} flexDir={`column`} h={`100%`}>
-                <Link onClick={handleChangeNumber}>
+                <Box onClick={handleChangeNumber}>
                     <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                         <Box className={`${styles.sectionContent}`} flexGrow={1}>
                             <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`normal`}>{phone}</Text></Text>
@@ -106,7 +106,7 @@ export default function AddressList() {
                             <Text><FaChevronRight /></Text>
                         </Box>
                     </Flex>
-                </Link>
+                </Box>
                 <Flex className={styles.pageTitle} mb={2} ps={4} pe={4}>
                     <Text fontWeight={`bold`}>Deliver to</Text>
                 </Flex>
