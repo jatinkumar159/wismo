@@ -13,7 +13,7 @@ export function getHeaders(method: string): Headers {
         platformInfo.isMobile = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches;
     }
 
-    if(localStorage.getItem('turbo')) headers.append('Authorization', `Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc19ndWVzdF91c2VyIjpmYWxzZSwic3ViIjoiKzkxODI3OTcwMTI2NyIsImlhdCI6MTY3MTcwNzI5MiwiZXhwIjoxNzAzMjQzMjkyfQ.FjtDKOXrHJ8VnISGEEHWJrQboj_ciIkXLZlQFAAaWyrFqroj3JYf7g_YzoHlV-aoY6xqleL5FoK3UpYZJDfQsw`);
+    if(localStorage.getItem('turbo')) headers.append('Authorization', `Bearer ${localStorage.getItem('turbo')}`);
     headers.append('X-NMerchantId', `mid1`);
     headers.append('user-agent', `${navigator.userAgent}`);
     headers.append('X-NPlatformInfo', 'SHOPIFY');

@@ -93,7 +93,6 @@ export default function NewAddress() {
             email: Yup.string().email('Invalid Email Format'),
         }),
         onSubmit: async (values) => {
-            console.log(values)
             try {
                 const res = await addNewAddress({ ...values, district: 'Gurgaon' });
                 const data = await res.json();
