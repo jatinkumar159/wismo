@@ -32,12 +32,15 @@ export default function AddressList() {
 
     const handleUpdateCart = async (id: string, type: string, data: any) => {
         try {
-            const res = await updateCart(id, type, data);
+            let address = JSON.parse(JSON.stringify(data));
+            delete address['selected'];
+
+            const res = await updateCart(id, type, address);
             const updatedCart = await res.json();
 
             if (updatedCart.hasOwnProperty('cart')) dispatch(setCart(updatedCart['cart']));
-        } catch {
-            console.error('Error while updating cart');
+        } catch (err) {
+            console.error(err);
         }
     }
 
