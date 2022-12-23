@@ -16,6 +16,10 @@
 .section {
     height: 48px;
     background-color: var(--chakra-colors-white);
+
+    p {
+        font-weight: normal;
+    }
 }
 
 .formContainer {
@@ -30,4 +34,9 @@
 
 .leftAddonLabel {
     left: 40px !important;
+}
+
+.inlineLabel {
+    font-weight: normal;
+    display:inline;
 }

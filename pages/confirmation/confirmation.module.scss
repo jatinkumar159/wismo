@@ -6,15 +6,20 @@
 }
 
 .section {
-    border-bottom: 1px solid var(--chakra-colors-gray-200);
-    padding: 0.5rem 1rem;
+    min-height: 48px;
+    background-color: var(--chakra-colors-white);
+
+    p {
+        font-weight:normal;
+    }
+
+    .sectionTitle {
+        max-height: 48px;
+        border-bottom: 1px solid var(--chakra-colors-gray-200);
+    }
 }
 
 .sectionContent {
-    p {
-        color: var(--chakra-colors-gray-500);
-    }
-
     button {
         margin-left: 0.5rem;
     }
@@ -57,4 +62,34 @@
     label {
         align-items: flex-start;
     }
+}
+
+.discountIcon {
+    display:inline;
+    width:auto;
+    height:auto;
+    vertical-align: middle;
+}
+
+.itemAvatarGroups {
+    display: inline;
+}
+
+.paymentMethod {
+    font-weight: 700;
+}
+
+.pageFooter {
+    border-top: 1px solid var(--chakra-colors-gray-200);
+    background-color: var(--chakra-colors-white);
+    position:sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.paymentMethod {
+    display: inline;
+    vertical-align: middle;
+    margin-right: 0.5rem;
 }

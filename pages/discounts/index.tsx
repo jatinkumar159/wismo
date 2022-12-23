@@ -8,10 +8,13 @@ import { selectAvailableCoupons, Coupon, setSelectedCoupon } from "../../redux/s
 import DiscountCard from "./../../components/DiscountCard/DiscountCard";
 import styles from './discounts.module.scss';
 import {useState} from 'react';
+import { FaChevronRight } from "react-icons/fa";
+import { selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
 
 
 export default function Discounts() {
     const router = useRouter();
+    const phone = useAppSelector(selectPhone);
     const dispatch = useAppDispatch();
     const coupons: Coupon[] = useAppSelector(selectAvailableCoupons);
     const [isSelected, setIsSelected] = useState<Boolean>(false);
@@ -22,9 +25,26 @@ export default function Discounts() {
         setIsSelected(e.target.checked);
         
     }
+
+    const handleChangeNumber = () => {
+        dispatch(unsetPhone());
+        router.push("/profile");        
+    }
+    
     return (
-        <>
-            <Formik
+        <Flex className={`${styles.container} confirmation`} flexDir="column" height={`100%`}>
+            <Box onClick={handleChangeNumber}>
+                <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
+                    <Box className={`${styles.sectionContent}`} flexGrow={1}>
+                        <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`bold`}>{phone}</Text></Text>
+                    </Box>
+                    <Box>
+                        <Text><FaChevronRight /></Text>
+                    </Box>
+                </Flex>
+            </Box>
+
+            {/* <Formik
                 initialValues={{
                     coupon: null,
                 }}
@@ -67,7 +87,7 @@ export default function Discounts() {
                         </Box>
                     </Box>
                 )}
-            </Formik>
-        </>
+            </Formik> */}
+        </Flex>
     )
 }

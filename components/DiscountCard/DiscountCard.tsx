@@ -10,9 +10,12 @@ interface Props {
 
 export default function DiscountCard({ coupon }: Props) {
     return (
-        <Box p={4} className={`discount-card`}>
-            <Text as="h3" fontSize={'md'} fontWeight={`bold`} color={`green.400`} textTransform={`uppercase`} size={`md`}>{coupon.code}</Text>
-            <Text as="span" fontSize="xs">{coupon.discountPercentage}% off upto ₹{coupon.maxDiscount}</Text>
-        </Box>
+        <Flex flexDir={`row`} align={`center`}>
+            <Text as="span" className={styles.cardName} flexGrow={1} lineHeight={1}>
+                <Text as="span" fontSize={'md'}>{coupon.code}</Text>
+                <Text as="span" className={styles.cardChip}>Code</Text>
+            </Text>
+            <Text className={styles.editCardLink} lineHeight={1} as="span">Edit</Text>
+        </Flex>
     )
 }

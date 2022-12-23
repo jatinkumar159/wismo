@@ -7,7 +7,7 @@ import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setSelectedAddress } from "../../redux/slices/addressSlice";
-import { selectName, selectPhone } from "../../redux/slices/profileSlice";
+import { selectName, selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
 import { addNewAddress } from "../../apis/post";
 import { showErrorToast } from "../../utils/toasts";
 import { Address } from "./../../utils/interfaces";
@@ -16,7 +16,6 @@ import { ChevronRightIcon } from "@chakra-ui/icons";
 
 function RadioCard(props: any) {
     const { getInputProps, getCheckboxProps } = useRadio(props)
-
     const input = getInputProps()
     const checkbox = getCheckboxProps()
 
@@ -132,17 +131,25 @@ export default function NewAddress() {
         }
     }, [formik.values.pincode])
 
+    const handleChangeNumber = () => {
+        dispatch(unsetPhone());
+        router.push("/profile");        
+    }
+
     return (
         <>
             <Flex className={styles.container} flexDir={`column`} h={`100%`}>
-                <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
-                    <Box className={`${styles.sectionContent}`} flexGrow={1}>
-                        <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`normal`}>{phone}</Text></Text>
-                    </Box>
-                    <Box>
-                        <Text><FaChevronRight /></Text>
-                    </Box>
-                </Flex>
+            
+                <Box onClick={handleChangeNumber}>
+                    <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
+                        <Box className={`${styles.sectionContent}`} flexGrow={1}>
+                            <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`bold`}>{phone}</Text></Text>
+                        </Box>
+                        <Box>
+                            <Text><FaChevronRight /></Text>
+                        </Box>
+                    </Flex>
+                </Box>
 
                 <Flex className={styles.pageTitle} mb={2} ps={4} pe={4}>
                     <Text fontWeight={`bold`}>Deliver to</Text>
@@ -195,7 +202,7 @@ export default function NewAddress() {
                             <FormLabel ps={4} htmlFor="address_line2">Address Line 2</FormLabel>
                         </FormControl>
                         <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
-                            <FormLabel htmlFor="address_type">Save address as </FormLabel>
+                            <FormLabel htmlFor="address_type" className={styles.inlineLabel} display="inline" fontWeight="normal">Save address as </FormLabel>
                             <Flex {...group} flexDir={`row`} display={`inline-flex`} gap={4}>
                                 {options.map((value) => {
                                     const radio = getRadioProps({ value })
@@ -217,7 +224,7 @@ export default function NewAddress() {
                     <Button type="submit" isDisabled={!formik.isValid} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2} onClick={formik.submitForm}>
                         <Text as="span" fontSize="sm" textTransform={`uppercase`}>Proceed to Buy <ChevronRightIcon ms={2} fontSize={`lg`} /></Text>
                     </Button>
-                    <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>TURBO</Link></Text>
+                    <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`blue.300`}>TURBO</Text></Link></Text>
                 </Box>
             </Flex>
 

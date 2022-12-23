@@ -6,7 +6,8 @@ const nextConfig = {
   swcMinify: true,
   distDir: "build",
   images: {
-    unoptimized: true
+    unoptimized: true,
+    loader: "custom"
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')]

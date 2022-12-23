@@ -132,6 +132,8 @@ export default function Profile() {
                                             +91
                                         </InputLeftAddon>
                                         <Input
+                                            className={styles.profileNumber}
+                                            ps={12}
                                             id='phone'
                                             type='number'
                                             placeholder='Phone Number'
@@ -140,7 +142,6 @@ export default function Profile() {
                                             value={values.phone}
                                             onBlur={handleBlur}
                                             onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, handleChange, submitForm)}
-                                            borderLeft={0}
                                         />
                                     </InputGroup>
                                     <FormErrorMessage>{errors.phone}</FormErrorMessage>
@@ -163,7 +164,7 @@ export default function Profile() {
     }
 
     function EnterOTP() {
-        const [timer, setTimer] = useState<number>(3);
+        const [timer, setTimer] = useState<number>(30);
         const [isOtpInvalid, setIsOtpInvalid] = useState<boolean | undefined>(undefined);
 
         useEffect(() => {

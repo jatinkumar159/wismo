@@ -1,6 +1,7 @@
 import { Flex, Box, Text } from "@chakra-ui/react";
 import { useAppSelector } from "../../redux/hooks";
 import { selectSelectedCoupon } from "../../redux/slices/confirmationSlice";
+import { selectCartPayload } from "../../redux/slices/settingsSlice";
 
 interface OrderSummaryProps {
     mode: string | undefined
@@ -8,26 +9,27 @@ interface OrderSummaryProps {
 export default function OrderSummary(props: OrderSummaryProps) {
     const contentFontSize = props.mode === 'sm' ? `sm` : `md`;
     const selectedDiscount = useAppSelector(selectSelectedCoupon);
+    const cartPayload = useAppSelector(selectCartPayload);
 
     return (
-        <Box justifyContent="space-between" flexDir="column">
+        <Box py={2} px={4} w={`100%`}>
             <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                <Text as="span" className="key" fontSize={contentFontSize}>Subtotal</Text>
-                <Text as="span" className="value" fontSize={contentFontSize} justifyContent={'flex-end'}>Rs. 3,298</Text>
+                <Text as="span" className="key" fontSize={contentFontSize}>Total MRP</Text>
+                <Text as="span" className="value" fontSize={contentFontSize} justifyContent={'flex-end'}>₹ {(cartPayload.items_subtotal_price / 100).toFixed(2)}</Text>
             </Flex>
             <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                <Text as="span" className="key" fontSize={contentFontSize}>Coupon Discount</Text>
-                <Text as="span" className="value" fontSize={contentFontSize}>{(selectedDiscount && <Text as="span">{`Rs. ${selectedDiscount.discountAmount!}`}</Text>)}
-                    {(!selectedDiscount && <Text as="span">{`Rs. 0`}</Text>)}</Text>
+                <Text as="span" className="key" fontSize={contentFontSize}>Discount</Text>
+                <Text as="span" className="value" fontSize={contentFontSize}>{(selectedDiscount && <Text as="span">{`₹ ${selectedDiscount.discountAmount!}`}</Text>)}
+                    {(!selectedDiscount && <Text as="span">{`₹ 0`}</Text>)}</Text>
             </Flex>
             <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                <Text as="span" className="key" fontSize={contentFontSize}>Shipping Fee</Text>
-                <Text as="span" className="value" fontSize={contentFontSize}>Rs. 0</Text>
+                <Text as="span" className="key" fontSize={contentFontSize}>Shipping</Text>
+                <Text as="span" className="value" fontSize={contentFontSize}>₹ 0</Text>
             </Flex>
-            <Flex justifyContent='space-between' flexDir="row" mb={2}>
-                <Text as="span" className="key" fontSize={contentFontSize}>Grand Total</Text>
+            <Flex justifyContent='space-between' flexDir="row" mb={2} mt={2}>
+                <Text as="span" className="key" fontSize={contentFontSize} textTransform="uppercase" fontWeight="bold">Grand Total</Text>
                 <Text as="strong" className="value" fontSize={contentFontSize}>
-                    {selectedDiscount ? `Rs. ${3298 - selectedDiscount.discountAmount!}` : `Rs. 3,298`}
+                    {selectedDiscount ? `₹ ${3298 - selectedDiscount.discountAmount!}` : `₹ ${(cartPayload.items_subtotal_price / 100).toFixed(2)}`}
                 </Text>
             </Flex>
         </Box>
