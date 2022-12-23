@@ -100,7 +100,7 @@ export default function AddressList() {
                 <Box onClick={handleChangeNumber}>
                     <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                         <Box className={`${styles.sectionContent}`} flexGrow={1}>
-                            <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`normal`}>{phone}</Text></Text>
+                            <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`bold`}>{phone}</Text></Text>
                         </Box>
                         <Box>
                             <Text><FaChevronRight /></Text>

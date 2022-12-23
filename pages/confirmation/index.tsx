@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import OrderItem from '../../components/OrderItem/OrderItem';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import { setFirstLoad } from '../../redux/slices/navigationSlice';
+import { FaChevronRight } from 'react-icons/fa';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
@@ -33,13 +34,29 @@ export default function Confirmation() {
         router.push('/addresses');
     }
 
+    const handleChangeNumber = () => {
+        dispatch(unsetPhone());
+        router.push("/profile");        
+    }
+
     return (
-        <Box className={`${styles.container} confirmation`}>
-            <Box className={styles.section}>
+        <Flex className={`${styles.container} confirmation`} flexDir="column" height={`100%`}>
+            {/* <Box className={styles.section}>
                 <div className={`mobile-section`}>
                     <p>Creating an order with <span className={styles.mobileNumber}>{name ? name + ' - ' : ''}{phone}</span>
                         <IconButton icon={<EditIcon />} aria-label={'Edit mobile'} background={'transparent'} _hover={{ bg: 'transparent' }} onClick={handleChangeMobile} /></p>
                 </div>
+            </Box> */}
+
+            <Box onClick={handleChangeNumber}>
+                <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
+                    <Box className={`${styles.sectionContent}`} flexGrow={1}>
+                        <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`bold`}>{phone}</Text></Text>
+                    </Box>
+                    <Box>
+                        <Text><FaChevronRight /></Text>
+                    </Box>
+                </Flex>
             </Box>
 
             <Box className={styles.section}>
@@ -124,6 +141,6 @@ export default function Confirmation() {
                 </Flex>
 
             </Box>
-        </Box>
+        </Flex>
     )
 }

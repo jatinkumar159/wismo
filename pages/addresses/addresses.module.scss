@@ -8,6 +8,10 @@
 .section {
     height: 48px;
     background-color: var(--chakra-colors-white);
+    
+    p {
+        font-weight: normal;
+    }
 }
 
 .card {
