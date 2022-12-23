@@ -1,5 +1,5 @@
 import { ArrowForwardIcon, DeleteIcon, EditIcon, SmallAddIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Avatar, AvatarGroup, Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
 import AddressCard from './../../components/AddressCard/AddressCard';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectName, selectPhone, unsetPhone, unverifyProfile } from '../../redux/slices/profileSlice';
@@ -8,14 +8,19 @@ import { selectSelectedAddress, selectTurboAddressList, selectUnifillAddressList
 import Link from 'next/link';
 import { selectSelectedCoupon, unsetSelectedCoupon } from '../../redux/slices/confirmationSlice';
 import { useRouter } from 'next/router';
-import OrderItem from '../../components/OrderItem/OrderItem';
+import OrderItemsList from '../../components/OrderItemsList/OrderItemsList';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import { setFirstLoad } from '../../redux/slices/navigationSlice';
 import { FaChevronRight } from 'react-icons/fa';
-import { CiDiscount1 } from 'react-icons/ci';
+import { BsBagCheckFill } from 'react-icons/bs';
 import Image from 'next/image';
 import discountImageSrc from "../../public/discounts.png";
+import upiMethodsSrc from "../../public/upiMethods.png";
+import cash from "../../public/cash.svg";
+import cards from "../../public/cards.svg";
+import upi from "../../public/upi.svg";
 import { useState } from 'react';
+import { selectCartPayload } from '../../redux/slices/settingsSlice';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
@@ -27,6 +32,7 @@ export default function Confirmation() {
     const unifillAddressList = useAppSelector(selectUnifillAddressList);
     const router = useRouter();
     const [showItemDetails, setShowItemDetails] = useState(false);
+    const cartPayload = useAppSelector(selectCartPayload);
 
     const handleChangeMobile = () => {
         dispatch(unsetPhone());
@@ -119,19 +125,29 @@ export default function Confirmation() {
 
             <Box className={styles.section} mt={2}>
                 <Flex className={styles.sectionTitle} flexDir="row" alignItems="center" justifyContent="space-between" p={4}>
-                    <Box>
+                    <Box flexGrow={1}>
                         <Text as="span" fontWeight="bold">Price Details</Text>
                     </Box>
-                    <Box onClick={handleToggleItemDetails}>
+                    <Box onClick={handleToggleItemDetails} textAlign={`right`}>
+                        {/* <Box className={styles.itemAvatarGroups}> */}
+                        <AvatarGroup size="sm" max={2}>
+                            {
+                                cartPayload.items.map((avatar: any, avatarIdx: any) => {
+                                    return <Avatar icon={<BsBagCheckFill fontSize={`14px`}/>} fontSize='1.5rem' key={`avatar-${avatarIdx}`} src={avatar.image || null} />
+                                })
+                            }
+                        </AvatarGroup>
+                    </Box>
+                    <Box ms={2} onClick={handleToggleItemDetails} >
                         <Text as="span" fontWeight="700" fontSize="xs" color="pink.400">{showItemDetails ? 'Hide Items' : 'View Items'}</Text>
                     </Box>
                 </Flex>
-                <Flex w="100%" className={styles.sectionBody} flexDir="row">
-                    { showItemDetails ? <OrderItem /> : null}
-                </Flex>
-                <Flex className={styles.sectionBody} flexDir="row" w={`100%`}>
+                <Box className={styles.sectionBody}>
+                    { showItemDetails ? <OrderItemsList /> : null}
+                </Box>
+                <Box className={styles.sectionBody}>
                     <OrderSummary mode={'sm'} />
-                </Flex>
+                </Box>
             </Box>
 
             {/* <Box className={`${styles.section} ${styles.orderSummaryContainer}`} mt={2}>
@@ -141,12 +157,61 @@ export default function Confirmation() {
                 </Box>
             </Box> */}
 
-            <Box>
-                <Box className={styles.section}>
+            <Flex className={styles.pageTitle} mt={2} ps={4} pe={4}>
+                <Text fontWeight={`700`}>Pay via</Text>
+            </Flex>
+
+            <Box className={styles.section} mt={2}>
+                <Box px={4} py={2}>
+                    <Flex flexDir="row" align="center">
+                        <Box flexGrow={1}>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image className={styles.paymentMethod} src={upi} alt="upi"/>UPI</Text>
+                            <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
+                        </Box>
+                        <Box>
+                            <Image className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
+                        </Box>
+                    </Flex>
+                </Box>
+            </Box>
+
+            <Box className={styles.section} mt={2}>
+                <Box px={4} py={2}>
+                    <Flex flexDir="row" align="center">
+                        <Box flexGrow={1}>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image className={styles.paymentMethod} src={cards} alt="cards"/>Cards/Net Banking/Wallets/Pay Later</Text>
+                            <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
+                        </Box>
+                        {/* <Box>
+                            <Image className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
+                        </Box> */}
+                    </Flex>
+                </Box>
+            </Box>
+
+            <Box className={styles.section} mt={2}>
+                <Box px={4} py={2}>
+                    <Flex flexDir="row" align="center">
+                        <Box flexGrow={1}>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image className={styles.paymentMethod} src={cash} alt="cash"/>Cash on Delivery</Text>
+                            <Text mt={1} fontSize={`xs`} color={`gray.800`}>Extra charge ₹20</Text>
+                        </Box>
+                        {/* <Box>
+                            <Image className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
+                        </Box> */}
+                    </Flex>
+                </Box>
+            </Box>
+
+            <Box className={styles.pageFooter}>
+                <Text mt={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`}>TURBO</Link></Text>
+            </Box>
+            {/* <Box>
+                {/* <Box className={styles.section}>
                     <Box className={`${styles.sectionContent} mobile-section`} mt={2} mb={2}>
                         <Text>Pay via</Text>
                     </Box>
-                </Box>
+                </Box> 
                 <Flex borderBottom={`1px solid var(--chakra-colors-gray-200)`} ps={4} pe={4} pt={2} pb={2} className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
                     <Flex flexDir="column" justifyContent="space-between" >
                         <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">Cash on Delivery</Text>
@@ -170,7 +235,7 @@ export default function Confirmation() {
                     <IconButton size="sm" icon={<ArrowForwardIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} />
                 </Flex>
 
-            </Box>
+            </Box> */}
         </Flex>
     )
 }

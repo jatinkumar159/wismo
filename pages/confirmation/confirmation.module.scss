@@ -17,10 +17,6 @@
         max-height: 48px;
         border-bottom: 1px solid var(--chakra-colors-gray-200);
     }
-
-    .sectionBody {
-        
-    }
 }
 
 .sectionContent {
@@ -73,4 +69,27 @@
     width:auto;
     height:auto;
     vertical-align: middle;
+}
+
+.itemAvatarGroups {
+    display: inline;
+}
+
+.paymentMethod {
+    font-weight: 700;
+}
+
+.pageFooter {
+    border-top: 1px solid var(--chakra-colors-gray-200);
+    background-color: var(--chakra-colors-white);
+    position:sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.paymentMethod {
+    display: inline;
+    vertical-align: middle;
+    margin-right: 0.5rem;
 }

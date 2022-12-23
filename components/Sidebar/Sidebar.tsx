@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCartPayload } from "../../redux/slices/settingsSlice";
-import OrderItem from "../OrderItem/OrderItem";
+import OrderItem from "../OrderItemsList/OrderItemsList";
 import OrderSummary from "../OrderSummary/OrderSummary";
 import styles from './Sidebar.module.scss';
 

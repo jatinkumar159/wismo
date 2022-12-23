@@ -1,0 +1,19 @@
+.viewToggle{
+    color: var(--chakra-colors-blue-400);
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+.image {
+    border: 1px solid var(--chakra-colors-gray-200);
+    border-radius: var(--chakra-sizes-2);
+    min-height: 100px;
+    min-width: 100px;
+}
+
+.itemList {
+    overflow:auto;
+    max-height: 200px;
+}
