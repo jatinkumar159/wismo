@@ -11,7 +11,7 @@ import {useState} from 'react';
 import { FaChevronRight } from "react-icons/fa";
 import { selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
-import { getDiscounts } from "../../apis/get";
+// import { getDiscounts } from "../../apis/get";
 import { Mulish } from "@next/font/google";
 
 const mulish = Mulish({

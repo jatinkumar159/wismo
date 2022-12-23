@@ -11,6 +11,8 @@
     input[disabled] {
         background: #dedede;
     }   
+
+    min-height: calc(100vh - 72px);
 }
 
 .section {

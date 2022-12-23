@@ -51,9 +51,9 @@ function RadioCard(props: any) {
 
 export default function NewAddress() {
     const router = useRouter();
-    const phone = useAppSelector(selectPhone);
     const name = useAppSelector(selectName);
     const toast = useToast();
+    const phone = useAppSelector(selectPhone);
     const dispatch = useAppDispatch();
 
     const options = ['HOME', 'WORK', 'OTHER']
@@ -159,7 +159,7 @@ export default function NewAddress() {
                     <form onSubmit={formik.handleSubmit}>
                         <FormControl className={`${formik.touched.state ? styles.touched : null} ${styles.leftAddonGroup}`} variant={`floating`} mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
                             <InputGroup>
-                                <InputLeftAddon p={2} fontSize="sm" background={`none`}>+91</InputLeftAddon>
+                                <InputLeftAddon p={2} fontSize="sm" background={`none`} className={styles.inputLeftAddon}>+91</InputLeftAddon>
                                 <Input borderLeft={0} type="number" placeholder={`Mobile`} {...formik.getFieldProps('mobile')}></Input>
                                 <FormLabel ps={4} htmlFor="mobile" className={styles.leftAddonLabel}>Mobile</FormLabel>
                             </InputGroup>

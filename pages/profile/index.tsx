@@ -21,6 +21,7 @@ import { selectCart, selectCartPayload, selectOtpLength, setCart } from '../../r
 import { showErrorToast } from '../../utils/toasts'
 import { getBuyerProfile } from '../../apis/get'
 import jwtDecode from 'jwt-decode';
+import { Token } from '../../utils/interfaces'
 
 export default function Profile() {
     const dispatch = useAppDispatch()
@@ -78,7 +79,6 @@ export default function Profile() {
                         const token = localStorage.getItem('turbo');
                         if (token) {
                             const decodedToken: Token = jwtDecode(token);
-                            debugger;
                             if ((decodedToken.sub === '+91' + values.phone) && Date.now() < (decodedToken.exp * 1000)) {
                                 dispatch(setPhone(values.phone));
                                 if (!cart) handleCreateCart(values.phone);
