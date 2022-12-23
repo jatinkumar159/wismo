@@ -20,6 +20,8 @@ import { ArrowForwardIcon, ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } fr
 import { selectCartPayload, selectOtpLength, setCart } from '../../redux/slices/settingsSlice'
 import { showErrorToast } from '../../utils/toasts'
 import { getBuyerProfile } from '../../apis/get'
+import jwtDecode from 'jwt-decode'
+import { Token } from '../../utils/interfaces'
 
 export default function Profile() {
     const dispatch = useAppDispatch()
@@ -75,6 +77,17 @@ export default function Profile() {
                 validateOnBlur={false}
                 onSubmit={async (values) => {
                     try {
+                        // IF TOKEN ALREADY EXISTS && NUMBER IS SAME
+                        const token = localStorage.getItem('turbo');
+                        if (token) {
+                            const decodedToken: Token = jwtDecode(token);
+                            if (decodedToken.sub === values.phone && Date.now() < (decodedToken.exp * 1000)) {
+                                dispatch(verifyProfile());
+                                router.push('/addresses');
+                                return;
+                            }
+                        }
+
                         const res = await verifyBuyer(values.phone);
                         const data = await res.json();
 
@@ -258,29 +271,10 @@ export default function Profile() {
         )
     }
 
-    function DisplayPhone() {
-        return (
-            <>
-                <Center h={`calc(100vh - 40px)`}>
-                    <Flex flexDir="column" align={`center`}>
-                        <Box m={2}>
-                            <Text as="h3">Hi, {name ? name : phone}</Text>
-                        </Box>
-                        <Box m={2}>
-                            <Text as="span">Not you? <Link onClick={handleResetProfile}>Click here.</Link></Text>
-                        </Box>
-                    </Flex>
-                </Center>
-            </>
-        )
-    }
-
     return (
         <>
             <Center h={`calc(100vh - 40px)`} className={styles.container}>
-                {!phone && <EnterPhone />}
-                {phone && !isVerified && <EnterOTP />}
-                {phone && isVerified && <Center h={`calc(100vh - 40px)`}><Spinner /></Center>}
+                {(phone && !isVerified) ? <EnterOTP /> : <EnterPhone />}
             </Center>
         </>
     )

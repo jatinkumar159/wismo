@@ -7,13 +7,7 @@ import { createCart, verifyBuyer } from "../apis/post";
 import { Center, Spinner, useToast } from "@chakra-ui/react";
 import { showErrorToast } from "../utils/toasts";
 import { selectCartPayload, setCart } from "../redux/slices/settingsSlice";
-
-interface Token {
-    is_guest_user: boolean;
-    iat: number;
-    exp: number;
-    sub: string;
-}
+import { Token } from "../utils/interfaces";
 
 export default function Home() {
     const dispatch = useAppDispatch();
