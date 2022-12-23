@@ -13,3 +13,9 @@ export async function getPostalAddress(pincode: string): Promise<any> {
     const res = await gateway(`${baseUrl}/v1/pincode/${pincode}`, 'GET');
     return res.json();
 }
+
+/********************************************** PAYMENT ***********************************************************/
+export async function getOrderById(id: string): Promise<Response> {
+    const res = await gateway(`${baseUrl}/v1/order/${id}`, `GET`);
+    return res;
+}

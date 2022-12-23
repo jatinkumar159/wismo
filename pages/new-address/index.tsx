@@ -57,11 +57,11 @@ export default function NewAddress() {
     const toast = useToast();
     const dispatch = useAppDispatch();
 
-    const options = ['home', 'work', 'other']
+    const options = ['HOME', 'WORK', 'OTHER']
 
     const { getRootProps, getRadioProps } = useRadioGroup({
-        name: 'home',
-        defaultValue: 'home',
+        name: 'HOME',
+        defaultValue: 'HOME',
         onChange: (e) => {
             formik.setValues({ ...formik.values, ['address_type']: e })
         },
