@@ -48,7 +48,7 @@ export default function Home() {
         // TOKEN IS NOT EXPIRED
         const handleCreateCart = async (phone: string) => {
             try {
-                const res = await createCart('SHOPIFY', '638d85e405faf1498a5adf2s', phone, cartPayload, undefined);
+                const res = await createCart('SHOPIFY', 'mid1', phone, cartPayload, undefined);
                 const data = await res.json();
 
                 if (data.hasOwnProperty('cart')) {

@@ -43,5 +43,13 @@ export async function createCart(platform: string, merchantId: string, mobileNum
         address: address,
     }));
     return res;
+}
 
+/********************************************** PAYMENT ***********************************************************/
+export async function createOrder(cartId: string, paymentMethod: string): Promise<Response> {
+    const res = await gateway(`${baseUrl}/v1/order`, `POST`, JSON.stringify({
+        cart_id: cartId,
+        payment_option: paymentMethod,
+    }));
+    return res;
 }
