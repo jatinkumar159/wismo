@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { selectFlowMap } from '../../redux/slices/navigationSlice';
 import { selectIsVerified, selectPhone, unsetPhone } from '../../redux/slices/profileSlice';
+import imageLoader from '../../utils/imageLoader';
 import styles from './Navigation.module.scss';
 
 export default function Navigation() {
@@ -35,7 +36,7 @@ export default function Navigation() {
                 <Text as="span" fontSize="sm" fontWeight="bold">{flowMap[router.pathname]?.title}</Text>
             </div>
             <div className={styles.attribution}>
-                <Image src={'https://infowordpress.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/10/06114711/logo.webp'} alt="Logo" width='70' height='50' priority />
+                <Image loader={imageLoader} src={'https://infowordpress.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/10/06114711/logo.webp'} alt="Logo" width='70' height='50' priority />
             </div>
         </div>
     )

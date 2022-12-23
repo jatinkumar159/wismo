@@ -25,7 +25,7 @@ export default function OrderItemsList(props: OrderItemProps) {
                             <Text fontSize={`xs`} color="gray.800" fontWeight={700}>{item.vendor}</Text>
                             <Text fontSize={`sm`} color="gray.800">{item.product_title}</Text>
                             {
-                                item.options_with_values.map((option, optionIdx) => {
+                                item.options_with_values.map((option: any, optionIdx: number) => {
                                     return <Text mt={1} key={`option-${optionIdx}`} fontSize={`xs`}>{option.name}:{option.value}</Text>
                                 })
                             }

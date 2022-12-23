@@ -14,13 +14,14 @@ import { setFirstLoad } from '../../redux/slices/navigationSlice';
 import { FaChevronRight } from 'react-icons/fa';
 import { BsBagCheckFill } from 'react-icons/bs';
 import Image from 'next/image';
-import discountImageSrc from "../../public/discounts.png";
-import upiMethodsSrc from "../../public/upiMethods.png";
-import cash from "../../public/cash.svg";
-import cards from "../../public/cards.svg";
-import upi from "../../public/upi.svg";
+import discountImageSrc from "../../images/discounts.png";
+import upiMethodsSrc from "../../images/upiMethods.png";
+import cash from "../../images/cash.svg";
+import cards from "../../images/cards.svg";
+import upi from "../../images/upi.svg";
 import { useState } from 'react';
 import { selectCartPayload } from '../../redux/slices/settingsSlice';
+import imageLoader from '../../utils/imageLoader';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
@@ -98,7 +99,7 @@ export default function Confirmation() {
                         <Box flexGrow={1}>
                             <Flex flexDir="row" alignItems="center">
                                 <Text w="100%" alignItems="center" lineHeight="1">
-                                    <Image className={styles.discountIcon} src={discountImageSrc} alt={'discount'} />
+                                    <Image loader={imageLoader} className={styles.discountIcon} src={discountImageSrc} alt={'discount'} />
                                     <Text as="span" fontWeight="bold" ms={2}>Apply Coupon</Text>
                                 </Text>
                             </Flex>
@@ -165,11 +166,11 @@ export default function Confirmation() {
                 <Box px={4} py={2}>
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
-                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image className={styles.paymentMethod} src={upi} alt="upi"/>UPI</Text>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={upi} alt="upi"/>UPI</Text>
                             <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
                         </Box>
                         <Box>
-                            <Image className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
+                            <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
                         </Box>
                     </Flex>
                 </Box>
@@ -179,11 +180,11 @@ export default function Confirmation() {
                 <Box px={4} py={2}>
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
-                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image className={styles.paymentMethod} src={cards} alt="cards"/>Cards/Net Banking/Wallets/Pay Later</Text>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cards} alt="cards"/>Cards/Net Banking/Wallets/Pay Later</Text>
                             <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
                         </Box>
                         {/* <Box>
-                            <Image className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
+                            <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
                         </Box> */}
                     </Flex>
                 </Box>
@@ -193,11 +194,11 @@ export default function Confirmation() {
                 <Box px={4} py={2}>
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
-                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image className={styles.paymentMethod} src={cash} alt="cash"/>Cash on Delivery</Text>
+                            <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cash} alt="cash"/>Cash on Delivery</Text>
                             <Text mt={1} fontSize={`xs`} color={`gray.800`}>Extra charge ₹20</Text>
                         </Box>
                         {/* <Box>
-                            <Image className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
+                            <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
                         </Box> */}
                     </Flex>
                 </Box>
