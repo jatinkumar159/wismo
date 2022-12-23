@@ -118,7 +118,11 @@ export default function Confirmation() {
                 ) : null}
             </Box>
 
-
+            <Box className={styles.section} mt={2}>
+                <Flex className={styles.sectionTitle} flexDir="row" alignItems="center" justifyContent="space-between" p={4}>
+                    <Text as="span" fontWeight="bold">Price Details</Text>
+                </Flex>
+            </Box>
 
             <Box className={`${styles.section} ${styles.orderSummaryContainer}`} mt={2}>
                 <Box className={`${styles.sectionContent} order-summary`} mb={4}>
