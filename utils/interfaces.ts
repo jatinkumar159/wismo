@@ -33,3 +33,10 @@ export interface Addresses {
     turbo_address_list: Address[];
     unifill_address_list: Address[];
 }
+
+export interface Token {
+    is_guest_user: boolean;
+    iat: number;
+    exp: number;
+    sub: string;
+}

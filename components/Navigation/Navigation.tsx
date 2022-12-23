@@ -3,7 +3,7 @@ import { IconButton, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { selectFlowMap } from '../../redux/slices/navigationSlice';
+import { selectFlowMap, setFirstLoad } from '../../redux/slices/navigationSlice';
 import { selectIsVerified, selectPhone, unsetPhone } from '../../redux/slices/profileSlice';
 import imageLoader from '../../utils/imageLoader';
 import styles from './Navigation.module.scss';
@@ -22,6 +22,7 @@ export default function Navigation() {
             dispatch(unsetPhone());
             return;
         }
+        if (router.pathname === '/confirmation') dispatch(setFirstLoad('addresses'));
         router.back();
     }
 
