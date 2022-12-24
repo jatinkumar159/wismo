@@ -90,7 +90,7 @@ export default function AddressList() {
     </>
 
     if (isLoading) return <>
-        <Center h={`calc(100vh - 40px)`}><Spinner /></Center> :
+        <Center h={`calc(100vh - 80px)`}><Spinner /></Center> :
     </>
 
     if (isError) return <>
@@ -99,7 +99,7 @@ export default function AddressList() {
 
     return (
         <>
-            <Flex className={styles.container} flexDir={`column`} h={`100%`}>
+            <Flex className={styles.container} flexDir={`column`}>
                 <Box onClick={handleChangeNumber}>
                     <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                         <Box className={`${styles.sectionContent}`} flexGrow={1}>
@@ -171,7 +171,7 @@ export default function AddressList() {
                         </form>
                     </Box>
                 </Box>
-                <Box p={4} className={styles.pageFooter}>
+                <Box py={2} px={4} className={styles.pageFooter}>
                     <Link href="/new-address">
                         <Button fontSize={`sm`} variant={`outline`} type="submit" w={`100%`} colorScheme={`black`} textTransform={`uppercase`}>
                             Add new Address

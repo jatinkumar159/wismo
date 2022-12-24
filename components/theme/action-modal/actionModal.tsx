@@ -5,10 +5,12 @@ const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(parts.keys)
 
 const action = definePartsStyle({
-dialogContainer: {
-    width: `50vw`,
-    right: 0,
-    left:`initial`
+  dialogContainer: {
+    height: `35vh`,
+    bottom: 0,
+    top:`initial`,
+    borderTopLeftRadius: `1rem`,
+    borderTopRightRadius: `1rem`,
   },
 })
 

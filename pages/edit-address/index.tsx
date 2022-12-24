@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftAddon, Radio, RadioGroup, Spinner, useToast } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftAddon, Link, Radio, RadioGroup, Spinner, Text, useRadio, useRadioGroup, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import styles from './edit-address.module.scss';
 import * as Yup from 'yup';
@@ -10,17 +10,64 @@ import { addAddress, selectTurboAddressList, selectUnifillAddressList, setSelect
 import { showErrorToast } from "../../utils/toasts";
 import { editAddress } from "../../apis/put";
 import { Address } from "../../utils/interfaces";
+import { FaChevronRight } from "react-icons/fa";
+import { selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
+import { ChevronRightIcon } from "@chakra-ui/icons";
+
+function RadioCard(props: any) {
+    const { getInputProps, getCheckboxProps } = useRadio(props)
+    const input = getInputProps()
+    const checkbox = getCheckboxProps()
+
+    return (
+        <Box as='label'>
+            <input {...input} />
+            <Box
+                {...checkbox}
+                cursor='pointer'
+                textTransform={`uppercase`}
+                borderWidth='1px'
+                borderColor={`gray.200`}
+                borderRadius='lg'
+                px={2} py={1}
+                fontSize={`xs`}
+                boxShadow='none'
+                _checked={{
+                    bg: '#F1F8E9',
+                    color: '#549112',
+                    borderColor: 'transparent',
+                    borderWidth: '1px'
+                }}
+                _focus={{
+                    boxShadow: 'none',
+                }}
+            >
+                {props.children}
+            </Box>
+        </Box>
+    )
+}
 
 export default function EditAddress() {
     const router = useRouter();
     const toast = useToast();
     const turboAddressList = useAppSelector(selectTurboAddressList);
     const unifillAddressList = useAppSelector(selectUnifillAddressList);
+    const phone = useAppSelector(selectPhone);
+    const dispatch = useAppDispatch();
     const { query: { address_id } } = router;
 
     let address: Address | undefined = turboAddressList?.find(el => el.address_id === address_id);
     if (!address) address = unifillAddressList?.find(el => el.address_id === address_id);
-
+    
+    const { getRootProps, getRadioProps } = useRadioGroup({
+        name: 'HOME',
+        defaultValue: 'HOME',
+        onChange: (e) => {
+            formik.setValues({ ...formik.values, ['address_type']: e })
+        },
+    })
+    
     const formik = useFormik({
         initialValues: {
             mobile: address?.mobile || '',
@@ -62,6 +109,10 @@ export default function EditAddress() {
         }
     });
 
+    const options = ['HOME', 'WORK', 'OTHER']
+    const group = getRootProps();
+    
+
     const handlePinCodeChange = async (e: ChangeEvent<HTMLInputElement>) => {
         formik.handleChange(e);
         if (e.target.value?.length === 6) {
@@ -94,57 +145,77 @@ export default function EditAddress() {
         }
     }
 
+    const handleChangeNumber = () => {
+        dispatch(unsetPhone());
+        router.push("/profile");        
+    }
+    
     return (
-        <>
+        <Flex className={styles.container} flexDir="column">
             {
                 address ? (<>
-                    <Box className={styles.container} mb={2}>
+
+                    <Box onClick={handleChangeNumber}>
+                        <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
+                            <Box className={`${styles.sectionContent}`} flexGrow={1}>
+                                <Text fontWeight={`bold`}>Your number <Text as="span" ms={4} fontWeight={`bold`}>{phone}</Text></Text>
+                            </Box>
+                            <Box>
+                                <Text><FaChevronRight /></Text>
+                            </Box>
+                        </Flex>
+                    </Box>
+                    <Flex className={styles.pageTitle} mb={2} ps={4} pe={4}>
+                        <Text fontWeight={`bold`}>Deliver to</Text>
+                    </Flex>
+                    
+                    <Box className={styles.formContainer} mb={2} p={4} flexGrow={1}>
                         <form onSubmit={formik.handleSubmit}>
-                            <FormControl mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
-                                <FormLabel ps={4} htmlFor="mobile">Mobile</FormLabel>
+                            <FormControl variant="floating" mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>
                                 <InputGroup>
-                                    <InputLeftAddon>+91</InputLeftAddon>
-                                    <Input type="number" placeholder={`Mobile`} {...formik.getFieldProps('mobile')}></Input>
+                                    <InputLeftAddon className={styles.leftAddon} p={2} fontSize="sm" background={`none`}>+91</InputLeftAddon>
+                                    <Input ps={12} className={styles.leftAddonInput} type="number" placeholder={`Mobile`} {...formik.getFieldProps('mobile')}></Input>
+                                    <FormLabel ps={4} htmlFor="mobile">Mobile</FormLabel>
                                 </InputGroup>
                                 <FormErrorMessage>{formik.errors.mobile}</FormErrorMessage>
                             </FormControl>
-                            <FormControl mb={4} isInvalid={formik.touched.name && formik.errors.name ? true : false}>
-                                <FormLabel ps={4} htmlFor="name">Name</FormLabel>
+                            <FormControl variant="floating" mb={4} isInvalid={formik.touched.name && formik.errors.name ? true : false}>
                                 <Input type="text" placeholder="Name" aria-placeholder="Name" {...formik.getFieldProps('name')}></Input>
+                                <FormLabel ps={4} htmlFor="name">Name</FormLabel>
                                 <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
                             </FormControl>
-                            <FormControl mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
-                                <FormLabel ps={4} htmlFor="email">Email</FormLabel>
+                            <FormControl variant="floating" mb={4} isInvalid={formik.touched.email && formik.errors.email ? true : false}>
                                 <Input type="text" placeholder="email" aria-placeholder="Email" {...formik.getFieldProps('email')}></Input>
+                                <FormLabel ps={4} htmlFor="email">Email</FormLabel>
                                 <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                             </FormControl>
-                            <FormControl mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
-                                <FormLabel ps={4} htmlFor="name">Pincode</FormLabel>
+                            <FormControl variant="floating" mb={4} isInvalid={formik.touched.pincode && formik.errors.pincode ? true : false}>
                                 <Input type="text" placeholder="pincode" aria-placeholder="Pincode" {...formik.getFieldProps('pincode')} onChange={handlePinCodeChange}></Input>
+                                <FormLabel ps={4} htmlFor="name">Pincode</FormLabel>
                                 <FormErrorMessage>{formik.errors.pincode}</FormErrorMessage>
                             </FormControl>
                             <Flex flexDir="row" justifyContent={`space-between`} gap={4} mb={4}>
-                                <FormControl isInvalid={formik.touched.city && formik.errors.city ? true : false}>
-                                    <FormLabel ps={4} htmlFor="city">City</FormLabel>
+                                <FormControl variant="floating" isInvalid={formik.touched.city && formik.errors.city ? true : false}>
                                     <Input type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
+                                    <FormLabel ps={4} htmlFor="city">City</FormLabel>
                                     <FormErrorMessage>{formik.errors.city}</FormErrorMessage>
                                 </FormControl>
-                                <FormControl isInvalid={formik.touched.state && formik.errors.state ? true : false}>
-                                    <FormLabel ps={4} htmlFor="state">State</FormLabel>
+                                <FormControl variant="floating" isInvalid={formik.touched.state && formik.errors.state ? true : false}>
                                     <Input disabled type="text" placeholder="State" aria-placeholder="State" {...formik.getFieldProps('state')}></Input>
+                                    <FormLabel ps={4} htmlFor="state">State</FormLabel>
                                     <FormErrorMessage>{formik.errors.state}</FormErrorMessage>
                                 </FormControl>
                             </Flex>
-                            <FormControl mb={4} isInvalid={formik.touched.address_line1 && formik.errors.address_line1 ? true : false}>
-                                <FormLabel ps={4} htmlFor="address_line1">Address Line 1</FormLabel>
+                            <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_line1 && formik.errors.address_line1 ? true : false}>
                                 <Input type="text" placeholder="House, road" aria-placeholder="house, road" {...formik.getFieldProps('address_line1')}></Input>
+                                <FormLabel ps={4} htmlFor="address_line1">Address Line 1</FormLabel>
                                 <FormErrorMessage>{formik.errors.address_line1}</FormErrorMessage>
                             </FormControl>
-                            <FormControl mb={4} isInvalid={formik.touched.address_line2 && formik.errors.address_line2 ? true : false}>
-                                <FormLabel ps={4} htmlFor="address_line2">Address Line 2</FormLabel>
+                            <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_line2 && formik.errors.address_line2 ? true : false}>
                                 <Input type="text" placeholder="Locality, Landmark" aria-placeholder="Locality, Landmark" {...formik.getFieldProps('address_line2')}></Input>
+                                <FormLabel ps={4} htmlFor="address_line2">Address Line 2</FormLabel>
                             </FormControl>
-                            <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
+                            {/* <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
                                 <FormLabel ps={4} htmlFor="address_type">Address Type</FormLabel>
                                 <RadioGroup defaultValue={address.address_type}>
                                     <Radio colorScheme='green' {...formik.getFieldProps('address_type')} value='HOME' mr={4}>
@@ -157,14 +228,37 @@ export default function EditAddress() {
                                         Other
                                     </Radio>
                                 </RadioGroup>
+                            </FormControl> */}
+                            <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
+                                <FormLabel htmlFor="address_type" className={styles.inlineLabel} display="inline" fontWeight="normal">Save address as </FormLabel>
+                                <Flex {...group} flexDir={`row`} display={`inline-flex`} gap={4}>
+                                    {options.map((value) => {
+                                        const radio = getRadioProps({ value })
+                                        return (
+                                            <RadioCard key={value} {...radio}>
+                                                {value}
+                                            </RadioCard>
+                                        )
+                                    })}
+                                </Flex>
                             </FormControl>
-                            <Button type='submit'>Submit</Button>
+                            <FormControl mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
+                                <Checkbox spacing="0.5rem"><Text fontSize="xs">Make this the default shipping address</Text></Checkbox>
+                            </FormControl>
+                            {/* <Button type='submit'>Submit</Button> */}
                         </form>
+                    </Box>
+
+                    <Box p={4}>
+                        <Button type="submit" isDisabled={!formik.isValid} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2} onClick={formik.submitForm}>
+                            <Text as="span" fontSize="sm" textTransform={`uppercase`}>Proceed to Buy <ChevronRightIcon ms={2} fontSize={`lg`} /></Text>
+                        </Button>
+                        <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`blue.300`}>TURBO</Text></Link></Text>
                     </Box>
 
 
                 </>) : (<p>Invalid Address Selected, Please try again with another address!</p>)
             }
-        </>
+        </Flex>
     )
 }

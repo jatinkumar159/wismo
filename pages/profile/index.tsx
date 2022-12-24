@@ -20,7 +20,7 @@ import { ArrowForwardIcon, ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } fr
 import { selectCart, selectCartPayload, selectOtpLength, setCart } from '../../redux/slices/settingsSlice'
 import { showErrorToast } from '../../utils/toasts'
 import { getBuyerProfile } from '../../apis/get'
-import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode';
 import { Token } from '../../utils/interfaces'
 
 export default function Profile() {
@@ -79,7 +79,6 @@ export default function Profile() {
                         const token = localStorage.getItem('turbo');
                         if (token) {
                             const decodedToken: Token = jwtDecode(token);
-                            debugger;
                             if ((decodedToken.sub === '+91' + values.phone) && Date.now() < (decodedToken.exp * 1000)) {
                                 dispatch(setPhone(values.phone));
                                 if (!cart) handleCreateCart(values.phone);
@@ -275,7 +274,7 @@ export default function Profile() {
 
     return (
         <>
-            <Center h={`calc(100vh - 40px)`} className={styles.container}>
+            <Center className={styles.container}>
                 {(phone && !isVerified) ? <EnterOTP /> : <EnterPhone />}
             </Center>
         </>

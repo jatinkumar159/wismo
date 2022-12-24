@@ -122,7 +122,7 @@ export default function Confirmation() {
     }
 
     return (
-        <Flex className={`${styles.container} confirmation`} flexDir="column" height={`100%`}>
+        <Flex className={`${styles.container} confirmation`} flexDir="column">
             <Box onClick={handleChangeNumber}>
                 <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`}>
                     <Box className={`${styles.sectionContent}`} flexGrow={1}>
@@ -140,8 +140,8 @@ export default function Confirmation() {
                         <Box flexGrow={1}>
                             <Text>Deliver to <Text as="span" fontWeight="bold">{selectedAddress?.name}, {selectedAddress?.pincode || ''}</Text></Text>
                             <Text mt={2} fontSize="xs">{selectedAddress?.address_line1}</Text>
-                            <Text fontSize="xs" mt={2}>{selectedAddress?.address_line2}</Text>
-                            {selectedAddress?.mobile ? <Text fontSize="xs">Mobile: +91 {selectedAddress?.mobile}</Text> : null}
+                            <Text fontSize="xs" >{selectedAddress?.address_line2}</Text>
+                            {selectedAddress?.mobile ? <Text mt={2} fontSize="xs">Mobile: +91 {selectedAddress?.mobile}</Text> : null}
                         </Box>
                         <Box>
                             <Text onClick={redirectToAddresses} as="span" fontSize="xs" fontWeight="bold" color="pink.400" cursor={`pointer`}>Change</Text>
@@ -233,7 +233,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center" onClick={() => initiatePayment('UPI')} cursor='pointer'>
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={upi} alt="upi" />UPI</Text>
-                            <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
+                            <Text mt={1} fontSize={`xs`} color={`green.400`} ml={6}>Additional 10% off</Text>
                         </Box>
                         <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
@@ -247,7 +247,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center" onClick={() => initiatePayment('PREPAID')} cursor='pointer'>
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cards} alt="cards" />Cards/Net Banking/Wallets/Pay Later</Text>
-                            <Text mt={1} fontSize={`xs`} color={`green.400`}>Additional 10% off</Text>
+                            <Text mt={1} fontSize={`xs`} color={`green.400`} ml={6}>Additional 10% off</Text>
                         </Box>
                         {/* <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
@@ -261,7 +261,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center" onClick={() => initiatePayment('COD')} cursor='pointer'>
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cash} alt="cash" />Cash on Delivery</Text>
-                            <Text mt={1} fontSize={`xs`} color={`gray.800`}>Extra charge ₹20</Text>
+                            <Text mt={1} fontSize={`xs`} color={`gray.800`} ml={6}>Extra charge ₹20</Text>
                         </Box>
                         {/* <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />

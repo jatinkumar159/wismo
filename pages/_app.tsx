@@ -59,9 +59,7 @@ export const theme = extendTheme({
 })
 
 const mulish = Mulish({
-  weight: ["400", "600", "700"],
-  subsets: ["latin"],
-  style: ["normal"]
+  subsets: ["latin"]
 })
 
 const queryClient = new QueryClient()
@@ -119,12 +117,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <ChakraProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <InitialiseMessaging />
-            <Flex flexDir="row" h={`100vh`} className={mulish.className}>
+            <Flex flexDir="row" className={mulish.className}>
               <Flex className={styles.container} flexDir="column" grow={1}>
                 <Navigation />
                 <PromoBar />
                 {isPageTransitionActive ?
-                  <Center h={`calc(100vh - 40px)`}><Spinner /></Center> :
+                  <Center h={`calc(100vh - 80px)`}><Spinner /></Center> :
                   <Component {...pageProps} className={styles.pageContainer} />
                 }
               </Flex>
