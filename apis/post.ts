@@ -53,3 +53,13 @@ export async function createOrder(cartId: string, paymentMethod: string): Promis
     }));
     return res;
 }
+
+export async function verifyPayment(paymentId: string, data: any): Promise<Response> {
+    const res = await gateway(`${baseUrl}/payments/v1/verify`, 'POST', JSON.stringify({
+        payment_id: paymentId,
+        pg_order_id: data.razorpay_order_id,
+        pg_payment_id: data.razorpay_payment_id,
+        pg_signature: data.razorpay_signature,
+    }));
+    return res;
+}
