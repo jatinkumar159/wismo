@@ -1,4 +1,4 @@
-import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, Link, Radio, RadioGroup, Spinner, Text, useRadio, useRadioGroup, useToast } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftAddon, InputRightAddon, Link, Radio, RadioGroup, Spinner, Text, useRadio, useRadioGroup, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import styles from './new-address.module.scss';
 import * as Yup from 'yup';
@@ -55,7 +55,7 @@ export default function NewAddress() {
     const toast = useToast();
     const phone = useAppSelector(selectPhone);
     const dispatch = useAppDispatch();
-
+    const [loadingPincode, setLoadingPincode] = useState(false);
     const options = ['HOME', 'WORK', 'OTHER']
 
     const { getRootProps, getRadioProps } = useRadioGroup({
@@ -111,16 +111,25 @@ export default function NewAddress() {
     });
 
     const fillPostalData = async (pincode: string) => {
+        setLoadingPincode(true);
         const data: any = await getPostalAddress(pincode);
         if (data.hasOwnProperty('api_error')) {
             formik.setErrors({
                 pincode: 'Invalid Pincode'
             });
+            setLoadingPincode(false);
+            return;
+        }
+        if(data.city === null || data.state === null) {
+            formik.setErrors({
+                pincode: "Invalid Pincode"
+            });
+            setLoadingPincode(false);
             return;
         }
         // await formik.setTouched({ ...formik.touched, city: true, state: true, country: true }, false);
         await formik.setValues({ ...formik.values, city: data['city'], state: data['state'], country: data['country'] });
-
+        setLoadingPincode(false); 
     }
 
     useEffect(() => {
@@ -182,13 +191,19 @@ export default function NewAddress() {
                         </FormControl>
                         <Flex flexDir="row" justifyContent={`space-between`} gap={4} mb={4}>
                             <FormControl variant="floating" isInvalid={formik.touched.city && formik.errors.city ? true : false}>
-                                <Input type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
-                                <FormLabel ps={4} htmlFor="city">City</FormLabel>
+                                <InputGroup>
+                                    <Input className={styles.rightAddonInput} type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
+                                    <FormLabel ps={4} htmlFor="state">City</FormLabel>
+                                    {loadingPincode ? <InputRightAddon p={2} fontSize="sm" background={`none`} className={styles.rightAddon}><Spinner size="xs" /></InputRightAddon> : null }
+                                </InputGroup>
                                 <FormErrorMessage fontSize={`xs`}>{formik.errors.city}</FormErrorMessage>
                             </FormControl>
                             <FormControl className={`${styles.disabledFormField}`} variant="floating" isInvalid={formik.touched.state && formik.errors.state ? true : false}>
-                                <Input disabled type="text" placeholder="State" aria-placeholder="State" {...formik.getFieldProps('state')}></Input>
-                                <FormLabel ps={4} htmlFor="state">State</FormLabel>
+                                <InputGroup>
+                                    <Input className={styles.rightAddonInput} disabled type="text" placeholder="State" aria-placeholder="State" {...formik.getFieldProps('state')}></Input>
+                                    <FormLabel ps={4} htmlFor="state">State</FormLabel>
+                                    {loadingPincode ? <InputRightAddon p={2} fontSize="sm" background={`none`} className={styles.rightAddon}><Spinner size="xs" /></InputRightAddon> : null }
+                                </InputGroup>
                                 <FormErrorMessage fontSize={`xs`}>{formik.errors.state}</FormErrorMessage>
                             </FormControl>
                         </Flex>
