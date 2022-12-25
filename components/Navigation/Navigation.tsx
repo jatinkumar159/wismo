@@ -33,7 +33,10 @@ export default function Navigation() {
     return (
         <div className={styles.container}>
             <div className={styles.brand}>
-                {!(router.pathname === '/profile' && !phone) ? <IconButton aria-label="back" icon={<ArrowBackIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleBackNavigation} /> : <IconButton aria-label="close" icon={<SmallCloseIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleClose} />}
+                {((router.pathname === '/profile' && phone && !isVerified) || (router.pathname === '/success')) ?
+                    <IconButton aria-label="close" icon={<SmallCloseIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleClose} />
+                    : <IconButton aria-label="back" icon={<ArrowBackIcon />} background={"transparent"} _hover={{ bg: 'transparent' }} onClick={handleBackNavigation} />
+                }
                 <Text as="span" fontSize="sm" fontWeight="bold">{flowMap[router.pathname]?.title}</Text>
             </div>
             <div className={styles.attribution}>

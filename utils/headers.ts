@@ -1,6 +1,6 @@
 import { getPlatformData } from "./platform";
 
-export function getHeaders(method: string): Headers {
+export function getHeaders(method: string, headersMap: any): Headers {
     const headers = new Headers();
 
     let platformInfo: any = {};
@@ -18,6 +18,7 @@ export function getHeaders(method: string): Headers {
     headers.append('user-agent', `${navigator.userAgent}`);
     headers.append('X-NPlatformInfo', 'SHOPIFY');
     if(method !== 'GET') headers.append('Content-type', 'application/json');
+    headersMap?.forEach((headerPair: any) => headers.append(headerPair[0], headerPair[1]));
 
     return headers;
 }
