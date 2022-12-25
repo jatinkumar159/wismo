@@ -1,4 +1,4 @@
-import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftAddon, Link, Radio, RadioGroup, Spinner, Text, useRadio, useRadioGroup, useToast } from "@chakra-ui/react";
+import { Box, Button, Center, Checkbox, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftAddon, InputRightAddon, Link, Radio, RadioGroup, Spinner, Text, useRadio, useRadioGroup, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import styles from './edit-address.module.scss';
 import * as Yup from 'yup';
@@ -55,6 +55,7 @@ export default function EditAddress() {
     const unifillAddressList = useAppSelector(selectUnifillAddressList);
     const phone = useAppSelector(selectPhone);
     const dispatch = useAppDispatch();
+    const [loadingPincode, setLoadingPincode] = useState(false);
     const { query: { address_id } } = router;
 
     let address: Address | undefined = turboAddressList?.find(el => el.address_id === address_id);
@@ -84,7 +85,7 @@ export default function EditAddress() {
         validationSchema: Yup.object({
             name: Yup.string().required('Required'),
             address_line1: Yup.string().required('Required'),
-            city: Yup.string().required('Required'),
+            city: Yup.string().nullable(false).required('Required'),
             state: Yup.string().required('Required'),
             country: Yup.string().required('Required'),
             pincode: Yup.string().required('Required'),
@@ -117,11 +118,21 @@ export default function EditAddress() {
         formik.handleChange(e);
         if (e.target.value?.length === 6) {
             try {
+                setLoadingPincode(true);
                 const data: any = await getPostalAddress(e.target.value);
                 if (data.hasOwnProperty('api_error')) {
                     formik.setErrors({
                         pincode: 'Invalid Pincode'
                     });
+                    setLoadingPincode(false);
+                    return;
+                }
+
+                if(data.city === null || data.state === null) {
+                    formik.setErrors({
+                        pincode: "Invalid Pincode"
+                    });
+                    setLoadingPincode(false);
                     return;
                 }
                 formik.setValues({
@@ -131,6 +142,7 @@ export default function EditAddress() {
                     country: data['country'],
                     state: data['state'],
                 })
+                setLoadingPincode(false);
             } catch {
                 showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
             }
@@ -196,13 +208,19 @@ export default function EditAddress() {
                             </FormControl>
                             <Flex flexDir="row" justifyContent={`space-between`} gap={4} mb={4}>
                                 <FormControl variant="floating" isInvalid={formik.touched.city && formik.errors.city ? true : false}>
-                                    <Input type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
-                                    <FormLabel ps={4} htmlFor="city">City</FormLabel>
+                                    <InputGroup>
+                                        <Input className={styles.rightAddonInput} type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
+                                        <FormLabel ps={4} htmlFor="city">City</FormLabel>
+                                        {loadingPincode ? <InputRightAddon p={2} fontSize="sm" background={`none`} className={styles.rightAddon}><Spinner size="xs" /></InputRightAddon> : null }
+                                    </InputGroup>
                                     <FormErrorMessage>{formik.errors.city}</FormErrorMessage>
                                 </FormControl>
                                 <FormControl variant="floating" isInvalid={formik.touched.state && formik.errors.state ? true : false}>
-                                    <Input disabled type="text" placeholder="State" aria-placeholder="State" {...formik.getFieldProps('state')}></Input>
+                                    <InputGroup>
+                                    <Input className={styles.rightAddonInput} disabled type="text" placeholder="State" aria-placeholder="State" {...formik.getFieldProps('state')}></Input>
                                     <FormLabel ps={4} htmlFor="state">State</FormLabel>
+                                    {loadingPincode ? <InputRightAddon p={2} fontSize="sm" background={`none`} className={styles.rightAddon}><Spinner size="xs" /></InputRightAddon> : null }
+                                    </InputGroup>
                                     <FormErrorMessage>{formik.errors.state}</FormErrorMessage>
                                 </FormControl>
                             </Flex>

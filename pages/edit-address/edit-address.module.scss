@@ -25,9 +25,20 @@
     position: absolute;
 }
 
+.rightAddon {
+    position: absolute;
+    right: 0;
+    border: 0 !important;
+}
+
 .leftAddonInput {
     border-top-left-radius: 6px !important;
     border-bottom-left-radius: 6px !important;
+}
+
+.rightAddonInput {
+    border-top-right-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
 }
 
 .formContainer {
