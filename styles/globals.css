@@ -1,9 +1,16 @@
+
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    --turbo-colors-green: #549112;
+    --turbo-colors-text: #212121;
+    --turbo-colors-red: ##FF3932;
+    --turbo-colors-link: #FF406C;
+    --chakra-colors-chakra-body-text: #212121;
 }
 
 a {

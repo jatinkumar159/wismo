@@ -118,7 +118,7 @@ export default function Confirmation() {
                 <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
                     <Flex flexDir="column" justifyContent="space-between" >
                         <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">{coupon.code}</Text>
-                        <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
+                        <Text as="span" fontWeight="bold" color={"var(--turbo-colors-green)"} fontSize="xs" >₹{coupon.discountAmount}</Text>
                     </Flex>
                     <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
                 </Flex>
@@ -168,7 +168,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={upi} alt="upi" />UPI</Text>
-                            <Text mt={1} fontSize={`xs`} color={`green.400`} ml={6}>Additional 10% off</Text>
+                            <Text mt={1} fontSize={`xs`} color={`var(--turbo-colors-green)`} ml={6}>Additional 10% off</Text>
                         </Box>
                         <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
@@ -182,7 +182,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center">
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cards} alt="cards" />Cards/Net Banking/Wallets/Pay Later</Text>
-                            <Text mt={1} fontSize={`xs`} color={`green.400`} ml={6}>Additional 10% off</Text>
+                            <Text mt={1} fontSize={`xs`} color={`var(--turbo-colors-green)`} ml={6}>Additional 10% off</Text>
                         </Box>
                         {/* <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
@@ -206,7 +206,7 @@ export default function Confirmation() {
             </Box>
             <Box flexGrow={1}></Box>
             <Box className={styles.pageFooter} mt={2}>
-                <Text p={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`blue.300`}>TURBO</Text></Link></Text>
+                <Text p={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`var(--turbo-colors-link)`} fontWeight="bold">TURBO</Text></Link></Text>
             </Box>
         </Flex>
     )

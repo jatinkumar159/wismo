@@ -67,7 +67,7 @@ export default function Profile() {
         return (
             <Formik
                 initialValues={{
-                    phone: PHONE ? String(PHONE) : '',
+                    phone: cachedPhoneNumber || PHONE ? String(PHONE) : '',
                 }}
                 validationSchema={Yup.object({
                     phone: Yup.string().length(10, 'Please enter a valid 10 digit mobile number.').required('Required'),
@@ -147,7 +147,7 @@ export default function Profile() {
                                     <FormErrorMessage>{errors.phone}</FormErrorMessage>
                                 </FormControl>
                                 <Box mt={8}>
-                                    <Text fontSize={`sm`} textAlign={`center`}>By continuing, I agree to the <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>Terms of Use </Link> & <Link color={`blue.300`} _hover={{ textDecor: 'underline' }}>Privacy Policy</Link></Text>
+                                    <Text fontSize={`sm`} textAlign={`center`}>By continuing, I agree to the <Link href={`https://unicommerce.com`} color={`var(--turbo-colors-link)`} _hover={{ textDecor: 'underline' }}>Terms of Use </Link> & <Link color={`var(--turbo-colors-link)`} _hover={{ textDecor: 'underline' }}>Privacy Policy</Link></Text>
                                 </Box>
                             </Form>
                             {/* {isOpen && <SearchCountry onClose={onClose} />} */}
@@ -155,7 +155,7 @@ export default function Profile() {
                         <Box>
                             <Button type="submit" isDisabled={String(values.phone).length !== 10} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2}>
                                 <Text as="span" fontSize="sm" textTransform={`uppercase`}>Continue <ChevronRightIcon ms={2} fontSize={`lg`} /></Text></Button>
-                            <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`} color={`blue.300`} _hover={{ textDecor: 'underline' }}>TURBO</Link></Text>
+                            <Text fontSize={`sm`} textAlign={`center`}> Powered by <Link href={`https://unicommerce.com`} color={`var(--turbo-colors-link)`} _hover={{ textDecor: 'underline' }}><Text as="span" fontWeight="bold">TURBO</Text></Link></Text>
                         </Box>
                     </Flex>
                 )}
@@ -264,7 +264,7 @@ export default function Profile() {
                                     className={styles.resendLink}
                                 >Resend OTP</Text>
                             </Center>
-                            {timer > 0 && <Text as="span" color={`gray.500`}>Didn’t receive the OTP? Resend in <Text as="span" fontWeight={`bold`} color={`#212121`}>{timer} seconds</Text></Text>}
+                            {timer > 0 && <Text as="span" color={`gray.500`}>Didn’t receive the OTP? Resend in <Text as="span" fontWeight={`bold`} color={`var(--turbo-colors-text)`}>{timer} seconds</Text></Text>}
                         </Form>
                     </Flex>
                 )}

@@ -7,7 +7,7 @@
 .cardChip {
     text-transform: uppercase;
     background-color: #F1F8E9;
-    color: #549112;
+    color: var(--turbo-colors-green);
     padding: 2px 10px;
     border-radius: 0.5rem;
     font-weight: 700;
@@ -18,7 +18,7 @@
 }
 
 .editCardLink {
-    color: #FF406C;
+    color: #var(--turbo-colors-link);
     font-size:10px;
     font-weight:700;
 }
