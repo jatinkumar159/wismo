@@ -27,7 +27,7 @@ export default function DiscountCard () {
                             <Text as="h4" fontSize={'md'} fontWeight={`bold`} mb={2} >Flat 10% upto ₹100</Text>
                             <Text as="span" className={styles.cardSubtitle}>Use Paytm wallet</Text>
                         </Box>
-                        <Tag backgroundColor={`transparent`} border={`1px solid var(--chakra-colors-gray-200)`} p={1}>WORLDCUP2022</Tag>
+                        <Tag backgroundColor={`transparent`} border={`1px solid var(--turbo-colors-gray)`} p={1}>WORLDCUP2022</Tag>
                     </Text>
                     <Flex align="flex-end">
                         <Text pb={2} fontSize={`xs`} className={styles.viewDetailLink} lineHeight={1} as="span" onClick={handleDetailView} fontWeight="700">View Details</Text>
@@ -46,14 +46,14 @@ export default function DiscountCard () {
             <Modal closeOnEsc={true} closeOnOverlayClick={true} variant={`action`} isOpen={isOpen} onClose={onClose} size={`full`} motionPreset={`none`}>
                 <ModalOverlay />
                 <ModalContent>
-                <ModalHeader py={3} pl={4} borderBottom={`1px solid var(--chakra-colors-gray-200)`} fontSize={`sm`} color="#757575" fontWeight="normal">Coupon Details</ModalHeader>
+                <ModalHeader py={3} pl={4} borderBottom={`1px solid var(--turbo-colors-gray)`} fontSize={`sm`} color="#757575" fontWeight="normal">Coupon Details</ModalHeader>
                 <ModalCloseButton size={`sm`} pt={1}/>
                 <ModalBody px={4}>
                     {/* <UserForm {...currentDiscount}/> */}
                     <Text fontSize={`sm`}>Coupon details come here...</Text>
                 </ModalBody>
 
-                <ModalFooter justifyContent={`flex-start`} p={2} pl={4} borderTop={`1px solid var(--chakra-colors-gray-200)`} fontSize={`md`}>
+                <ModalFooter justifyContent={`flex-start`} p={2} pl={4} borderTop={`1px solid var(--turbo-colors-gray)`} fontSize={`md`}>
                     <Button mr={3} onClick={onClose} size={`xs`}>Close</Button>
                 </ModalFooter>
                 </ModalContent>

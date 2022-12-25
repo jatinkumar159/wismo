@@ -22,6 +22,7 @@ import { showErrorToast } from '../../utils/toasts'
 import { getBuyerProfile } from '../../apis/get'
 import jwtDecode from 'jwt-decode';
 import { Token } from '../../utils/interfaces'
+import PageFooter from '../../components/PageFooter/PageFooter'
 
 export default function Profile() {
     const dispatch = useAppDispatch()
@@ -137,7 +138,7 @@ export default function Profile() {
                                             id='phone'
                                             type='number'
                                             placeholder='Phone Number'
-                                            errorBorderColor='red.300'
+                                            errorBorderColor='var(--turbo-colors-red)'
                                             autoFocus
                                             value={values.phone}
                                             onBlur={handleBlur}
@@ -147,7 +148,7 @@ export default function Profile() {
                                     <FormErrorMessage>{errors.phone}</FormErrorMessage>
                                 </FormControl>
                                 <Box mt={8}>
-                                    <Text fontSize={`sm`} textAlign={`center`}>By continuing, I agree to the <Link href={`https://unicommerce.com`} color={`var(--turbo-colors-link)`} _hover={{ textDecor: 'underline' }}>Terms of Use </Link> & <Link color={`var(--turbo-colors-link)`} _hover={{ textDecor: 'underline' }}>Privacy Policy</Link></Text>
+                                    <Text fontSize={`sm`} textAlign={`center`}>By continuing, I agree to the <Link href={`https://unicommerce.com`} color={`--turbo-colors-link`} _hover={{ textDecor: 'underline' }}>Terms of Use </Link> & <Link color={`var(--turbo-colors-link)`} _hover={{ textDecor: 'underline' }}>Privacy Policy</Link></Text>
                                 </Box>
                             </Form>
                             {/* {isOpen && <SearchCountry onClose={onClose} />} */}
@@ -155,7 +156,7 @@ export default function Profile() {
                         <Box>
                             <Button type="submit" isDisabled={String(values.phone).length !== 10} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2}>
                                 <Text as="span" fontSize="sm" textTransform={`uppercase`}>Continue <ChevronRightIcon ms={2} fontSize={`lg`} /></Text></Button>
-                            <Text fontSize={`sm`} textAlign={`center`}> Powered by <Link href={`https://unicommerce.com`} color={`var(--turbo-colors-link)`} _hover={{ textDecor: 'underline' }}><Text as="span" fontWeight="bold">TURBO</Text></Link></Text>
+                                <PageFooter />
                         </Box>
                     </Flex>
                 )}

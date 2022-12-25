@@ -13,6 +13,7 @@ import { Address } from "../../utils/interfaces";
 import { FaChevronRight } from "react-icons/fa";
 import { selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
 import { ChevronRightIcon } from "@chakra-ui/icons";
+import PageFooter from "../../components/PageFooter/PageFooter";
 
 function RadioCard(props: any) {
     const { getInputProps, getCheckboxProps } = useRadio(props)
@@ -271,7 +272,7 @@ export default function EditAddress() {
                         <Button type="submit" isDisabled={!formik.isValid} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2} onClick={formik.submitForm}>
                             <Text as="span" fontSize="sm" textTransform={`uppercase`}>Proceed to Buy <ChevronRightIcon ms={2} fontSize={`lg`} /></Text>
                         </Button>
-                        <Text fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`var(--turbo-colors-link)`} fontWeight="bold">TURBO</Text></Link></Text>
+                        <PageFooter />
                     </Box>
 
 

@@ -22,6 +22,7 @@ import upi from "../../images/upi.svg";
 import { useState } from 'react';
 import { selectCartPayload } from '../../redux/slices/settingsSlice';
 import imageLoader from '../../utils/imageLoader';
+import PageFooter from '../../components/PageFooter/PageFooter';
 
 export default function Confirmation() {
     const phone = useAppSelector(selectPhone);
@@ -79,7 +80,7 @@ export default function Confirmation() {
                             {selectedAddress?.mobile ? <Text mt={2} fontSize="xs">Mobile: +91 {selectedAddress?.mobile}</Text> : null}
                         </Box>
                         <Box>
-                            <Text onClick={redirectToAddresses} as="span" fontSize="xs" fontWeight="bold" color="pink.400" cursor={`pointer`}>Change</Text>
+                            <Text onClick={redirectToAddresses} as="span" fontSize="xs" fontWeight="bold" color="var(--turbo-colors-link)" cursor={`pointer`}>Change</Text>
                         </Box>
                     </Flex>
                 </Box>
@@ -141,7 +142,7 @@ export default function Confirmation() {
                         </AvatarGroup>
                     </Box>
                     <Box ms={2} onClick={handleToggleItemDetails} >
-                        <Text as="span" fontWeight="700" fontSize="xs" color="pink.400">{showItemDetails ? 'Hide Items' : 'View Items'}</Text>
+                        <Text as="span" fontWeight="700" fontSize="xs" color="var(--turbo-colors-link)">{showItemDetails ? 'Hide Items' : 'View Items'}</Text>
                     </Box>
                 </Flex>
                 <Box className={styles.sectionBody}>
@@ -206,7 +207,7 @@ export default function Confirmation() {
             </Box>
             <Box flexGrow={1}></Box>
             <Box className={styles.pageFooter} mt={2}>
-                <Text p={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`var(--turbo-colors-link)`} fontWeight="bold">TURBO</Text></Link></Text>
+                <PageFooter />
             </Box>
         </Flex>
     )

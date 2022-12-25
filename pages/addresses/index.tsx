@@ -16,6 +16,7 @@ import { updateCart } from "../../apis/patch";
 import { createCart } from "../../apis/post";
 import { FaChevronDown, FaChevronRight, FaChevronUp } from 'react-icons/fa';
 import { selectFirstLoad, setFirstLoad } from "../../redux/slices/navigationSlice";
+import PageFooter from "../../components/PageFooter/PageFooter";
 
 export default function AddressList() {
     // TODO: CHECK IF USER IS A GUEST AND IF ANY ADDRESSES HAVE BEEN STORED
@@ -177,7 +178,7 @@ export default function AddressList() {
                             Add new Address
                         </Button>
                     </Link>
-                    <Text mt={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`var(--turbo-colors-link)`} fontWeight="bold">TURBO</Text></Link></Text>
+                    <PageFooter />
                 </Box>
             </Flex>
         </>

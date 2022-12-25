@@ -12,11 +12,12 @@
 
     p {
         font-weight:normal;
+        color: var(--turbo-colors-light-text);
     }
 
     .sectionTitle {
         max-height: 48px;
-        border-bottom: 1px solid var(--chakra-colors-gray-200);
+        border-bottom: 1px solid var(--turbo-colors-gray);
     }
 }
 
@@ -42,7 +43,7 @@
 
 .orderSectionTitle {
     p {
-        color: var(--chakra-colors-gray-500);
+        color: var(--turbo-colors-background0);
     }
 }
 
@@ -58,8 +59,8 @@
 
 .card {
     border-radius: 0.375rem;
-    border: 1px solid var(--chakra-colors-gray-400);
-    background-color: var(--chakra-colors-gray-50);
+    border: 1px solid var(--turbo-colors-gray);
+    background-color: var(--turbo-colors-background);
     label {
         align-items: flex-start;
     }
@@ -81,12 +82,13 @@
 }
 
 .pageFooter {
-    border-top: 1px solid var(--chakra-colors-gray-200);
+    border-top: 1px solid var(--turbo-colors-gray);
     background-color: var(--chakra-colors-white);
     position:sticky;
     bottom: 0;
     left: 0;
     right: 0;
+    min-height: 28px;
 }
 
 .paymentMethod {
