@@ -22,6 +22,7 @@ import upi from "../../images/upi.svg";
 import { useState } from 'react';
 import { selectCartPayload } from '../../redux/slices/settingsSlice';
 import imageLoader from '../../utils/imageLoader';
+import PageFooter from '../../components/PageFooter/PageFooter';
 import { createOrder, verifyPayment } from '../../apis/post';
 import { selectCart } from '../../redux/slices/settingsSlice';
 import { getOrderById } from '../../apis/get';
@@ -138,13 +139,13 @@ export default function Confirmation() {
                 <Box className={`${styles.sectionContent} delivery-section`} mb={2} p={4}>
                     <Flex flexDir="row" w="100%" align="flex-start">
                         <Box flexGrow={1}>
-                            <Text>Deliver to <Text as="span" fontWeight="bold">{selectedAddress?.name}, {selectedAddress?.pincode || ''}</Text></Text>
+                            <Text>Deliver to <Text as="span" fontWeight="bold">{selectedAddress?.name.trim()}, {selectedAddress?.pincode || ''}</Text></Text>
                             <Text mt={2} fontSize="xs">{selectedAddress?.address_line1}</Text>
                             <Text fontSize="xs" >{selectedAddress?.address_line2}</Text>
                             {selectedAddress?.mobile ? <Text mt={2} fontSize="xs">Mobile: +91 {selectedAddress?.mobile}</Text> : null}
                         </Box>
                         <Box>
-                            <Text onClick={redirectToAddresses} as="span" fontSize="xs" fontWeight="bold" color="pink.400" cursor={`pointer`}>Change</Text>
+                            <Text onClick={redirectToAddresses} as="span" fontSize="xs" fontWeight="bold" color="var(--turbo-colors-link)" cursor={`pointer`}>Change</Text>
                         </Box>
                     </Flex>
                 </Box>
@@ -183,7 +184,7 @@ export default function Confirmation() {
                 <Flex className={`${styles.sectionContent} coupon-section`} justifyContent="space-between" alignItems={'center'}>
                     <Flex flexDir="column" justifyContent="space-between" >
                         <Text as="span" fontWeight="bold" color={`gray.500`} fontSize="sm">{coupon.code}</Text>
-                        <Text as="span" fontWeight="bold" color={"green.400"} fontSize="xs" >₹{coupon.discountAmount}</Text>
+                        <Text as="span" fontWeight="bold" color={"var(--turbo-colors-green)"} fontSize="xs" >₹{coupon.discountAmount}</Text>
                     </Flex>
                     <IconButton size="sm" icon={<DeleteIcon />} bg={'black'} _hover={{ bg: 'black' }} color="white" aria-label={'Close'} onClick={() => dispatch(unsetSelectedCoupon())} />
                 </Flex>
@@ -206,7 +207,7 @@ export default function Confirmation() {
                         </AvatarGroup>
                     </Box>
                     <Box ms={2} onClick={handleToggleItemDetails} >
-                        <Text as="span" fontWeight="700" fontSize="xs" color="pink.400">{showItemDetails ? 'Hide Items' : 'View Items'}</Text>
+                        <Text as="span" fontWeight="700" fontSize="xs" color="var(--turbo-colors-link)">{showItemDetails ? 'Hide Items' : 'View Items'}</Text>
                     </Box>
                 </Flex>
                 <Box className={styles.sectionBody}>
@@ -233,7 +234,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center" onClick={() => initiatePayment('UPI')} cursor='pointer'>
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={upi} alt="upi" />UPI</Text>
-                            <Text mt={1} fontSize={`xs`} color={`green.400`} ml={6}>Additional 10% off</Text>
+                            <Text mt={1} fontSize={`xs`} color={`var(--turbo-colors-green)`} ml={6}>Additional 10% off</Text>
                         </Box>
                         <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
@@ -247,7 +248,7 @@ export default function Confirmation() {
                     <Flex flexDir="row" align="center" onClick={() => initiatePayment('PREPAID')} cursor='pointer'>
                         <Box flexGrow={1}>
                             <Text as="span" fontSize={`sm`} className={styles.paymentMethod}><Image loader={imageLoader} className={styles.paymentMethod} src={cards} alt="cards" />Cards/Net Banking/Wallets/Pay Later</Text>
-                            <Text mt={1} fontSize={`xs`} color={`green.400`} ml={6}>Additional 10% off</Text>
+                            <Text mt={1} fontSize={`xs`} color={`var(--turbo-colors-green)`} ml={6}>Additional 10% off</Text>
                         </Box>
                         {/* <Box>
                             <Image loader={imageLoader} className={styles.upiMethods} src={upiMethodsSrc} alt={'upi methods'} />
@@ -271,7 +272,7 @@ export default function Confirmation() {
             </Box>
             <Box flexGrow={1}></Box>
             <Box className={styles.pageFooter} mt={2}>
-                <Text p={2} fontSize={`sm`} textAlign={`center`}>Powered by <Link href={`https://unicommerce.com`}><Text as="span" color={`blue.300`}>TURBO</Text></Link></Text>
+                <PageFooter />
             </Box>
         </Flex>
     )

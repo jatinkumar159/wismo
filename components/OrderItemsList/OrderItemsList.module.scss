@@ -1,5 +1,5 @@
 .viewToggle{
-    color: var(--chakra-colors-blue-400);
+    color: var(--turbo-colors-link);
     &:hover {
         text-decoration: underline;
         cursor: pointer;
@@ -7,7 +7,7 @@
 }
 
 .image {
-    border: 1px solid var(--chakra-colors-gray-200);
+    border: 1px solid var(--turbo-colors-gray);
     border-radius: var(--chakra-sizes-2);
     min-height: 100px;
     min-width: 100px;

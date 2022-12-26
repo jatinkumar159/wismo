@@ -6,9 +6,9 @@ export default function Success() {
     return (
         <Flex className={styles.container} flexDir='column' h={'calc(100vh - 80px)'} justifyContent='space-between'>
             <Center h={'100%'}>
-                <Flex flexDir='column'>
-                    <CheckCircleIcon color='green' w='39px' h='39px' alignItems='center' />
-                    <Text fontSize='md' mt='12.5px' fontWeight='bold' textTransform='capitalize' color='green'>CONGRATULATIONS!</Text>
+                <Flex flexDir='column' alignItems="center">
+                    <CheckCircleIcon color='green' w='39px' h='39px' />
+                    <Text fontSize='md' mt='6' fontWeight='bold' textTransform='capitalize' color='green'>CONGRATULATIONS!</Text>
                     <Text fontSize='sm' mt='0.5rem'>Order placed successfully</Text>
                 </Flex>
             </Center>
