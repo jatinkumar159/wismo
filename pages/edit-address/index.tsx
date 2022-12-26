@@ -11,7 +11,7 @@ import { showErrorToast } from "../../utils/toasts";
 import { editAddress } from "../../apis/put";
 import { Address } from "../../utils/interfaces";
 import { FaChevronRight } from "react-icons/fa";
-import { selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
+import { selectPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 function RadioCard(props: any) {
@@ -59,7 +59,7 @@ export default function EditAddress() {
 
     let address: Address | undefined = turboAddressList?.find(el => el.address_id === address_id);
     if (!address) address = unifillAddressList?.find(el => el.address_id === address_id);
-    
+
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: 'HOME',
         defaultValue: 'HOME',
@@ -67,7 +67,7 @@ export default function EditAddress() {
             formik.setValues({ ...formik.values, ['address_type']: e })
         },
     })
-    
+
     const formik = useFormik({
         initialValues: {
             mobile: address?.mobile || '',
@@ -111,7 +111,7 @@ export default function EditAddress() {
 
     const options = ['HOME', 'WORK', 'OTHER']
     const group = getRootProps();
-    
+
 
     const handlePinCodeChange = async (e: ChangeEvent<HTMLInputElement>) => {
         formik.handleChange(e);
@@ -147,9 +147,10 @@ export default function EditAddress() {
 
     const handleChangeNumber = () => {
         dispatch(unsetPhone());
-        router.push("/profile");        
+        dispatch(unverifyProfile());
+        router.push("/profile");
     }
-    
+
     return (
         <Flex className={styles.container} flexDir="column">
             {
@@ -168,7 +169,7 @@ export default function EditAddress() {
                     <Flex className={styles.pageTitle} mb={2} ps={4} pe={4}>
                         <Text fontWeight={`bold`}>Deliver to</Text>
                     </Flex>
-                    
+
                     <Box className={styles.formContainer} mb={2} p={4} flexGrow={1}>
                         <form onSubmit={formik.handleSubmit}>
                             <FormControl variant="floating" mb={4} isInvalid={formik.touched.mobile && formik.errors.mobile ? true : false}>

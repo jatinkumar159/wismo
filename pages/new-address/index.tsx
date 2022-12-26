@@ -7,7 +7,7 @@ import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setSelectedAddress } from "../../redux/slices/addressSlice";
-import { selectName, selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
+import { selectName, selectPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { addNewAddress } from "../../apis/post";
 import { showErrorToast } from "../../utils/toasts";
 import { Address } from "./../../utils/interfaces";
@@ -133,13 +133,14 @@ export default function NewAddress() {
 
     const handleChangeNumber = () => {
         dispatch(unsetPhone());
-        router.push("/profile");        
+        dispatch(unverifyProfile());
+        router.push("/profile");
     }
 
     return (
         <>
             <Flex className={styles.container} flexDir={`column`}>
-            
+
                 <Box onClick={handleChangeNumber}>
                     <Flex className={styles.section} ps={4} pe={4} pt={2} pb={2} align={`center`} mb={2}>
                         <Box className={`${styles.sectionContent}`} flexGrow={1}>

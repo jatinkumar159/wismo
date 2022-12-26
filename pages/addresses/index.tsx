@@ -3,7 +3,7 @@ import { Box, Button, Progress, Text, FormControl, Radio, RadioGroup, Flex, Cent
 import styles from './addresses.module.scss';
 import AddressCard from "../../components/AddressCard/AddressCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectPhone, setName, unsetPhone } from "../../redux/slices/profileSlice";
+import { selectPhone, setName, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getBuyerProfile } from "../../apis/get";
 import Link from "next/link";
@@ -46,8 +46,8 @@ export default function AddressList() {
 
     const handleChangeNumber = () => {
         dispatch(unsetPhone());
+        dispatch(unverifyProfile());
         router.push("/profile");
-        
     }
 
     const formik = useFormik({

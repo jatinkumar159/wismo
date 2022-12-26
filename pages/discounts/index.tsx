@@ -7,9 +7,9 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectAvailableCoupons, Coupon, setSelectedCoupon } from "../../redux/slices/confirmationSlice";
 import DiscountCard from "./../../components/DiscountCard/DiscountCard";
 import styles from './discounts.module.scss';
-import {useState} from 'react';
+import { useState } from 'react';
 import { FaChevronRight } from "react-icons/fa";
-import { selectPhone, unsetPhone } from "../../redux/slices/profileSlice";
+import { selectPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { useQuery } from "@tanstack/react-query";
 // import { getDiscounts } from "../../apis/get";
 import { Mulish } from "@next/font/google";
@@ -40,14 +40,15 @@ export default function Discounts() {
         // e.stopPropagation();
         handleChange(e);
         setIsSelected(e.target.checked);
-        
+
     }
 
     const handleChangeNumber = () => {
         dispatch(unsetPhone());
-        router.push("/profile");        
+        dispatch(unverifyProfile());
+        router.push("/profile");
     }
-    
+
     return (
         <Flex className={`${styles.container} confirmation`} flexDir="column">
             <Box onClick={handleChangeNumber}>
@@ -60,8 +61,8 @@ export default function Discounts() {
                     </Box>
                 </Flex>
             </Box>
-            
-            <DiscountCard />
+
+            {/* <DiscountCard /> */}
 
             {/* <Formik
                 initialValues={{
