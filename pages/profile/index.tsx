@@ -86,7 +86,7 @@ export default function Profile() {
                                 dispatch(verifyProfile());
                                 router.push('/addresses');
                                 return;
-                            }
+                            } else localStorage.removeItem('turbo');
                         }
 
                         const res = await verifyBuyer(values.phone);
@@ -156,7 +156,7 @@ export default function Profile() {
                         <Box>
                             <Button type="submit" isDisabled={String(values.phone).length !== 10} w={`100%`} bg={`black`} color={`white`} _hover={{ background: `black` }} mb={2}>
                                 <Text as="span" fontSize="sm" textTransform={`uppercase`}>Continue <ChevronRightIcon ms={2} fontSize={`lg`} /></Text></Button>
-                                <PageFooter />
+                            <PageFooter />
                         </Box>
                     </Flex>
                 )}
