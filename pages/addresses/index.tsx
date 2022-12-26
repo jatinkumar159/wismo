@@ -30,6 +30,7 @@ export default function AddressList() {
     const { isLoading, isError, data } = useQuery([phone], () => getBuyerProfile(localStorage.getItem('turbo')!));
 
     const [showAllAddresses, setShowAllAddresses] = useState(false);
+    const [showSpinner, setShowSpinner] = useState(firstLoad['addresses'] ? true : false);
 
     const handleUpdateCart = async (id: string, type: string, data: any) => {
         try {
@@ -68,8 +69,8 @@ export default function AddressList() {
             if (defaultAddress) {
                 dispatch(setName(defaultAddress.name));
                 formik.setFieldValue('selectedAddress', defaultAddress.address_id);
-            }
-        }
+            } else setShowSpinner(false);
+        } else setShowSpinner(false);
 
         dispatch(setTurboAddressList(data.turbo_address_list));
         dispatch(setUnifillAddressList(data.unifill_address_list));
@@ -90,7 +91,7 @@ export default function AddressList() {
         <span>Please enter a valid phone number to continue!</span>
     </>
 
-    if (isLoading) return <>
+    if (isLoading || showSpinner) return <>
         <Center h={`calc(100vh - 80px)`}><Spinner /></Center> :
     </>
 
