@@ -112,7 +112,7 @@ export default function EditAddress() {
                     return;
                 }
 
-                router.back();
+                router.replace('/confirmation');
             } catch {
                 showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
             }
