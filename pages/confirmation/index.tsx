@@ -40,7 +40,7 @@ export default function Confirmation() {
     const selectedAddress = useAppSelector(selectSelectedAddress);
     const turboAddressList = useAppSelector(selectTurboAddressList);
     const unifillAddressList = useAppSelector(selectUnifillAddressList);
-    const [showItemDetails, setShowItemDetails] = useState(false);
+    const [showItemDetails, setShowItemDetails] = useState(true);
     const cartPayload = useAppSelector(selectCartPayload);
 
     const redirectToAddresses = () => {
