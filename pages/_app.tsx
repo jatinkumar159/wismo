@@ -86,7 +86,7 @@ const InitialiseMessaging = () => {
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
-
+  NProgress.settings.showSpinner = false;
   useEffect(() => {
     const handleRouteStart = () => {
       NProgress.start();

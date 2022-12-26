@@ -68,7 +68,7 @@ export default function Profile() {
         return (
             <Formik
                 initialValues={{
-                    phone: cachedPhoneNumber || PHONE ? String(PHONE) : '',
+                    phone: PHONE ? String(PHONE) : '',
                 }}
                 validationSchema={Yup.object({
                     phone: Yup.string().length(10, 'Please enter a valid 10 digit mobile number.').required('Required'),
