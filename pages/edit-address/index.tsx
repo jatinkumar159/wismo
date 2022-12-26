@@ -70,9 +70,17 @@ export default function EditAddress() {
         },
     })
 
+    const removePrefix = (mobile: string | undefined): string | null => {
+        // removes +91 prefix
+        if (!mobile) return null;
+
+        if (mobile.indexOf("+91") !== -1) return mobile.substring(3, mobile.length);
+        else return mobile;
+    }
+
     const formik = useFormik({
         initialValues: {
-            mobile: address?.mobile || '',
+            mobile: removePrefix(address?.mobile) || '',
             name: address?.name || '',
             email: address?.email || '',
             pincode: address?.pincode || '',
