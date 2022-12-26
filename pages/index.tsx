@@ -8,6 +8,7 @@ import { Center, Spinner, useToast } from "@chakra-ui/react";
 import { showErrorToast } from "../utils/toasts";
 import { selectCartPayload, setCart } from "../redux/slices/settingsSlice";
 import { Token } from "../utils/interfaces";
+import cleanPhoneNumber from "../utils/cleanPhoneNumber";
 
 export default function Home() {
     const dispatch = useAppDispatch();
@@ -48,7 +49,7 @@ export default function Home() {
                 if (data.hasOwnProperty('cart')) {
                     dispatch(setCart(data.cart));
                 }
-                dispatch(setPhone(decodedToken.sub));
+                dispatch(setPhone(cleanPhoneNumber(decodedToken.sub)!));
                 dispatch(verifyProfile());
                 router.replace('/addresses');
             } catch {

@@ -14,6 +14,7 @@ import { FaChevronRight } from "react-icons/fa";
 import { selectPhone, unsetPhone, unverifyProfile } from "../../redux/slices/profileSlice";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import PageFooter from "../../components/PageFooter/PageFooter";
+import cleanPhoneNumber from "../../utils/cleanPhoneNumber";
 
 function RadioCard(props: any) {
     const { getInputProps, getCheckboxProps } = useRadio(props)
@@ -70,17 +71,9 @@ export default function EditAddress() {
         },
     })
 
-    const removePrefix = (mobile: string | undefined): string | null => {
-        // removes +91 prefix
-        if (!mobile) return null;
-
-        if (mobile.indexOf("+91") !== -1) return mobile.substring(3, mobile.length);
-        else return mobile;
-    }
-
     const formik = useFormik({
         initialValues: {
-            mobile: removePrefix(address?.mobile) || '',
+            mobile: cleanPhoneNumber(address?.mobile) || '',
             name: address?.name || '',
             email: address?.email || '',
             pincode: address?.pincode || '',
