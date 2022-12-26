@@ -83,12 +83,12 @@ export default function AddressList() {
             data?.turbo_address_list?.find(address => address.address_id === formik.values.selectedAddress)
             || data?.unifill_address_list?.find(address => address.address_id === formik.values.selectedAddress);
         dispatch(setSelectedAddress(selectedAddress!));
-        handleUpdateCart(cart['id'], 'ADDRESS_UPDATE', selectedAddress);
+        if (cart) handleUpdateCart(cart['id'], 'ADDRESS_UPDATE', selectedAddress);
         router.push('/confirmation');
     }, [formik.values.selectedAddress])
 
     if (!phone) return <>
-        <span>Please enter a valid phone number to continue!</span>
+        <Center h={`calc(100vh - 80px)`}><span>Please enter a valid phone number!</span></Center> :
     </>
 
     if (isLoading || showSpinner) return <>
