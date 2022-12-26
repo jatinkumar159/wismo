@@ -24,7 +24,7 @@ export default function AddressCard({ address, selected, isInForm }: Props) {
     }
 
     return (
-        <Box>
+        <Box w={`100%`}>
             <Flex align={'flex-start'} gap={'0.5rem'}>
                 <Flex grow={1} flexDir={'column'}>
                     {!isInForm ? (

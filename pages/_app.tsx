@@ -55,6 +55,15 @@ export const theme = extendTheme({
         },
       },
     },
+    Radio: {
+      parts: ["label"],
+      baseStyle: {
+        label: {
+          display: `inline-flex`,
+          width: `100%`
+        }
+      }
+    },
   },
 })
 
