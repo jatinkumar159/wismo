@@ -121,7 +121,7 @@ export default function NewAddress() {
             setLoadingPincode(false);
             return;
         }
-        if(data.city === null || data.state === null) {
+        if (data.city === null || data.state === null) {
             formik.setErrors({
                 pincode: "Invalid Pincode"
             });
@@ -130,7 +130,7 @@ export default function NewAddress() {
         }
         // await formik.setTouched({ ...formik.touched, city: true, state: true, country: true }, false);
         await formik.setValues({ ...formik.values, city: data['city'], state: data['state'], country: data['country'] });
-        setLoadingPincode(false); 
+        setLoadingPincode(false);
     }
 
     useEffect(() => {
@@ -196,7 +196,7 @@ export default function NewAddress() {
                                 <InputGroup>
                                     <Input className={styles.rightAddonInput} type="text" placeholder="City" aria-placeholder="City" {...formik.getFieldProps('city')}></Input>
                                     <FormLabel ps={4} htmlFor="state">City</FormLabel>
-                                    {loadingPincode ? <InputRightAddon p={2} fontSize="sm" background={`none`} className={styles.rightAddon}><Spinner size="xs" /></InputRightAddon> : null }
+                                    {loadingPincode ? <InputRightAddon p={2} fontSize="sm" background={`none`} className={styles.rightAddon}><Spinner size="xs" /></InputRightAddon> : null}
                                 </InputGroup>
                                 <FormErrorMessage fontSize={`xs`}>{formik.errors.city}</FormErrorMessage>
                             </FormControl>
@@ -204,7 +204,7 @@ export default function NewAddress() {
                                 <InputGroup>
                                     <Input className={styles.rightAddonInput} disabled type="text" placeholder="State" aria-placeholder="State" {...formik.getFieldProps('state')}></Input>
                                     <FormLabel ps={4} htmlFor="state">State</FormLabel>
-                                    {loadingPincode ? <InputRightAddon p={2} fontSize="sm" background={`none`} className={styles.rightAddon}><Spinner size="xs" /></InputRightAddon> : null }
+                                    {loadingPincode ? <InputRightAddon p={2} fontSize="sm" background={`none`} className={styles.rightAddon}><Spinner size="xs" /></InputRightAddon> : null}
                                 </InputGroup>
                                 <FormErrorMessage fontSize={`xs`}>{formik.errors.state}</FormErrorMessage>
                             </FormControl>

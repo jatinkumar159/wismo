@@ -227,12 +227,12 @@ export default function EditAddress() {
                                 </FormControl>
                             </Flex>
                             <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_line1 && formik.errors.address_line1 ? true : false}>
-                                <Input type="text" placeholder="House, road" aria-placeholder="house, road" {...formik.getFieldProps('address_line1')}></Input>
+                                <Input type="text" placeholder="House no." aria-placeholder="house, road" {...formik.getFieldProps('address_line1')}></Input>
                                 <FormLabel ps={4} htmlFor="address_line1">Address Line 1</FormLabel>
                                 <FormErrorMessage>{formik.errors.address_line1}</FormErrorMessage>
                             </FormControl>
                             <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_line2 && formik.errors.address_line2 ? true : false}>
-                                <Input type="text" placeholder="Locality, Landmark" aria-placeholder="Locality, Landmark" {...formik.getFieldProps('address_line2')}></Input>
+                                <Input type="text" placeholder="Locality" aria-placeholder="Locality, Landmark" {...formik.getFieldProps('address_line2')}></Input>
                                 <FormLabel ps={4} htmlFor="address_line2">Address Line 2</FormLabel>
                             </FormControl>
                             {/* <FormControl variant="floating" mb={4} isInvalid={formik.touched.address_type && formik.errors.address_type ? true : false}>
