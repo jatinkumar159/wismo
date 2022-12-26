@@ -28,7 +28,7 @@ function RadioCard(props: any) {
                 cursor='pointer'
                 textTransform={`uppercase`}
                 borderWidth='1px'
-                borderColor={`gray.200`}
+                borderColor={`var(--turbo-colors-gray)`}
                 borderRadius='lg'
                 px={2} py={1}
                 fontSize={`xs`}
@@ -80,7 +80,7 @@ export default function NewAddress() {
             address_line1: '',
             address_line2: '',
             country: '',
-            address_type: 'home',
+            address_type: 'HOME',
         },
         validationSchema: Yup.object({
             name: Yup.string().required('This is a mandatory field.'),

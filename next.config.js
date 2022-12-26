@@ -5,6 +5,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   distDir: "build",
+  trailingSlash: true,
   images: {
     unoptimized: true,
     loader: "custom"
