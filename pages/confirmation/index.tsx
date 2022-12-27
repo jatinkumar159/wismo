@@ -38,9 +38,7 @@ export default function Confirmation() {
     const cart = useAppSelector(selectCart);
     const coupon = useAppSelector(selectSelectedCoupon);
     const selectedAddress = useAppSelector(selectSelectedAddress);
-    const turboAddressList = useAppSelector(selectTurboAddressList);
-    const unifillAddressList = useAppSelector(selectUnifillAddressList);
-    const [showItemDetails, setShowItemDetails] = useState(true);
+    const [showItemDetails, setShowItemDetails] = useState(false);
     const cartPayload = useAppSelector(selectCartPayload);
 
     const redirectToAddresses = () => {
@@ -73,13 +71,32 @@ export default function Confirmation() {
     }
 
     const initiatePayment = async (paymentMethod: string) => {
+        const res = await createOrder(cart['id'], paymentMethod);
+        const data = await res.json();
+
+        if (paymentMethod === 'COD') {
+            if (data?.order?.status === 'SUCCESS') {
+                router.push('/success');
+                return;
+            }
+            if (data?.order?.status === 'COD_OTP_VERIFICATION_INITIATED' && data?.otp_request_id) {
+                router.push({
+                    pathname: 'verifyorder',
+                    query: {
+                        otpRequestId: data.otp_request_id
+                    }
+                }, '/verifyorder');
+                return;
+            }
+            showErrorToast(toast, { error_code: 'Internal Error', message: 'Failed to place order, please try again later!' });
+            return;
+        }
+
         const didRazorpayLoad = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
         if (!didRazorpayLoad) {
             showErrorToast(toast, { error_code: 'Connection Error', message: 'Failed to initiate transaction, please make sure you are connected to the internet.' });
         }
 
-        const res = await createOrder(cart['id'], paymentMethod);
-        const data = await res.json();
 
         if (res.status !== 201) {
             showErrorToast(toast, data.api_error);
@@ -108,7 +125,16 @@ export default function Confirmation() {
             "prefill": {
                 "name": "Utkarsh Saxena",
                 "email": "saxenautkarsh0@gmail.com",
-                "contact": "8171505570"
+                "contact": "8171505570",
+                "method": `${paymentMethod === 'UPI' ? 'upi' : ''}`
+            },
+            "readonly": {
+                contact: true,
+                email: true,
+            },
+            "hidden": {
+                contact: true,
+                email: true,
             },
             "notes": {
                 "address": "Razorpay Corporate Office"

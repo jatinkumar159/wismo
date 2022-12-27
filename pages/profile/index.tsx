@@ -39,7 +39,7 @@ export default function Profile() {
     const [otpRequestId, setOtpRequestId] = useState<string>('');
 
     const handleCreateCart = async (phone: string) => {
-        const res = await createCart('SHOPIFY', 'mid1', phone, cartPayload, undefined);
+        const res = await createCart('SHOPIFY', 'mid4', phone, cartPayload, undefined);
         const data = await res.json();
 
         if (data.hasOwnProperty('cart')) {

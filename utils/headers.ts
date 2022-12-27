@@ -14,7 +14,7 @@ export function getHeaders(method: string, headersMap: any): Headers {
     }
 
     if(localStorage.getItem('turbo')) headers.append('Authorization', `Bearer ${localStorage.getItem('turbo')}`);
-    headers.append('X-NMerchantId', `mid1`);
+    headers.append('X-NMerchantId', `mid4`);
     headers.append('user-agent', `${navigator.userAgent}`);
     headers.append('X-NPlatformInfo', 'SHOPIFY');
     if(method !== 'GET') headers.append('Content-type', 'application/json');
