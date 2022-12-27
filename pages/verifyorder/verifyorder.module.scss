@@ -1,0 +1,9 @@
+.container {
+    background: var(--chaka-colors-gray-50);
+    padding: 1rem;
+    min-height: calc(100vh - 80px);
+}
+
+.resendLink {
+    color: var(--turbo-colors-link);
+}
