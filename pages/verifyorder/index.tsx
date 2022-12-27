@@ -46,8 +46,8 @@ export default function VerifyOrder() {
                 }
 
                 if (data.verified) router.push('/success');
-                else throw error;
-            } catch {
+                else throw new Error("data is not verified");
+            } catch(error) {
                 showErrorToast(toast, { error_code: '500', message: 'An Internal Server Error Occurred, Please Try Again Later' });
             }
         }
