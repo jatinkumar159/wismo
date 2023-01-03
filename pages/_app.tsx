@@ -1,4 +1,4 @@
-import { Center, ChakraProvider, Flex, Spinner, extendTheme } from '@chakra-ui/react'
+import { Center, ChakraProvider, Flex, Spinner, extendTheme, StyleFunctionProps } from '@chakra-ui/react'
 import { Mulish } from '@next/font/google'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
@@ -9,12 +9,34 @@ import 'nprogress/nprogress.css'
 import { useEffect, useState } from 'react'
 
 import Navigation from '../components/Navigation/Navigation'
+import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
 import { ActionModalTheme } from '../components/theme/action-modal/actionModal'
 import styles from '../styles/app.module.scss'
 import '../styles/globals.css'
 
 const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-24px)'
+}
+
+const CustomSteps = {
+  ...Steps,
+  baseStyle: (props: StyleFunctionProps) => {
+    return {
+      ...Steps.baseStyle(props),
+      label: {
+        ...Steps.baseStyle(props).label,
+        'font-size': '0.5rem',
+      },
+      // connector: {
+      //   ...Steps.baseStyle(props).connector,
+      //   'width': '2rem',
+      // },
+      steps: {
+        ...Steps.baseStyle(props).steps,
+        'width': '20rem',
+      }
+    }
+  }
 }
 
 export const theme = extendTheme({
@@ -57,7 +79,8 @@ export const theme = extendTheme({
           width: `100%`
         }
       }
-    }
+    },
+    Steps: CustomSteps
   }
 })
 
