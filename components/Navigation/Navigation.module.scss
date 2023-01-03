@@ -1,5 +1,5 @@
 .container {
-    background: var(--turbo-colors-background);
+    background: var(--wismo-colors-background);
     display:flex;
     flex-direction: row;
     align-items: center;
@@ -7,7 +7,7 @@
     padding-right: 0.5rem;
     position: sticky;
     top:0;
-    border-bottom: 1px solid var(--turbo-colors-gray);
+    border-bottom: 1px solid var(--wismo-colors-gray);
     min-height: 48px;
 }
 
@@ -26,7 +26,7 @@
 .attribution {
     font-size:0.875rem;
     a {
-        color: var(--turbo-colors-link);
+        color: var(--wismo-colors-link);
         font-weight:bold;
         &:hover {
             text-decoration: underline;

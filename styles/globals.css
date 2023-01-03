@@ -6,13 +6,13 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    --turbo-colors-green: #549112;
-    --turbo-colors-light-text: #616161;
-    --turbo-colors-text: #212121;
-    --turbo-colors-red: ##FF3932;
-    --turbo-colors-link: #FF406C;
-    --turbo-colors-gray: #E0E0E0;
-    --turbo-colors-background: #F5F5F5;
+    --wismo-colors-green: #549112;
+    --wismo-colors-light-text: #616161;
+    --wismo-colors-text: #212121;
+    --wismo-colors-red: ##FF3932;
+    --wismo-colors-link: #FF406C;
+    --wismo-colors-gray: #E0E0E0;
+    --wismo-colors-background: #F5F5F5;
     --chakra-colors-chakra-body-text: #212121;
 }
 
