@@ -1,13 +1,11 @@
 .container {
-
 }
 
 .sidebar {
-
-    min-width: 15rem;
-    max-width: 35%;
-    border-left: 1px solid var(--wismo-colors-gray);
-    @media all and (max-width: 768px) {
-        display:none !important;
-    }
+  min-width: 15rem;
+  max-width: 35%;
+  border-left: 1px solid var(--wismo-colors-gray);
+  @media all and (max-width: 768px) {
+    display: none !important;
+  }
 }

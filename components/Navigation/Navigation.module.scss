@@ -1,29 +1,29 @@
 .container {
-    background: var(--wismo-colors-background);
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding-right: 0.5rem;
-    position: sticky;
-    top:0;
-    border-bottom: 1px solid var(--wismo-colors-gray);
-    min-height: 48px;
+  background: var(--wismo-colors-background);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 0.5rem;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid var(--wismo-colors-gray);
+  min-height: 48px;
 }
 
 .brand {
-    display:flex;
-    align-items: center;
-    padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
 }
 
 .attribution {
-    font-size:0.875rem;
-    a {
-        color: var(--wismo-colors-link);
-        font-weight:bold;
-        &:hover {
-            text-decoration: underline;
-        }
+  font-size: 0.875rem;
+  a {
+    color: var(--wismo-colors-link);
+    font-weight: bold;
+    &:hover {
+      text-decoration: underline;
     }
+  }
 }

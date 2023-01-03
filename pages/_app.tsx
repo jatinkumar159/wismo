@@ -1,19 +1,20 @@
-import { Flex, ChakraProvider, Center, Spinner, extendTheme } from '@chakra-ui/react'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { Center, ChakraProvider, Flex, Spinner, extendTheme } from '@chakra-ui/react'
+import { Mulish } from '@next/font/google'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
-import Navigation from '../components/Navigation/Navigation';
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+import { useEffect, useState } from 'react'
+
+import Navigation from '../components/Navigation/Navigation'
+import { ActionModalTheme } from '../components/theme/action-modal/actionModal'
+import styles from '../styles/app.module.scss'
 import '../styles/globals.css'
-import { useEffect, useState } from 'react';
-import NProgress from 'nprogress';
-import { useRouter } from 'next/router';
-import 'nprogress/nprogress.css';
-import { Mulish } from '@next/font/google';
-import Head from 'next/head';
-import { ActionModalTheme } from '../components/theme/action-modal/actionModal';
-import styles from "../styles/app.module.scss";
 
 const activeLabelStyles = {
-  transform: 'scale(0.85) translateY(-24px)',
+  transform: 'scale(0.85) translateY(-24px)'
 }
 
 export const theme = extendTheme({
@@ -23,16 +24,15 @@ export const theme = extendTheme({
       variants: {
         floating: {
           container: {
-            _focusWithin: {
+            '_focusWithin': {
               label: {
-                ...activeLabelStyles,
-              },
+                ...activeLabelStyles
+              }
             },
-            'input:not(:placeholder-shown) + label, .chakra-select__wrapper + label':
-            {
-              ...activeLabelStyles,
+            'input:not(:placeholder-shown) + label, .chakra-select__wrapper + label': {
+              ...activeLabelStyles
             },
-            label: {
+            'label': {
               top: 0,
               left: 0,
               zIndex: 2,
@@ -44,51 +44,51 @@ export const theme = extendTheme({
               px: 1,
               my: 2,
               transformOrigin: 'left top'
-            },
-          },
-        },
-      },
+            }
+          }
+        }
+      }
     },
     Radio: {
-      parts: ["label"],
+      parts: ['label'],
       baseStyle: {
         label: {
           display: `inline-flex`,
           width: `100%`
         }
       }
-    },
-  },
+    }
+  }
 })
 
 const mulish = Mulish({
-  subsets: ["latin"]
+  subsets: ['latin']
 })
 
 const queryClient = new QueryClient()
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-  const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
-  NProgress.settings.showSpinner = false;
+  const router = useRouter()
+  const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false)
+  NProgress.settings.showSpinner = false
   useEffect(() => {
     const handleRouteStart = () => {
-      NProgress.start();
-      setIsPageTransitionActive(true);
+      NProgress.start()
+      setIsPageTransitionActive(true)
     }
     const handleRouteDone = () => {
-      NProgress.done();
-      setIsPageTransitionActive(false);
-    };
+      NProgress.done()
+      setIsPageTransitionActive(false)
+    }
 
-    router.events.on('routeChangeStart', handleRouteStart);
-    router.events.on('routeChangeComplete', handleRouteDone);
-    router.events.on('routeChangeError', handleRouteDone);
+    router.events.on('routeChangeStart', handleRouteStart)
+    router.events.on('routeChangeComplete', handleRouteDone)
+    router.events.on('routeChangeError', handleRouteDone)
 
     return () => {
-      router.events.off('routeChangeStart', handleRouteStart);
-      router.events.off('routeChangeComplete', handleRouteDone);
-      router.events.off('routeChangeError', handleRouteDone);
+      router.events.off('routeChangeStart', handleRouteStart)
+      router.events.off('routeChangeComplete', handleRouteDone)
+      router.events.off('routeChangeError', handleRouteDone)
     }
   })
 
@@ -103,10 +103,13 @@ export default function App({ Component, pageProps }: AppProps) {
           <Flex flexDir="row" className={mulish.className}>
             <Flex className={styles.container} flexDir="column" grow={1}>
               <Navigation />
-              {isPageTransitionActive ?
-                <Center h={`calc(100vh - 80px)`}><Spinner /></Center> :
+              {isPageTransitionActive ? (
+                <Center h={`calc(100vh - 80px)`}>
+                  <Spinner />
+                </Center>
+              ) : (
                 <Component {...pageProps} className={styles.pageContainer} />
-              }
+              )}
             </Flex>
           </Flex>
         </QueryClientProvider>

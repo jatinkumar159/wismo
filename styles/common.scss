@@ -1,12 +1,12 @@
 .container {
-    font-size: var(--chakra-fontSizes-sm);
+  font-size: var(--chakra-fontSizes-sm);
 
-    * {
-        box-sizing: border-box;
-    }
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .pageContainer {
-    overflow: scroll;
-    background-color: var(--wismo-colors-background); 
+  overflow: scroll;
+  background-color: var(--wismo-colors-background);
 }

@@ -1,18 +1,18 @@
 /** @type {import('next').NextConfig} */
-const path = require("path")
+const path = require('path')
 
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
-  distDir: "build",
+  distDir: 'build',
   trailingSlash: true,
   images: {
     unoptimized: true,
-    loader: "custom"
+    loader: 'custom'
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')]
-  },
+  }
   // assetPrefix: './'
 }
 
