@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon, CheckIcon } from "@chakra-ui/icons";
 import { Step, Steps } from "chakra-ui-steps";
 
 const steps = [{ label: "CONFIRMED" }, { label: "SHIPPED" }, { label: "OUT FOR DELIVERY" }, { label: "DELIVERED" }];
@@ -13,7 +13,7 @@ interface Props {
 
 export default function OrderSteps({ activeStep }: Props) {
     return (
-        <Steps activeStep={activeStep} orientation='horizontal' labelOrientation="vertical" responsive={false} checkIcon={CheckCircleIcon} mt='1rem'>
+        <Steps activeStep={activeStep} orientation='horizontal' labelOrientation="vertical" responsive={false} checkIcon={CheckIcon} mt='1rem' h='4rem'>
             {steps.map(({ label }, index) => (
                 <Step label={label} key={index}></Step>
             ))}

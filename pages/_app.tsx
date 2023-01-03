@@ -27,10 +27,6 @@ const CustomSteps = {
         ...Steps.baseStyle(props).label,
         'font-size': '0.5rem',
       },
-      // connector: {
-      //   ...Steps.baseStyle(props).connector,
-      //   'width': '2rem',
-      // },
       steps: {
         ...Steps.baseStyle(props).steps,
         'width': '20rem',
