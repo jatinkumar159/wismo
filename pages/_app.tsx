@@ -1,22 +1,16 @@
-import { Provider } from 'react-redux';
-import { Flex, ChakraProvider, Center, Spinner, extendTheme} from '@chakra-ui/react'
+import { Flex, ChakraProvider, Center, Spinner, extendTheme } from '@chakra-ui/react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
-import store from '../redux/store'
 import Navigation from '../components/Navigation/Navigation';
 import '../styles/globals.css'
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../redux/hooks';
-import styles from './../styles/app.module.scss';
-import Sidebar from '../components/Sidebar/Sidebar';
-import { setCartPayload } from '../redux/slices/settingsSlice';
 import NProgress from 'nprogress';
 import { useRouter } from 'next/router';
 import 'nprogress/nprogress.css';
-import PromoBar from '../components/PromoBar/PromoBar';
 import { Mulish } from '@next/font/google';
 import Head from 'next/head';
 import { ActionModalTheme } from '../components/theme/action-modal/actionModal';
+import styles from "../styles/app.module.scss";
 
 const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-24px)',
@@ -35,9 +29,9 @@ export const theme = extendTheme({
               },
             },
             'input:not(:placeholder-shown) + label, .chakra-select__wrapper + label':
-              {
-                ...activeLabelStyles,
-              },
+            {
+              ...activeLabelStyles,
+            },
             label: {
               top: 0,
               left: 0,
@@ -73,25 +67,6 @@ const mulish = Mulish({
 
 const queryClient = new QueryClient()
 
-// const mulish = Mulish({ weight: '400', style: ['normal'], subsets: ['latin']})
-
-const InitialiseMessaging = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const handler = (message: MessageEvent) => {
-      if (!message.data || !message.data.type || message.data.type.indexOf('TURBO') === -1) return;
-      console.log("Received cart payload from parent.", message.data.cartPayload);
-      dispatch(setCartPayload(message.data.cartPayload));
-    }
-
-    window.addEventListener("message", handler);
-
-    return () => window.removeEventListener('message', handler);
-  });
-  return null;
-}
-
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isPageTransitionActive, setIsPageTransitionActive] = useState<boolean>(false);
@@ -120,28 +95,22 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Provider store={store}>
-        <ChakraProvider theme={theme}>
-          <QueryClientProvider client={queryClient}>
-            <InitialiseMessaging />
-            <Flex flexDir="row" className={mulish.className}>
-              <Flex className={styles.container} flexDir="column" grow={1}>
-                <Navigation />
-                <PromoBar />
-                {isPageTransitionActive ?
-                  <Center h={`calc(100vh - 80px)`}><Spinner /></Center> :
-                  <Component {...pageProps} className={styles.pageContainer} />
-                }
-              </Flex>
-              <Flex className={styles.sidebar} bg={`gray.50`} p={4} pt={4}>
-                <Sidebar />
-              </Flex>
+
+      <ChakraProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <Flex flexDir="row" className={mulish.className}>
+            <Flex className={styles.container} flexDir="column" grow={1}>
+              <Navigation />
+              {isPageTransitionActive ?
+                <Center h={`calc(100vh - 80px)`}><Spinner /></Center> :
+                <Component {...pageProps} className={styles.pageContainer} />
+              }
             </Flex>
-          </QueryClientProvider>
-        </ChakraProvider>
-      </Provider>
+          </Flex>
+        </QueryClientProvider>
+      </ChakraProvider>
     </>
   )
 }
