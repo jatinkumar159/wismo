@@ -18,22 +18,22 @@ const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-24px)'
 }
 
-const CustomSteps = {
-  ...Steps,
-  baseStyle: (props: StyleFunctionProps) => {
-    return {
-      ...Steps.baseStyle(props),
-      label: {
-        ...Steps.baseStyle(props).label,
-        'font-size': '0.5rem',
-      },
-      steps: {
-        ...Steps.baseStyle(props).steps,
-        'width': '20rem',
-      }
-    }
-  }
-}
+// const CustomSteps = {
+//   ...Steps,
+//   baseStyle: (props: StyleFunctionProps) => {
+//     return {
+//       ...Steps.baseStyle(props),
+//       label: {
+//         ...Steps.baseStyle(props).label,
+//         'font-size': '0.5rem',
+//       },
+//       steps: {
+//         ...Steps.baseStyle(props).steps,
+//         'width': '20rem',
+//       }
+//     }
+//   }
+// }
 
 export const theme = extendTheme({
   components: {
@@ -76,7 +76,7 @@ export const theme = extendTheme({
         }
       }
     },
-    Steps: CustomSteps
+    Steps: Steps
   }
 })
 

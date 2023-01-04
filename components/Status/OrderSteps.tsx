@@ -13,7 +13,7 @@ interface Props {
 
 export default function OrderSteps({ activeStep }: Props) {
     return (
-        <Steps activeStep={activeStep} orientation='horizontal' labelOrientation="vertical" responsive={false} checkIcon={CheckIcon} mt='1rem' h='4rem'>
+        <Steps activeStep={activeStep} orientation='horizontal' labelOrientation="vertical" responsive={false} mt='1rem' size='sm'>
             {steps.map(({ label }, index) => (
                 <Step label={label} key={index}></Step>
             ))}
