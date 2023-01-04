@@ -11,6 +11,18 @@ body {
   --wismo-colors-gray: #e0e0e0;
   --wismo-colors-background: #f5f5f5;
   --chakra-colors-chakra-body-text: #212121;
+
+  --bg-color: hsl(256,33,10);
+  --dot-color: hsl(256,33,70);
+  
+  --dot-size: 1px;
+  --dot-space: 22px;
+  background:
+		linear-gradient(90deg, var(--bg-color) (var(--dot-space) - var(--dot-size)), transparent 1%) center,
+		linear-gradient(--bg-color (var(--dot-space) - var(--dot-size)), transparent 1%) center,
+		var(--dot-color);
+	background-size: var(--dot-space) var(--dot-space);
+
 }
 
 a {

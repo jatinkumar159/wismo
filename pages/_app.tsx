@@ -119,8 +119,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-          <Flex flexDir="row" className={mulish.className}>
-            <Flex className={styles.container} flexDir="column" grow={1}>
+          <Flex flexDir="row" align="center" justify="center" h={`100vh`} w={`100vw`} className={`${mulish.className} ${styles.pageContainer}`}>
+            <Flex className={styles.turboContainer} flexDir="column" grow={1}>
               <Navigation />
               {isPageTransitionActive ? (
                 <Center h={`calc(100vh - 80px)`}>
