@@ -1,6 +1,8 @@
-import { Button, Flex, Heading, Text, Input } from "@chakra-ui/react";
+import { ChevronRightIcon } from "@chakra-ui/icons";
+import { Button, Flex, Heading, Text, Input, space } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import styles from './index.module.scss';
 
 export default function Home() {
   const router = useRouter();
@@ -16,10 +18,10 @@ export default function Home() {
   }
 
   return <>
-    <Flex flexDir='column' mt='2rem' paddingInline='2rem' gap='1rem'>
-      <Text marginInline='auto' fontSize='2xl'>Track your order</Text>
-      <Input placeholder="Enter Order ID or Tracking Number" border='1px' borderColor='black' borderStyle='solid' value={orderID} onChange={handleChange} />
-      <Button fontSize='sm' bg='black' color='white' _hover={{ background: 'black' }} w='50%' textTransform='uppercase' onClick={handleClick}>Track</Button>
-    </Flex>
+  <Flex className={styles.pageContainer} flexDir="column" h={`100%`} align="center" py={4} gap={`0.5rem`}>
+    <Text as="h1" marginInline='auto' fontSize='xl'>Track your order</Text>
+    <Input className={styles.trackInput} fontSize="md" placeholder="Enter Order ID or Tracking Number" border='1px' borderColor='black' borderStyle='solid' value={orderID} onChange={handleChange} textAlign="center" w={`auto`}/>
+    <Button mt={4}fontSize='sm' bg='black' color='white' _hover={{ background: 'black' }} w='auto' px={8} onClick={handleClick}>Track&nbsp;<ChevronRightIcon /></Button>
+  </Flex>
   </>
 }
