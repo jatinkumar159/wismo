@@ -40,14 +40,20 @@ export default function Order() {
         trackingUpdates: data.result.tracking_events
     };
 
-    const details = {};
+    const details = {
+        orderNumber: data.result.order_number,
+        deliveryAddress: data.result.delivery_address,
+        trackingNumber: data.result.tracking_number,
+        shippingProvider: data.result.shipping_source_code,
+        items: Object.values(data.result.line_items)
+    };
 
     const auth = {};
     
     return (
         <Flex className={styles.container}>
-            <Status { ...status }/>
-            <Details { ...details }/>
+            <Status { ...status } />
+            <Details { ...details } />
             <Box flexGrow={1} className={styles.flexGrowBox}>
                 <Auth { ...auth } />
             </Box>

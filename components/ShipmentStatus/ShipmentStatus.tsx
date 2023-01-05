@@ -12,7 +12,7 @@ const steps = [
 ]
 
 export interface TrackEvent {
-    trackTime: string;
+    tracking_datetime: string;
     tracking_location: string;
     tracking_status: string;
 }

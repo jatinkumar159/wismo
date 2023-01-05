@@ -7,7 +7,14 @@ import { BsBagCheckFill, BsHeadphones } from 'react-icons/bs'
 import { motion } from "framer-motion"
 import ItemList from "../ItemList/ItemList"
 
-export default function Details() {
+interface OrderDetailProps {
+    orderNumber: string;
+    deliveryAddress: string;
+    trackingNumber: string;
+    shippingProvider: string;
+    items: any[];
+}
+export default function Details(props: OrderDetailProps) {
     const modal = useDisclosure();
     const popover = useDisclosure();
     
@@ -24,7 +31,7 @@ export default function Details() {
                 <Text as="h3" fontSize="lg">Order Details</Text>
                 <Flex justifyContent='space-between' alignItems='center'>
                 <Box>
-                    <Text fontSize="sm" className={styles.lightText}>Order number:&nbsp;<Text as="span" className={styles.darkText}>FK989473</Text></Text>
+                    <Text fontSize="sm" className={styles.lightText}>Order number:&nbsp;<Text as="span" className={styles.darkText}>{props.orderNumber}</Text></Text>
                 </Box>
                 <Box display="inline-flex" alignItems="center" onClick={modal.onOpen}>
                     <Box>
@@ -43,7 +50,7 @@ export default function Details() {
                 <Box>
                     <HStack>
                         <Icon as={MdLocationPin} fontSize="md" mr={2} color="var(--wismo-colors-text)"/>
-                            <Text as='span'>Gurgaon</Text>
+                            <Text as='span'>{props.deliveryAddress}</Text>
                         {/* <Box>
                             <Text as="p" className={styles.lightText} fontSize="sm">&nbsp;</Text>
                         </Box> */}
@@ -54,12 +61,12 @@ export default function Details() {
                     <HStack>
                     <Icon as={FaTruckMoving} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
                     <Box>
-                        <Text>Delhivery</Text>
+                        <Text>{props.shippingProvider}</Text>
                         <HStack>
-                            <Text as="p" className={styles.lightText} fontSize="xs">Tracking ID: <Text as="span" className={styles.darkText}>123456789345</Text></Text>  
+                            <Text as="p" className={styles.lightText} fontSize="xs">Tracking ID: <Text as="span" className={styles.darkText}>{props.trackingNumber}</Text></Text>  
                             <Popover variant="responsive" isOpen={popover.isOpen} onOpen={popover.onOpen} onClose={popover.onClose}>
                             <PopoverTrigger>
-                                <CopyIcon fontSize="xs" onClick={() => handleOnCopy('123456789345')}/>
+                                <CopyIcon fontSize="xs" onClick={() => handleOnCopy(props.trackingNumber)}/>
                             </PopoverTrigger>
                             <Portal>
                                 <PopoverContent>
@@ -115,12 +122,12 @@ export default function Details() {
                         <DrawerHeader pl={4} pt={4} pr={4} pb={2}>
                         <HStack>
                             <Icon as={MdLocationPin} />
-                            <Text as="p" fontSize="sm" fontWeight={`normal`} pr={6}>Plot No 65, Landmark House, Sector 44, Gurgaon, Haryana - 122003</Text>
+                            <Text as="p" fontSize="sm" fontWeight={`normal`} pr={6}>{props.deliveryAddress}</Text>
                         </HStack>
                             <CloseIcon w="0.75rem" h="0.75rem" onClick={modal.onClose} position="absolute" top="1.25rem" right="1.25rem"/>
                         </DrawerHeader>
                         <DrawerBody>
-                            <ItemList />
+                            <ItemList items={props.items}/>
                         </DrawerBody>
                     </DrawerContent>
                 {/* </motion.div> */}
