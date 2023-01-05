@@ -8,7 +8,7 @@ import ShipmentStatus from "../ShipmentStatus/ShipmentStatus"
 
 interface TrackingStatusProps {
     statusHeading: string;
-    statusSubheading: string;
+    statusSubheading: string | any;
     currentStep: number;
     lastUpdated: string;
     trackingUpdates: any[]
@@ -23,7 +23,7 @@ export default function Status(props: TrackingStatusProps) {
         <Box className={styles.container} p={4}>
             <Box textAlign="center">
                 <Text as="h1" fontSize="xl">{props.statusHeading}</Text>
-                <Text as="p" fontSize="sm" className={styles.lightText}>{props.statusSubheading}</Text>
+                <Text as="p" fontSize="sm" className={styles.lightText} dangerouslySetInnerHTML={{__html: props.statusSubheading}}></Text>
             </Box>
             <OrderSteps {...stepData} />
             <Flex justifyContent="space-between" w="100%" pt={4}>

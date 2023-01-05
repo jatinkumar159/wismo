@@ -30,7 +30,7 @@ const CustomSteps = {
       },
       iconLabel: {
         ...StepsStyleConfig.baseStyle(props).iconLabel,
-        "font-size": "0"
+        "fontSize": "0"
       },
       steps: {
         ...StepsStyleConfig.baseStyle(props).steps,
