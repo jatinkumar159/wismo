@@ -1,5 +1,5 @@
 import { ChevronRightIcon, CloseIcon, CopyIcon } from "@chakra-ui/icons"
-import { Avatar, AvatarGroup, Box, Button, Divider, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, Icon, PinInput, PinInputField, Text, useDisclosure } from "@chakra-ui/react"
+import { Avatar, AvatarGroup, Box, Button, Divider, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, Icon, PinInput, PinInputField, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Text, useDisclosure } from "@chakra-ui/react"
 import styles from "./Details.module.scss"
 import { MdLocationPin } from 'react-icons/md'
 import { FaTruckMoving } from 'react-icons/fa'
@@ -8,8 +8,17 @@ import { motion } from "framer-motion"
 import ItemList from "../ItemList/ItemList"
 
 export default function Details() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const popover = useDisclosure();
+    const modal = useDisclosure();
     
+    const handleOnCopy = (text: string) => {
+        setTimeout(() => {
+            console.log('done');
+            return popover.onClose()
+        }, 1000);
+        return navigator.clipboard.writeText(text);
+    }
+
     return (
         <>
             <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
@@ -18,7 +27,7 @@ export default function Details() {
                 <Box>
                     <Text fontSize="sm" className={styles.lightText}>Order number:&nbsp;<Text as="span" className={styles.darkText}>FK989473</Text></Text>
                 </Box>
-                <Box display="inline-flex" alignItems="center" onClick={onOpen}>
+                <Box display="inline-flex" alignItems="center" onClick={modal.onOpen}>
                     <Box>
                         <AvatarGroup size='sm' max={2} spacing="-0.375rem">
                             <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
@@ -48,7 +57,20 @@ export default function Details() {
                     <Box>
                         <Text>Delhivery</Text>
                         <HStack>
-                            <Text as="p" className={styles.lightText} fontSize="xs">Tracking ID: <Text as="span" className={styles.darkText}>123456789345</Text> <CopyIcon fontSize="xs"/></Text>    
+                            <Text as="p" className={styles.lightText} fontSize="xs">Tracking ID: <Text as="span" className={styles.darkText}>123456789345</Text></Text>  
+                            <Popover variant="responsive" onOpen={popover.onOpen} onClose={popover.onClose}>
+                            <PopoverTrigger>
+                                <CopyIcon fontSize="xs" onClick={() => handleOnCopy('123456789345')}/>
+                            </PopoverTrigger>
+                            <Portal>
+                                <PopoverContent>
+                                    <PopoverArrow />
+                                    <PopoverBody>
+                                        <Text as="p" fontSize="xs">Copied!</Text>
+                                    </PopoverBody>
+                                </PopoverContent>
+                            </Portal>
+                            </Popover>
                         </HStack>
                     </Box>
                     </HStack>
@@ -67,7 +89,7 @@ export default function Details() {
                     </HStack>
                 </Box>
             </Flex>
-            <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
+            <Drawer placement="bottom" onClose={modal.onClose} isOpen={modal.isOpen}>
                 <DrawerOverlay />
                 {/* <motion.div
                     style={{
@@ -96,7 +118,7 @@ export default function Details() {
                             <Icon as={MdLocationPin} />
                             <Text as="p" fontSize="sm" fontWeight={`normal`} pr={6}>Plot No 65, Landmark House, Sector 44, Gurgaon, Haryana - 122003</Text>
                         </HStack>
-                            <CloseIcon w="0.75rem" h="0.75rem" onClick={onClose} position="absolute" top="1.25rem" right="1.25rem"/>
+                            <CloseIcon w="0.75rem" h="0.75rem" onClick={modal.onClose} position="absolute" top="1.25rem" right="1.25rem"/>
                         </DrawerHeader>
                         <DrawerBody>
                             <ItemList />

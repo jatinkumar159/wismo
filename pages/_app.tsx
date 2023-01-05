@@ -55,6 +55,17 @@ const CustomSteps = {
 export const theme = extendTheme({
   components: {
     Modal: ActionModalTheme,
+    Popover: {
+      variants: {
+        responsive: {
+          popper: {
+            maxWidth: 'unset',
+            width: 'unset',
+          },
+          content: { width: "unset" },
+        }
+      }
+    },
     Form: {
       variants: {
         floating: {
