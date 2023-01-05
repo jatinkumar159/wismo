@@ -8,14 +8,14 @@ import { motion } from "framer-motion"
 import ItemList from "../ItemList/ItemList"
 
 export default function Details() {
-    const popover = useDisclosure();
     const modal = useDisclosure();
+    const popover = useDisclosure();
     
     const handleOnCopy = (text: string) => {
         setTimeout(() => {
             console.log('done');
             return popover.onClose()
-        }, 1000);
+        }, 1500);
         return navigator.clipboard.writeText(text);
     }
 
@@ -58,7 +58,7 @@ export default function Details() {
                         <Text>Delhivery</Text>
                         <HStack>
                             <Text as="p" className={styles.lightText} fontSize="xs">Tracking ID: <Text as="span" className={styles.darkText}>123456789345</Text></Text>  
-                            <Popover variant="responsive" onOpen={popover.onOpen} onClose={popover.onClose}>
+                            <Popover variant="responsive" isOpen={popover.isOpen} onOpen={popover.onOpen} onClose={popover.onClose}>
                             <PopoverTrigger>
                                 <CopyIcon fontSize="xs" onClick={() => handleOnCopy('123456789345')}/>
                             </PopoverTrigger>
