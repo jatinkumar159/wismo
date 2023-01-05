@@ -14,19 +14,19 @@ export default function ShipmentStatus() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const { activeStep } = useSteps({
-        initialStep: 2,
+        initialStep: 3,
     })
 
     return (
         <>
             <Box className={styles.container}>
-                <Text color='blue' cursor='pointer' onClick={onOpen}>Shipment Status</Text>
+                <Text color="var(--wismo-colors-link)" cursor="pointer" onClick={onOpen}>Shipment Status</Text>
             </Box>
             <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
                 <DrawerOverlay />
-                <DrawerContent borderRadius='1rem 1rem 0 0' pt='2rem'>
+                <DrawerContent borderRadius="1rem 1rem 0 0" pt="2rem">
                     <DrawerBody>
-                        <Steps orientation='vertical' activeStep={activeStep} size='sm'>
+                        <Steps orientation="vertical" activeStep={activeStep} size='sm'>
                             {steps.map(({ label, description }, index) => (
                                 <Step label={label} key={index} description={description}></Step>
                             ))}

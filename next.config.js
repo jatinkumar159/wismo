@@ -13,7 +13,6 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')]
   }
-  // assetPrefix: './'
 }
 
 module.exports = nextConfig

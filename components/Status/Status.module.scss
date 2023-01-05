@@ -1,8 +1,5 @@
-.container {
-  height: 30%;
-  background-color: var(--wismo-colors-background);
+@import './../../styles/common.scss';
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.container {
+  background-color: var(--wismo-colors-background);
 }

@@ -1,5 +1,5 @@
 .container {
-  background: var(--wismo-colors-background);
+  background: var(--wismo-colors-white);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -9,6 +9,7 @@
   top: 0;
   border-bottom: 1px solid var(--wismo-colors-gray);
   min-height: 3rem;
+  z-index: 9;
 }
 
 .brand {

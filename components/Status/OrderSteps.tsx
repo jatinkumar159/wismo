@@ -1,7 +1,8 @@
 import { CheckCircleIcon, CheckIcon } from "@chakra-ui/icons";
+import { Text } from "@chakra-ui/react";
 import { Step, Steps } from "chakra-ui-steps";
 
-const steps = [{ label: "CONFIRMED" }, { label: "SHIPPED" }, { label: "OUT FOR DELIVERY" }, { label: "DELIVERED" }];
+const steps = [{ label: "Confirmed" }, { label: "Shipped" }, { label: "Out for Delivery" }, { label: "Delivered" }];
 
 interface Props {
     nextStep: () => void;

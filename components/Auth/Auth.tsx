@@ -12,7 +12,7 @@ export default function Auth() {
             <Box className={styles.container}>
                 <Text>
                     You don&apos;t have access to take any action on
-                    this page. <Text color="blue" as="span" cursor="pointer" onClick={onOpen}>Login</Text> to see
+                    this page. <Text color="var(--wismo-colors-link)" as="span" cursor="pointer" onClick={onOpen}>Login</Text> to see
                     order details or share feedback
                 </Text>
             </Box>

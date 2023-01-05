@@ -9,7 +9,7 @@ import 'nprogress/nprogress.css'
 import { useEffect, useState } from 'react'
 
 import Navigation from '../components/Navigation/Navigation'
-import { StepsStyleConfig as Steps } from 'chakra-ui-steps';
+import { StepsStyleConfig } from 'chakra-ui-steps';
 import { ActionModalTheme } from '../components/theme/action-modal/actionModal'
 import styles from '../styles/app.module.scss'
 import '../styles/globals.css'
@@ -18,22 +18,35 @@ const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-24px)'
 }
 
-// const CustomSteps = {
-//   ...Steps,
-//   baseStyle: (props: StyleFunctionProps) => {
-//     return {
-//       ...Steps.baseStyle(props),
-//       label: {
-//         ...Steps.baseStyle(props).label,
-//         'font-size': '0.5rem',
-//       },
-//       steps: {
-//         ...Steps.baseStyle(props).steps,
-//         'width': '20rem',
-//       }
-//     }
-//   }
-// }
+const CustomSteps = {
+  ...StepsStyleConfig,
+  baseStyle: (props: StyleFunctionProps) => {
+    return {
+      ...StepsStyleConfig.baseStyle(props),
+      label: {
+        ...StepsStyleConfig.baseStyle(props).label,
+        "font-size": "0.625rem",
+        "font-weight": "normal"
+      },
+      iconLabel: {
+        ...StepsStyleConfig.baseStyle(props).iconLabel,
+        "font-size": "0"
+      },
+      steps: {
+        ...StepsStyleConfig.baseStyle(props).steps,
+      },
+      stepIconContainer: {
+        ...StepsStyleConfig.baseStyle(props).stepIconContainer,
+        "width": '1rem',
+        "height": '1rem',
+        "borderColor": "#A0AEC0",
+        "_activeStep": {
+          "bg": "gray.400"
+        }
+      }
+    }
+  }
+}
 
 export const theme = extendTheme({
   components: {
@@ -76,7 +89,7 @@ export const theme = extendTheme({
         }
       }
     },
-    Steps: Steps
+    Steps: CustomSteps
   }
 })
 
