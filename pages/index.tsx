@@ -23,7 +23,6 @@ export default function Home() {
   })
 
   const tryFetchTracking = async (trackingNumber: string): Promise<Boolean> => {
-    const trackDetails = await fetchTracking(trackingNumber);
     return router.push({
       pathname: '/order',
       query: {

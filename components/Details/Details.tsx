@@ -13,7 +13,6 @@ export default function Details() {
     
     const handleOnCopy = (text: string) => {
         setTimeout(() => {
-            console.log('done');
             return popover.onClose()
         }, 1500);
         return navigator.clipboard.writeText(text);

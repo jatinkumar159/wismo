@@ -6,12 +6,21 @@ import { motion } from "framer-motion";
 import styles from "./Shipment.module.scss";
 
 const steps = [
-    { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' },
-    { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' },
-    { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' }
+    // { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' },
+    // { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' },
+    // { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' }
 ]
 
-export default function ShipmentStatus() {
+export interface TrackEvent {
+    trackTime: string;
+    tracking_location: string;
+    tracking_status: string;
+}
+interface ShipmentStatusProps {
+    trackingUpdates: TrackEvent[]
+}
+
+export default function ShipmentStatus(props: ShipmentStatusProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const { activeStep } = useSteps({
@@ -35,7 +44,6 @@ export default function ShipmentStatus() {
                     }}
                     drag="y"
                     onDragEnd={(e) => {
-                        console.log(e);
                         onClose();
                     }}
                     dragConstraints={{
@@ -48,9 +56,9 @@ export default function ShipmentStatus() {
                 > 
                 <DrawerContent borderRadius="1rem 1rem 0 0" pt="2rem">
                     <DrawerBody>
-                        <Steps orientation="vertical" activeStep={activeStep} size='sm'>
-                            {steps.map(({ label, description }, index) => (
-                                <Step label={label} key={index} description={description}></Step>
+                        <Steps orientation="vertical" activeStep={props.trackingUpdates.length} size='sm'>
+                            {props.trackingUpdates.map((trackEvent, index) => (
+                                <Step label={trackEvent.tracking_location} key={index} description={`${trackEvent.tracking_status}\n${trackEvent.tracking_datetime.trim()}`}></Step>
                             ))}
                         </Steps>
                     </DrawerBody>

@@ -30,14 +30,16 @@ const CustomSteps = {
       },
       iconLabel: {
         ...StepsStyleConfig.baseStyle(props).iconLabel,
-        // "font-size": "0"
+        "font-size": "0"
       },
       steps: {
         ...StepsStyleConfig.baseStyle(props).steps,
       },
       description: {
         ...StepsStyleConfig.baseStyle(props).description,
-        "whiteSpace": "pre-line"
+        "whiteSpace": "pre-line",
+        "text-align": "left",
+        "marginLeft": "0.5rem"
       },
       stepIconContainer: {
         ...StepsStyleConfig.baseStyle(props).stepIconContainer,

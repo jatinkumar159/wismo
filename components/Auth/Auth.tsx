@@ -29,7 +29,6 @@ export default function Auth() {
                     }}
                     drag="y"
                     onDragEnd={(e) => {
-                        console.log(e);
                         onClose();
                     }}
                     dragConstraints={{

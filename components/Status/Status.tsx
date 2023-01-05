@@ -6,24 +6,32 @@ import Link from "next/link"
 import { TimeIcon } from "@chakra-ui/icons"
 import ShipmentStatus from "../ShipmentStatus/ShipmentStatus"
 
-export default function Status() {
-    const stepData = useSteps({
-        initialStep: 2,
-    })
+interface TrackingStatusProps {
+    statusHeading: string;
+    statusSubheading: string;
+    currentStep: number;
+    lastUpdated: string;
+    trackingUpdates: any[]
+}
 
+export default function Status(props: TrackingStatusProps) {
+    const stepData = useSteps({
+        initialStep: props.currentStep,
+    })
+    
     return (
         <Box className={styles.container} p={4}>
             <Box textAlign="center">
-                <Text as="h1" fontSize="xl">Arriving Today!</Text>
-                <Text as="p" fontSize="sm" className={styles.lightText}>Package will arrive between <Text as="span" className={styles.darkText}>6pm and 8pm</Text></Text>
+                <Text as="h1" fontSize="xl">{props.statusHeading}</Text>
+                <Text as="p" fontSize="sm" className={styles.lightText}>{props.statusSubheading}</Text>
             </Box>
             <OrderSteps {...stepData} />
             <Flex justifyContent="space-between" w="100%" pt={4}>
                 <HStack className={styles.lightText}>
                     <TimeIcon verticalAlign="middle" fontSize={`xs`}/>
-                    <Text as="span" fontSize="xs">Dec 1st, 2022, 9:30 AM</Text>
+                    <Text as="span" fontSize="xs">{`${new Date(props.lastUpdated).toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })} at ${new Date(props.lastUpdated).toLocaleTimeString('en-us', {hour: '2-digit', minute:'2-digit'})}`}</Text>
                 </HStack>
-                <ShipmentStatus />
+                <ShipmentStatus trackingUpdates={props.trackingUpdates} />
             </Flex>
         </Box>
     )
