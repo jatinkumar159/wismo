@@ -12,8 +12,8 @@ export default function Order() {
         <Flex className={styles.container}>
             <Status />
             <Details />
-            {/* <Auth /> */}
-            {/* <ShipmentStatus /> */}
+            <Auth />
+            <ShipmentStatus />
             <BrandRating />
             <ShippingRating />
         </Flex>

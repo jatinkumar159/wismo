@@ -18,7 +18,7 @@ export default function Home() {
   }
 
   return <>
-  <Flex className={styles.pageContainer} flexDir="column" h={`100%`} align="center" py={4} gap={`0.5rem`}>
+  <Flex className={styles.pageContainer} flexDir="column" h={`100%`} align="center" py={4} gap={`0.5rem`} mt={10}>
     <Text as="h1" marginInline='auto' fontSize='xl'>Track your order</Text>
     <Input className={styles.trackInput} fontSize="md" placeholder="Enter Order ID or Tracking Number" border='1px' borderColor='black' borderStyle='solid' value={orderID} onChange={handleChange} textAlign="center" w={`auto`}/>
     <Button mt={4}fontSize='sm' bg='black' color='white' _hover={{ background: 'black' }} w='auto' px={8} onClick={handleClick}>Track&nbsp;<ChevronRightIcon /></Button>
