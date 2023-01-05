@@ -4,6 +4,7 @@ import styles from "./Status.module.scss"
 import OrderSteps from "./OrderSteps"
 import Link from "next/link"
 import { TimeIcon } from "@chakra-ui/icons"
+import ShipmentStatus from "../ShipmentStatus/ShipmentStatus"
 
 export default function Status() {
     const stepData = useSteps({
@@ -22,7 +23,7 @@ export default function Status() {
                     <TimeIcon verticalAlign="middle" fontSize={`xs`}/>
                     <Text as="span" fontSize="xs">Dec 1st, 2022, 9:30 AM</Text>
                 </HStack>
-                <Text color="var(--wismo-colors-link)" fontSize="xs">View more</Text>
+                <ShipmentStatus />
             </Flex>
         </Box>
     )

@@ -15,9 +15,10 @@ export default function Order() {
             <Box flexGrow={1} className={styles.flexGrowBox}>
                 <Auth />
             </Box>
-            {/* <ShipmentStatus />
-            <BrandRating />
-            <ShippingRating /> */}
+            {/* <ShipmentStatus /> 
+                <BrandRating />
+                <ShippingRating /> 
+            */}
         </Flex>
     )
 }

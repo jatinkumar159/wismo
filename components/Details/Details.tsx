@@ -69,12 +69,12 @@ export default function Details() {
             </Flex>
             <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
                 <DrawerOverlay />
-                <motion.div
+                {/* <motion.div
                     style={{
                         width: "100%",
                         // height: 150,
                         borderRadius: 30,
-                        backgroundColor: "#fff",
+                        backgroundColor: "blue",
                         zIndex: 120,
                     }}
                     drag="y"
@@ -89,7 +89,7 @@ export default function Details() {
                     dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
                     dragElastic={0.5}
                 //   whileTap={{ cursor: "grabbing" }}
-                >
+                > */}
                     <DrawerContent borderRadius="1rem 1rem 0 0">
                         <DrawerHeader pl={4} pt={4} pr={4} pb={2}>
                         <HStack>
@@ -102,7 +102,7 @@ export default function Details() {
                             <ItemList />
                         </DrawerBody>
                     </DrawerContent>
-                </motion.div>
+                {/* </motion.div> */}
             </Drawer>
         </>
     )
