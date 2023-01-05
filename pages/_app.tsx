@@ -35,6 +35,10 @@ const CustomSteps = {
       steps: {
         ...StepsStyleConfig.baseStyle(props).steps,
       },
+      description: {
+        ...StepsStyleConfig.baseStyle(props).description,
+        "whiteSpace": "pre-line"
+      },
       stepIconContainer: {
         ...StepsStyleConfig.baseStyle(props).stepIconContainer,
         "width": '1rem',

@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import styles from "./Shipment.module.scss";
 
 const steps = [
-    { label: <Text as="p" className={styles.darkText} fontSize="sm">Shipment arrived at hub</Text>, description:<Text as="p" fontSize="xs" className={styles.lightText}>NBM/GHN, Manesar, HR<br/>Nov 27, 2022, 10:06 AM</Text>},
-    { label: <Text as="p" className={styles.darkText} fontSize="sm">Shipment arrived at hub</Text>, description: <Text as="p" fontSize="xs" className={styles.lightText}>NBM/GHN, Manesar, HR<br/>Nov 27, 2022, 10:06 AM</Text> },
-    { label: <Text as="p" className={styles.darkText} fontSize="sm">Shipment arrived at hub</Text>, description: <Text as="p" fontSize="xs" className={styles.lightText}>NBM/GHN, Manesar, HR<br/>Nov 27, 2022, 10:06 AM</Text> }
+    { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' },
+    { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' },
+    { label: 'Shipment arrived at hub', description: 'NBM/GHN, Manesar, HR\nNov 27, 2022, 10:06 AM' }
 ]
 
 export default function ShipmentStatus() {
