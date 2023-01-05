@@ -91,8 +91,12 @@ export default function Details() {
                 //   whileTap={{ cursor: "grabbing" }}
                 >
                     <DrawerContent borderRadius="1rem 1rem 0 0">
-                        <DrawerHeader marginLeft="auto">
-                            <CloseIcon w="1rem" h="1rem" onClick={onClose} />
+                        <DrawerHeader pl={4} pt={4} pr={4} pb={2}>
+                        <HStack>
+                            <Icon as={MdLocationPin} />
+                            <Text as="p" fontSize="sm" fontWeight={`normal`} pr={6}>Plot No 65, Landmark House, Sector 44, Gurgaon, Haryana - 122003</Text>
+                        </HStack>
+                            <CloseIcon w="0.75rem" h="0.75rem" onClick={onClose} position="absolute" top="1.25rem" right="1.25rem"/>
                         </DrawerHeader>
                         <DrawerBody>
                             <ItemList />
