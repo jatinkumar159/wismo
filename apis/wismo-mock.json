@@ -1,0 +1,103 @@
+{
+  "uuid": "2641f9b2-3d57-411c-b1a6-b08877aa4111",
+  "lastMigration": 24,
+  "name": "Wismo mock",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 4001,
+  "hostname": "0.0.0.0",
+  "routes": [
+    {
+      "uuid": "403075a8-b730-4f5a-b79e-0914e91d0a7e",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "api/buyer/tracking",
+      "responses": [
+        {
+          "uuid": "dd4e3b30-b40a-4d2a-8f00-40078bcec44c",
+          "body": "{\n    \"code\": 80000,\n    \"description\": \"OK\",\n    \"result\": {\n        \"tracking_number\": \"53441108954\",\n        \"shipping_source_code\": \"BLUEDART\",\n        \"no_of_items\": 4,\n        \"shipping_type\": \"CUSTOM\",\n        \"payment_method\": \"PREPAID\",\n        \"order_number\": \"4684296978611\",\n        \"shipping_package_code\": \"SP-DEL-FY22-12860\",\n        \"current_location\": \"At Courier Partner Hub\",\n        \"expected_delivered_datetime\": \"2023-01-09T18:00:00\",\n        \"dispatch_datetime\": \"2023-01-04T18:11:03\",\n        \"delivered_datetime\": null,\n        \"order_datetime\": \"2023-01-02T18:40:04\",\n        \"current_wismo_display_status\": \"In Transit\",\n        \"last_event_updated\": \"2023-01-05T16:31:47\",\n        \"is_dispatched\": true,\n        \"is_shipped\": true,\n        \"is_out_for_delivery\": false,\n        \"is_delivered\": false,\n        \"delivery_address\": \"House no 6409 Ghari malook no 2,Saharanpur,UP,247001\",\n        \"line_items\": [\n            {\n                \"total_price\": \"38999.00\",\n                \"seller_sku_code\": \"ADA-T8V\",\n                \"channel_product_name\": \"ADAM Audio T8V Nearfield Monitor Speaker - Single\"\n            },\n            {\n                \"total_price\": \"3000.00\",\n                \"seller_sku_code\": \"EMIPF\",\n                \"channel_product_name\": \"0% EMI Processing Fee - 3000\"\n            },\n            {\n                \"total_price\": \"3000.00\",\n                \"seller_sku_code\": \"EMIPF\",\n                \"channel_product_name\": \"0% EMI Processing Fee - 3000\"\n            },\n            {\n                \"total_price\": \"519.00\",\n                \"seller_sku_code\": \"EMIPF\",\n                \"channel_product_name\": \"0% EMI Processing Fee - 600\"\n            }\n        ],\n        \"total_price\": 45518.0,\n        \"customer_name\": \"Nitin Gautam\",\n        \"customer_phone\": \"8369441262\",\n        \"customer_email\": null,\n        \"tracking_events\": [\n            {\n                \"tracking_status\": \"IT-In Transit. Await delivery information\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 05 2023, 16:31 PM\"\n            },\n            {\n                \"tracking_status\": \"IT-In Transit. Await delivery information\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 05 2023, 12:01 PM\"\n            },\n            {\n                \"tracking_status\": \"IT-In Transit. Await delivery information\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 05 2023, 06:01 AM\"\n            },\n            {\n                \"tracking_status\": \"PU-Online shipment booked\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 04 2023, 16:47 PM\"\n            },\n            {\n                \"tracking_status\": \"PU-Online shipment booked\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 04 2023, 16:47 PM\"\n            }\n        ],\n        \"status_heading\": \"<b>current_status</b>\",\n        \"status_sub_heading\": \"Package will arrive on <b>Jan 09 2023, 18:00 PM</b>\"\n    }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "3c5307f9-66b1-4b56-b0f9-582156dc26fd",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "APP-KEY",
+      "value": "#$%^SK&SNLSH*^%SF"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With, APP-KEY"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": []
+}

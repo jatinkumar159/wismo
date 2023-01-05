@@ -1,12 +1,15 @@
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { Button, Flex, Heading, Text, Input, space } from "@chakra-ui/react";
+import { Button, Flex, Heading, Text, Input, space, useQuery } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import { fetchTracking } from "../apis/post";
 import styles from './index.module.scss';
 
 export default function Home() {
   const router = useRouter();
   const [orderID, setOrderID] = useState<string>('');
+  
+  const tracking = fetchTracking('53441108954');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setOrderID(e.target.value);

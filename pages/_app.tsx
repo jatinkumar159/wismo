@@ -26,11 +26,11 @@ const CustomSteps = {
       label: {
         ...StepsStyleConfig.baseStyle(props).label,
         // "font-size": "0.625rem",
-        "font-weight": "normal"
+        // "font-weight": "normal"
       },
       iconLabel: {
         ...StepsStyleConfig.baseStyle(props).iconLabel,
-        "font-size": "0"
+        // "font-size": "0"
       },
       steps: {
         ...StepsStyleConfig.baseStyle(props).steps,
@@ -142,7 +142,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0" />
       </Head>
 
       <ChakraProvider theme={theme}>
