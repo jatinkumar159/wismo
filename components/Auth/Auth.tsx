@@ -9,11 +9,11 @@ export default function Auth() {
 
     return (
         <>
-            <Box className={styles.container}>
-                <Text>
+            <Box className={styles.container} p={4}>
+                <Text as="p" fontSize="sm">
                     You don&apos;t have access to take any action on
-                    this page. <Text color="var(--wismo-colors-link)" as="span" cursor="pointer" onClick={onOpen}>Login</Text> to see
-                    order details or share feedback
+                    this page. Please <Text color="var(--wismo-colors-link)" as="span" cursor="pointer" onClick={onOpen}>Login</Text> to see
+                    order details or share feedback.
                 </Text>
             </Box>
             <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>

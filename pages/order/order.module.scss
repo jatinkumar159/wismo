@@ -1,8 +1,9 @@
 .container {
   height: calc(100vh - 3rem);
   flex-direction: column;
+  background: var(--wismo-colors-background);
+}
 
-  > * {
-    flex: 1 1 auto;
-  }
+.flexGrowBox {
+  background-color: var(--wismo-colors-white);
 }

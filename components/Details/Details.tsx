@@ -7,7 +7,7 @@ import { BsBagCheckFill, BsHeadphones } from 'react-icons/bs'
 
 export default function Details() {
     return (
-        <Flex className={styles.container} flexDir='column' gap='0.5rem'>
+        <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
             <Text as="h3" fontSize="lg">Order Details</Text>
             <Flex justifyContent='space-between' alignItems='center'>
             <Box>
@@ -30,7 +30,10 @@ export default function Details() {
             <Box>
                 <HStack>
                     <Icon as={MdLocationPin} fontSize="md" mr={2} color="var(--wismo-colors-text)"/>
-                    <Text as='span'>Gurgaon</Text>
+                        <Text as='span'>Gurgaon</Text>
+                    {/* <Box>
+                        <Text as="p" className={styles.lightText} fontSize="sm">&nbsp;</Text>
+                    </Box> */}
                 </HStack>
             </Box>
             <Divider />
@@ -39,7 +42,9 @@ export default function Details() {
                 <Icon as={FaTruckMoving} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
                 <Box>
                     <Text>Delhivery</Text>
-                    <Text>Tracking ID: 123456789345 <CopyIcon /></Text>
+                    <HStack>
+                        <Text as="p" className={styles.lightText} fontSize="xs">Tracking ID: <Text as="span" className={styles.darkText}>123456789345</Text> <CopyIcon fontSize="xs"/></Text>    
+                    </HStack>
                 </Box>
                 </HStack>
             </Box>
@@ -48,8 +53,8 @@ export default function Details() {
                 <HStack>
                     <Icon as={BsHeadphones} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
                     <Box>
-                        <Text>Need Help</Text>
-                        <Text>Raise Ticket</Text>
+                        <Text>Need Help?</Text>
+                        <Text as="p" fontSize="xs" className={styles.lightText}>Raise a ticket</Text>
                     </Box>
                     <Box flexGrow={1} textAlign="right">
                         <ChevronRightIcon w='1.5rem' h='1.5rem' />

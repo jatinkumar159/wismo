@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import Auth from "../../components/Auth/Auth"
 import Details from "../../components/Details/Details"
 import BrandRating from "../../components/Ratings/Brand/BrandRating"
@@ -12,10 +12,12 @@ export default function Order() {
         <Flex className={styles.container}>
             <Status />
             <Details />
-            <Auth />
-            <ShipmentStatus />
+            <Box flexGrow={1} className={styles.flexGrowBox}>
+                <Auth />
+            </Box>
+            {/* <ShipmentStatus />
             <BrandRating />
-            <ShippingRating />
+            <ShippingRating /> */}
         </Flex>
     )
 }
