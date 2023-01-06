@@ -13,6 +13,8 @@ interface OrderDetailProps {
     trackingNumber: string;
     shippingProvider: string;
     items: any[];
+    deliveryCity: string;
+    deliveryStateCode: string;
 }
 export default function Details(props: OrderDetailProps) {
     const modal = useDisclosure();
@@ -50,7 +52,7 @@ export default function Details(props: OrderDetailProps) {
                 <Box>
                     <HStack>
                         <Icon as={MdLocationPin} fontSize="md" mr={2} color="var(--wismo-colors-text)"/>
-                            <Text as='span'>{props.deliveryAddress}</Text>
+                            <Text as='span'>{`${props.deliveryCity}, ${props.deliveryStateCode}`}</Text>
                         {/* <Box>
                             <Text as="p" className={styles.lightText} fontSize="sm">&nbsp;</Text>
                         </Box> */}

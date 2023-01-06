@@ -21,8 +21,9 @@ export default function Order() {
     }, [queryParams]);
 
     const resolveProgressStep = (data: any): number => {
-        if(!!data.is_delivered) return 3;
-        if(!!data.is_out_for_delivery) return 2;
+        if(!!data.is_delivered) return 4;
+        if(!!data.is_out_for_delivery) return 3;
+        if(!!data.is_dispatched) return 2;
         if(!!data.is_shipped) return 1;
         else return 0;
     }
@@ -45,7 +46,9 @@ export default function Order() {
         deliveryAddress: data.result.delivery_address,
         trackingNumber: data.result.tracking_number,
         shippingProvider: data.result.shipping_source_code,
-        items: Object.values(data.result.line_items)
+        items: Object.values(data.result.line_items),
+        deliveryCity: data.result.delivery_city,
+        deliveryStateCode: data.result.delivery_state_code
     };
 
     const auth = {};
