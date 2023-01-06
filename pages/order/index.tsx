@@ -17,7 +17,6 @@ export default function Order() {
     useEffect(() => {
         if(queryParams && queryParams.id) {
             setTrackingId(queryParams.id);
-
         }
     }, [queryParams]);
 
@@ -28,7 +27,8 @@ export default function Order() {
         else return 0;
     }
 
-    const { isLoading, isError, data } = useQuery(['trackingDetails'], () => fetchTracking(trackingId));
+    const { isLoading, isError, data } = useQuery([trackingId], () => fetchTracking(trackingId));
+    
     if(isLoading) return <Center h={`100%`}><Spinner /></Center>
     if(isError) return <Center h={`100%`}><Text as="p">Something went wrong, please try again later...</Text></Center>
 
