@@ -15,7 +15,8 @@ export default function Navigation() {
   return (
     <div className={styles.container}>
       <div className={styles.brand}>
-        <Image loader={imageLoader} src="https://cdn.worldvectorlogo.com/logos/reddit-logo-new.svg" alt="Brand" width="60" height="40" onClick={handleOnBack}></Image>
+        {/* <Image loader={imageLoader} src="https://cdn.worldvectorlogo.com/logos/reddit-logo-new.svg" alt="Brand" width="60" height="40" onClick={handleOnBack}></Image> */}
+        <Text as="span">UniShipper</Text>
       </div>
       <div className={styles.attribution}>
         <Flex dir="row" alignItems="center">

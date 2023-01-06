@@ -34,7 +34,7 @@ export default function ShipmentStatus(props: ShipmentStatusProps) {
             </Box>
             <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
                 <DrawerOverlay />
-                <motion.div
+                {/* <motion.div
                     style={{
                         width: "100%",
                         // height: 150,
@@ -53,8 +53,8 @@ export default function ShipmentStatus(props: ShipmentStatusProps) {
                     dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
                     dragElastic={0.5}
                 //   whileTap={{ cursor: "grabbing" }}
-                > 
-                <DrawerContent borderRadius="1rem 1rem 0 0" pt="2rem">
+                >  */}
+                <DrawerContent borderRadius="1rem 1rem 0 0" pt="2rem" maxHeight={`45%`}>
                     <DrawerBody>
                         <Steps orientation="vertical" activeStep={props.trackingUpdates.length} size='sm'>
                             {props.trackingUpdates.map((trackEvent, index) => (
@@ -63,7 +63,7 @@ export default function ShipmentStatus(props: ShipmentStatusProps) {
                         </Steps>
                     </DrawerBody>
                 </DrawerContent>
-                </motion.div>
+                {/* </motion.div> */}
             </Drawer>
 
         </>
