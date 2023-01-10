@@ -144,10 +144,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <html lang="en"></html>
+        {/* <html lang="en"></html> */}
         <title>UniShipper - Unicommerce</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
-      </Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+      </Head> 
 
         <QueryClientProvider client={queryClient}>
           <Flex flexDir="row" align="center" justify="center" h={`100vh`} w={`100vw`} className={`${mulish.className} ${styles.pageContainer}`}>

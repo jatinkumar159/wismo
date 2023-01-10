@@ -35,7 +35,7 @@ export default function Details(props: OrderDetailProps) {
                 <Box>
                     <Text fontSize="sm" className={styles.lightText}>Order number:&nbsp;<Text as="span" className={styles.darkText}>{props.orderNumber}</Text></Text>
                 </Box>
-                <Box display="inline-flex" alignItems="center" onClick={modal.onOpen}>
+                <Box display="inline-flex" alignItems="center" onClick={modal.onOpen} cursor="pointer">
                     <Box>
                         <AvatarGroup size='sm' max={2} spacing="-0.375rem">
                             <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
