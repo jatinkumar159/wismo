@@ -147,7 +147,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <html lang="en"></html>
         <title>UniShipper - Unicommerce</title>
         <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
-        <link rel="shortcut icon" href="/static/favicon.png" />
       </Head>
 
         <QueryClientProvider client={queryClient}>
