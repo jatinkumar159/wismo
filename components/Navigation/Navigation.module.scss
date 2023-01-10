@@ -12,6 +12,11 @@
   border-bottom: 1px solid var(--wismo-colors-gray);
   min-height: 3rem;
   z-index: 9;
+
+  @media all and (min-width:768px) {
+    border-top-right-radius: var(--chakra-space-1);
+    border-top-left-radius: var(--chakra-space-1);
+  }
 }
 
 .brand {

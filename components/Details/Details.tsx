@@ -68,7 +68,7 @@ export default function Details(props: OrderDetailProps) {
                             <Text as="p" className={styles.lightText} fontSize="xs">Tracking ID: <Text as="span" className={styles.darkText}>{props.trackingNumber}</Text></Text>  
                             <Popover variant="responsive" isOpen={popover.isOpen} onOpen={popover.onOpen} onClose={popover.onClose}>
                             <PopoverTrigger>
-                                <CopyIcon fontSize="xs" onClick={() => handleOnCopy(props.trackingNumber)}/>
+                                <CopyIcon cursor="pointer" fontSize="xs" onClick={() => handleOnCopy(props.trackingNumber)}/>
                             </PopoverTrigger>
                             <Portal>
                                 <PopoverContent>

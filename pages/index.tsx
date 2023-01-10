@@ -9,14 +9,6 @@ import * as Yup from 'yup'
 
 export default function Home() {
   const router = useRouter();
-  const [orderID, setOrderID] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  
-  const trackingNumberRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    trackingNumberRef?.current?.focus();
-  }, []);
 
   const validationSchema = Yup.object().shape({
     trackingNumber: Yup.string().min(3, 'Tracking number should be at least 3 digits').required('Tracking number is required')
@@ -48,7 +40,7 @@ export default function Home() {
               <Form>
                 <span>{touched.trackingNumber}</span>
                 <FormControl isInvalid={touched.trackingNumber && errors.trackingNumber?.length ? true : false}>
-                  <Input w={`260px`} textAlign="center" placeholder="Tracking Number or Order ID" autoFocus name="trackingNumber" type="text" onChange={handleChange} value={values.trackingNumber} ref={trackingNumberRef}/>
+                  <Input w={`260px`} textAlign="center" placeholder="Tracking Number or Order ID" autoFocus name="trackingNumber" type="text" onChange={handleChange} value={values.trackingNumber}/>
                   <FormErrorMessage fontSize="xs">{errors.trackingNumber}</FormErrorMessage>
                 </FormControl>
                 <Button w={`100%`} mt={4}fontSize='sm' bg='black' color='white' _hover={{ background: 'black' }} px={8} onClick={submitForm}>Track&nbsp;<ChevronRightIcon /></Button>

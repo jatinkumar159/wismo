@@ -13,14 +13,8 @@
 .turboContainer {
   height: 100vh;
   background: white;
-  max-width: 768px;
   border:1px solid var(--chakra-colors-gray-200);
   box-shadow: 0 0 var(--chakra-space-4) var(--chakra-colors-gray-200);
-  
-  @media all and (min-width: 768px) {
-    border-radius: var(--chakra-space-2);
-    max-height:80vh;
-  }
 
   @media (prefers-color-scheme: dark) {
     box-shadow: 0 0 var(--chakra-space-4) var(--chakra-colors-gray-900);

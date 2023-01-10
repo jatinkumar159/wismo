@@ -144,12 +144,15 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0" />
+        <html lang="en"></html>
+        <title>UniShipper - Unicommerce</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+        <link rel="shortcut icon" href="/static/favicon.png" />
       </Head>
 
-      <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <Flex flexDir="row" align="center" justify="center" h={`100vh`} w={`100vw`} className={`${mulish.className} ${styles.pageContainer}`}>
+            <ChakraProvider theme={theme}>
             <Flex className={styles.turboContainer} flexDir="column" grow={1}>
               <Navigation />
               {isPageTransitionActive ? (
@@ -160,9 +163,9 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} className={styles.pageContainer} />
               )}
             </Flex>
+            </ChakraProvider>
           </Flex>
         </QueryClientProvider>
-      </ChakraProvider>
     </>
   )
 }
