@@ -13,6 +13,7 @@ import { StepsStyleConfig } from 'chakra-ui-steps';
 import { ActionModalTheme } from '../components/theme/action-modal/actionModal'
 import styles from '../styles/app.module.scss'
 import '../styles/globals.css'
+import AuthProvider from '../components/AuthProvider/AuthProvider'
 
 const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-24px)'
@@ -149,22 +150,24 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
       </Head>
 
+      <AuthProvider>
         <QueryClientProvider client={queryClient}>
           <Flex flexDir="row" align="center" justify="center" h={`100vh`} w={`100vw`} className={`${mulish.className} ${styles.pageContainer}`}>
             <ChakraProvider theme={theme}>
-            <Flex className={styles.turboContainer} flexDir="column" grow={1}>
-              <Navigation />
-              {isPageTransitionActive ? (
-                <Center h={`calc(100vh - 80px)`}>
-                  <Spinner />
-                </Center>
-              ) : (
-                <Component {...pageProps} className={styles.pageContainer} />
-              )}
-            </Flex>
+              <Flex className={styles.turboContainer} flexDir="column" grow={1}>
+                <Navigation />
+                {isPageTransitionActive ? (
+                  <Center h={`calc(100vh - 80px)`}>
+                    <Spinner />
+                  </Center>
+                ) : (
+                  <Component {...pageProps} className={styles.pageContainer} />
+                )}
+              </Flex>
             </ChakraProvider>
           </Flex>
         </QueryClientProvider>
+      </AuthProvider>
     </>
   )
 }

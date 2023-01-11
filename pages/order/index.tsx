@@ -7,31 +7,37 @@ import styles from "./order.module.scss"
 import QueryString from 'query-string'
 import { useQuery } from "@tanstack/react-query"
 import { fetchTracking } from "../../apis/post"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "../../components/AuthProvider/AuthProvider"
 
 export default function Order() {
     const router = useRouter();
+    const auth = useContext(AuthContext);
     const queryParams = QueryString.parse(router.asPath.split(/\?/)[1]);
     const [trackingId, setTrackingId] = useState<any | string>('');
+    const { isLoading, isError, data } = useQuery([trackingId], () => fetchTracking(trackingId));
 
     useEffect(() => {
-        if(queryParams && queryParams.id) {
+        if (queryParams && queryParams.id) {
             setTrackingId(queryParams.id);
         }
     }, [queryParams]);
 
+    useEffect(() => {
+        if (data?.result?.customer_phone)
+            auth.setPhoneNumber(data.result.customer_phone.slice(-10));
+    }, [data])
+
     const resolveProgressStep = (data: any): number => {
-        if(!!data.is_delivered) return 4;
-        if(!!data.is_out_for_delivery) return 3;
-        if(!!data.is_dispatched) return 2;
-        if(!!data.is_shipped) return 1;
+        if (!!data.is_delivered) return 4;
+        if (!!data.is_out_for_delivery) return 3;
+        if (!!data.is_dispatched) return 2;
+        if (!!data.is_shipped) return 1;
         else return 0;
     }
 
-    const { isLoading, isError, data } = useQuery([trackingId], () => fetchTracking(trackingId));
-    
-    if(isLoading) return <Center h={`100%`}><Spinner /></Center>
-    if(isError) return <Center h={`100%`}><Text as="p">Something went wrong, please try again later...</Text></Center>
+    if (isLoading) return <Center h={`100%`}><Spinner /></Center>
+    if (isError) return <Center h={`100%`}><Text as="p">Something went wrong, please try again later...</Text></Center>
 
     const status = {
         statusHeading: data.result.current_wismo_display_status,
@@ -51,14 +57,12 @@ export default function Order() {
         deliveryStateCode: data.result.delivery_state_code
     };
 
-    const auth = {};
-    
     return (
         <Flex className={styles.container}>
-            <Status { ...status } />
-            <Details { ...details } />
+            <Status {...status} />
+            <Details {...details} />
             <Box flexGrow={1} className={styles.flexGrowBox}>
-                <Auth { ...auth } />
+                <Auth />
             </Box>
         </Flex>
     )
