@@ -145,7 +145,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <html lang="en"></html>
         <title>UniShipper - Unicommerce</title>
         <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
       </Head>
