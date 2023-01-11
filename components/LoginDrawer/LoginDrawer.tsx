@@ -1,6 +1,8 @@
 import { CloseIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Text, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Flex, HStack, PinInput, PinInputField, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { Text, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Flex, HStack, PinInput, PinInputField, Button, useToast, Center } from "@chakra-ui/react";
+import { useContext, useEffect, useState } from "react";
+import { resendOTP, sendOTP, verifyOTP } from "../../apis/post";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 interface Props {
     isOpen: boolean;
@@ -9,7 +11,68 @@ interface Props {
 }
 
 export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
+    const auth = useContext(AuthContext);
+    const toast = useToast();
     const [pin, setPin] = useState<string>("");
+    const [timer, setTimer] = useState<number>(30);
+    const [otpRequestId, setOtpRequestId] = useState<string>("");
+
+    useEffect(() => {
+        const interval = timer > 0 ? setInterval(() => setTimer(time => time - 1), 1000) : undefined;
+        return () => clearInterval(interval);
+    }, [timer]);
+
+    const showToast = (message: any, success?: boolean) => {
+        toast({
+            title: success ? 'Successful!' : 'A problem occurred!',
+            description: `${message}`,
+            status: success ? "success" : "error",
+            variant: 'left-accent',
+            position: 'top-right',
+            duration: 4000,
+            isClosable: true,
+        });
+    }
+
+    useEffect(() => {
+        // NO NEED TO SEND OTP IF DRAWER IS NOT OPEN
+        if (!isOpen) return;
+
+        const sendOtp = async () => {
+            try {
+                if (!auth.phoneNumber) throw new Error('Invalid Phone Number!');
+
+                const data = await sendOTP(auth.phoneNumber);
+                setOtpRequestId(data.otp_request_id);
+            } catch (err) {
+                showToast(err);
+            }
+        }
+
+        sendOtp();
+    }, [isOpen])
+
+    const handleResendOtp = async () => {
+        try {
+            const data = await resendOTP(otpRequestId);
+            setOtpRequestId(data.otp_request_id);
+        } catch (err) {
+            showToast(err);
+        }
+    }
+
+    const handleLogin = async () => {
+        try {
+            const data = await verifyOTP(otpRequestId, pin);
+            if (data.otp_status !== 'VERIFIED') throw new Error('Invalid OTP!');
+
+            auth.setAuthorization(true);
+            showToast('Logged in successfully!', true);
+            onClose();
+        } catch (err) {
+            showToast(err);
+        }
+    }
 
     return (
         <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
@@ -40,7 +103,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
                 </DrawerHeader>
                 <DrawerBody>
                     <Flex flexDir="column" gap="1rem" pb="3rem" paddingInline="1rem" align="center">
-                        <Text>Enter OTP received on 817*****70</Text>
+                        <Text>Enter OTP received on {`*******${auth.phoneNumber?.substring(7, 10)}`}</Text>
                         <HStack>
                             <PinInput otp onChange={val => setPin(val)} placeholder="">
                                 <PinInputField />
@@ -49,8 +112,14 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
                                 <PinInputField />
                             </PinInput>
                         </HStack>
-                        <Text>Resend OTP in 25 seconds</Text>
-                        <Button fontSize="sm" bg="black" color="white" _hover={{ background: "black" }} onClick={onClose}>Login&nbsp;<ChevronRightIcon /></Button>
+                        <Center>
+                            <Text
+                                hidden={timer > 0}
+                                onClick={handleResendOtp}
+                            >Resend OTP</Text>
+                        </Center>
+                        {timer > 0 && <Text as="span" color={`gray.500`}>Didn’t receive the OTP? Resend in <Text as="span" fontWeight={`bold`} color={`var(--turbo-colors-text)`}>{timer} seconds</Text></Text>}
+                        <Button fontSize="sm" bg="black" color="white" _hover={{ background: "black" }} onClick={handleLogin}>Login&nbsp;<ChevronRightIcon /></Button>
                     </Flex>
                 </DrawerBody>
             </DrawerContent>

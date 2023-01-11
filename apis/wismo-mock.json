@@ -8,6 +8,87 @@
   "hostname": "0.0.0.0",
   "routes": [
     {
+      "uuid": "f3cd22dc-c169-4a8a-ad6f-372ef74eca0b",
+      "documentation": "Send OTP",
+      "method": "post",
+      "endpoint": "communication/v1/otp/send",
+      "responses": [
+        {
+          "uuid": "b13ea848-1e93-4da3-b8be-257d86eba92c",
+          "body": "{\n  \"otp_request_id\": \"24rejr-dkdid-wiwso\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "d8a278d8-82d8-4adc-a19e-2952090714d2",
+      "documentation": "Verify OTP",
+      "method": "post",
+      "endpoint": "communication/v1/otp/verify",
+      "responses": [
+        {
+          "uuid": "640504e5-767c-4cda-877a-9a93fb23189a",
+          "body": "{\n  \"otp_request_id\": \"24rejr-dkdid-wiwso\",\n  \"recipient\": \"9999999999\",\n  \"template_type\": \"login_otp\",\n  \"otp_status\": \"VERIFIED\"\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "0742037a-3a21-4818-b7db-5b752f82b1f7",
+      "documentation": "Verify OTP",
+      "method": "patch",
+      "endpoint": "communication/v1/otp/resend",
+      "responses": [
+        {
+          "uuid": "498a9ab3-507a-49eb-b865-ba49a23e2934",
+          "body": "{\n  \"otp_request_id\": \"23rejr-dkdid-wiwso\"\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
       "uuid": "403075a8-b730-4f5a-b79e-0914e91d0a7e",
       "documentation": "",
       "method": "post",
@@ -15,7 +96,7 @@
       "responses": [
         {
           "uuid": "dd4e3b30-b40a-4d2a-8f00-40078bcec44c",
-          "body": "{\n    \"code\": 80000,\n    \"description\": \"OK\",\n    \"result\": {\n        \"tracking_number\": \"53441108954\",\n        \"shipping_source_code\": \"BLUEDART\",\n        \"no_of_items\": 4,\n        \"shipping_type\": \"CUSTOM\",\n        \"payment_method\": \"PREPAID\",\n        \"order_number\": \"4684296978611\",\n        \"shipping_package_code\": \"SP-DEL-FY22-12860\",\n        \"current_location\": \"At Courier Partner Hub\",\n        \"expected_delivered_datetime\": \"2023-01-09T18:00:00\",\n        \"dispatch_datetime\": \"2023-01-04T18:11:03\",\n        \"delivered_datetime\": null,\n        \"order_datetime\": \"2023-01-02T18:40:04\",\n        \"current_wismo_display_status\": \"In Transit\",\n        \"last_event_updated\": \"2023-01-05T16:31:47\",\n        \"is_dispatched\": true,\n        \"is_shipped\": true,\n        \"is_out_for_delivery\": false,\n        \"is_delivered\": false,\n        \"delivery_address\": \"House no 6409 Ghari malook no 2,Saharanpur,UP,247001\",\n        \"line_items\": [\n            {\n                \"total_price\": \"38999.00\",\n                \"seller_sku_code\": \"ADA-T8V\",\n                \"channel_product_name\": \"ADAM Audio T8V Nearfield Monitor Speaker - Single\"\n            },\n            {\n                \"total_price\": \"3000.00\",\n                \"seller_sku_code\": \"EMIPF\",\n                \"channel_product_name\": \"0% EMI Processing Fee - 3000\"\n            },\n            {\n                \"total_price\": \"3000.00\",\n                \"seller_sku_code\": \"EMIPF\",\n                \"channel_product_name\": \"0% EMI Processing Fee - 3000\"\n            },\n            {\n                \"total_price\": \"519.00\",\n                \"seller_sku_code\": \"EMIPF\",\n                \"channel_product_name\": \"0% EMI Processing Fee - 600\"\n            }\n        ],\n        \"total_price\": 45518.0,\n        \"customer_name\": \"Nitin Gautam\",\n        \"customer_phone\": \"8369441262\",\n        \"customer_email\": null,\n        \"tracking_events\": [\n            {\n                \"tracking_status\": \"IT-In Transit. Await delivery information\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 05 2023, 16:31 PM\"\n            },\n            {\n                \"tracking_status\": \"IT-In Transit. Await delivery information\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 05 2023, 12:01 PM\"\n            },\n            {\n                \"tracking_status\": \"IT-In Transit. Await delivery information\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 05 2023, 06:01 AM\"\n            },\n            {\n                \"tracking_status\": \"PU-Online shipment booked\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 04 2023, 16:47 PM\"\n            },\n            {\n                \"tracking_status\": \"PU-Online shipment booked\",\n                \"tracking_location\": \"At Courier Partner Hub\",\n                \"tracking_datetime\": \"Jan 04 2023, 16:47 PM\"\n            }\n        ],\n        \"status_heading\": \"<b>current_status</b>\",\n        \"status_sub_heading\": \"Package will arrive on <b>Jan 09 2023, 18:00 PM</b>\"\n    }\n}",
+          "body": "{\n    \"code\": 80000,\n    \"description\": \"OK\",\n    \"result\": {\n        \"tracking_number\": \"53441130691\",\n        \"shipping_source_code\": \"BLUEDART\",\n        \"no_of_items\": 1,\n        \"shipping_type\": \"CUSTOM\",\n        \"payment_method\": \"PREPAID\",\n        \"order_number\": \"4684330860723\",\n        \"shipping_package_code\": \"SP-MUM-FY22-05001\",\n        \"current_location\": \"\",\n        \"expected_delivered_datetime\": \"2023-01-07T18:00:00\",\n        \"dispatch_datetime\": \"2023-01-05T16:14:03\",\n        \"delivered_datetime\": \"2023-01-06T17:55:00\",\n        \"order_datetime\": \"2023-01-02T19:30:08\",\n        \"current_wismo_display_status\": \"Delivered\",\n        \"last_event_updated\": \"2023-01-06T17:55:00\",\n        \"is_dispatched\": true,\n        \"is_shipped\": true,\n        \"is_out_for_delivery\": true,\n        \"is_delivered\": true,\n        \"delivery_city\": \"Pune\",\n        \"delivery_state_code\": \"MH\",\n        \"delivery_address\": \"A - 903, Freshia Apartment, opposite to Zolo crown society/PG , Pune, MH, 411021\",\n        \"line_items\": [\n            {\n                \"total_price\": \"6644.73\",\n                \"seller_sku_code\": \"CRA-MS45PROPLUSPAIR\",\n                \"channel_product_name\": \"Craftec MS45 PRO Plus Monitor Stand - Pair\"\n            }\n        ],\n        \"total_price\": 6644.73,\n        \"customer_name\": \"Rahul  R\",\n        \"customer_phone\": \"8767797458‬\",\n        \"customer_email\": null,\n        \"tracking_events\": [\n            {\n                \"tracking_status\": \"DL-SHIPMENT DELIVERED\",\n                \"tracking_location\": \"\",\n                \"tracking_datetime\": \"Jan 06 2023, 17:55 PM\"\n            },\n            {\n                \"tracking_status\": \"DL-SHIPMENT DELIVERED\",\n                \"tracking_location\": \"AMBEDKAR CHOWK PUD CENTER\",\n                \"tracking_datetime\": \"Jan 06 2023, 17:55 PM\"\n            },\n            {\n                \"tracking_status\": \"IT-In Transit. Await delivery information\",\n                \"tracking_location\": \"\",\n                \"tracking_datetime\": \"Jan 06 2023, 17:02 PM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT OUT FOR DELIVERY\",\n                \"tracking_location\": \"AMBEDKAR CHOWK PUD CENTER\",\n                \"tracking_datetime\": \"Jan 06 2023, 12:55 PM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT ARRIVED\",\n                \"tracking_location\": \"AMBEDKAR CHOWK PUD CENTER\",\n                \"tracking_datetime\": \"Jan 06 2023, 11:39 AM\"\n            },\n            {\n                \"tracking_status\": \"UD-PAPER WORK INSCAN\",\n                \"tracking_location\": \"AMBEDKAR CHOWK PUD CENTER\",\n                \"tracking_datetime\": \"Jan 06 2023, 11:03 AM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT FURTHER CONNECTED\",\n                \"tracking_location\": \"HINJEWADI WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 06 2023, 09:49 AM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT ARRIVED\",\n                \"tracking_location\": \"HINJEWADI WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 06 2023, 06:51 AM\"\n            },\n            {\n                \"tracking_status\": \"UD-PAPER WORK INSCAN\",\n                \"tracking_location\": \"HINJEWADI WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 06 2023, 06:47 AM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT FURTHER CONNECTED\",\n                \"tracking_location\": \"MUMBAI KANDIVALI WAR\",\n                \"tracking_datetime\": \"Jan 06 2023, 01:40 AM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT ARRIVED\",\n                \"tracking_location\": \"MUMBAI KANDIVALI WAR\",\n                \"tracking_datetime\": \"Jan 06 2023, 00:42 AM\"\n            },\n            {\n                \"tracking_status\": \"UD-PAPER WORK INSCAN\",\n                \"tracking_location\": \"MUMBAI KANDIVALI WAR\",\n                \"tracking_datetime\": \"Jan 06 2023, 00:38 AM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT FURTHER CONNECTED\",\n                \"tracking_location\": \"MUMBAI AIRPORT WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 05 2023, 23:44 PM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT ARRIVED\",\n                \"tracking_location\": \"MUMBAI AIRPORT WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 05 2023, 21:07 PM\"\n            },\n            {\n                \"tracking_status\": \"UD-PAPER WORK INSCAN\",\n                \"tracking_location\": \"MUMBAI AIRPORT WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 05 2023, 21:05 PM\"\n            },\n            {\n                \"tracking_status\": \"UD-SHIPMENT PICKED UP\",\n                \"tracking_location\": \"MUMBAI AIRPORT WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 05 2023, 16:22 PM\"\n            },\n            {\n                \"tracking_status\": \"Dispatched from Warehouse\",\n                \"tracking_location\": \"Mumbai-MH\",\n                \"tracking_datetime\": \"Jan 05 2023, 16:14 PM\"\n            },\n            {\n                \"tracking_status\": \"PU-PICKUP EMPLOYEE IS OUT TO P/U SHIPMENT\",\n                \"tracking_location\": \"MUMBAI AIRPORT WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 05 2023, 15:18 PM\"\n            },\n            {\n                \"tracking_status\": \"PU-Online shipment booked\",\n                \"tracking_location\": \"THANE\",\n                \"tracking_datetime\": \"Jan 04 2023, 18:42 PM\"\n            },\n            {\n                \"tracking_status\": \"PU-PICKUP HAS BEEN REGISTERED\",\n                \"tracking_location\": \"MUMBAI AIRPORT WAREHOUSE\",\n                \"tracking_datetime\": \"Jan 04 2023, 18:42 PM\"\n            }\n        ],\n        \"status_heading\": \"<b>Delivered</b>\",\n        \"status_sub_heading\": \"Package delivered on Jan 06 2023, 17:55 PM\"\n    }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -88,6 +169,10 @@
     }
   ],
   "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    },
     {
       "key": "",
       "value": ""

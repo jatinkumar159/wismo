@@ -25,7 +25,7 @@ export default function Order() {
 
     useEffect(() => {
         if (data?.result?.customer_phone)
-            auth.setPhoneNumber(data.result.customer_phone.slice(-10));
+            auth.setPhoneNumber(data.result.customer_phone);
     }, [data])
 
     const resolveProgressStep = (data: any): number => {
