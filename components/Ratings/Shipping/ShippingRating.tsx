@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Text } from "@chakra-ui/react";
 import Rating from "../Rating";
 
-export default function ShippingRating() {
-    const [rating, setRating] = useState(3);
+interface Props {
+    rating: number;
+    setRating: Function;
+}
 
+export default function ShippingRating({ rating, setRating }: Props) {
     return (
         <>
             <Text>Did you like Shipping Journey?</Text>
