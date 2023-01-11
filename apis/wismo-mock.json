@@ -63,7 +63,7 @@
     },
     {
       "uuid": "0742037a-3a21-4818-b7db-5b752f82b1f7",
-      "documentation": "Verify OTP",
+      "documentation": "Resend OTP",
       "method": "patch",
       "endpoint": "communication/v1/otp/resend",
       "responses": [
