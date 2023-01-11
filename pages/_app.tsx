@@ -146,7 +146,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>UniShipper - Unicommerce</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
       </Head>
 
       <AuthProvider>

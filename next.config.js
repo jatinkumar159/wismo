@@ -6,7 +6,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   distDir: 'build',
-  trailingSlash: false,
+  trailingSlash: true,
   webpack: function(config) {
     config.plugins.push(new CompressionPlugin());
     return config;

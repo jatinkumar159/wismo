@@ -1,8 +1,7 @@
-import { Box, Divider, Flex, HStack, Icon, Text } from '@chakra-ui/react';
-import { MdLocationPin } from 'react-icons/md';
+import { Avatar, Box, Divider, Flex, HStack, Icon, Text } from '@chakra-ui/react';
+import imageLoader from '../../utils/imageLoader'
 import styles from './ItemList.module.scss';
 import Image from 'next/image';
-import imageLoader from '../../utils/imageLoader';
 
 export interface OrderItem {
     total_price: any;

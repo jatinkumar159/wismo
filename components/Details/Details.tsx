@@ -93,8 +93,8 @@ export default function Details(props: OrderDetailProps) {
                     <HStack>
                         <Icon as={BsHeadphones} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
                         <Box>
-                            <Text>Need Help?</Text>
-                            <Text as="p" fontSize="xs" className={styles.lightText}>Raise a ticket</Text>
+                            <Text>Rate us</Text>
+                            <Text as="p" fontSize="xs" className={styles.lightText}>Share feedback</Text>
                         </Box>
                         <Box flexGrow={1} textAlign="right">
                             <ChevronRightIcon w='1.5rem' h='1.5rem' />
