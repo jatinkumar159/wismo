@@ -1,6 +1,5 @@
 import { Box, Center, Flex, Spinner, Text } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import Auth from "../../components/Auth/Auth"
 import Details from "../../components/Details/Details"
 import Status from "../../components/Status/Status"
 import styles from "./order.module.scss"
@@ -9,6 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchTracking } from "../../apis/post"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../components/AuthProvider/AuthProvider"
+import LoginPrompt from "../../components/LoginPrompt/LoginPrompt"
 
 export default function Order() {
     const router = useRouter();
@@ -62,7 +62,11 @@ export default function Order() {
             <Status {...status} />
             <Details {...details} />
             <Box flexGrow={1} className={styles.flexGrowBox}>
-                <Auth />
+                {
+                    auth.isAuthorized ?
+                        <Text as="span">Show whatever you want here, as user is logged in.</Text>
+                        : <LoginPrompt />
+                }
             </Box>
         </Flex>
     )
