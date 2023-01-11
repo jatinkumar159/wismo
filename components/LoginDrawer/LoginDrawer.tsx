@@ -14,7 +14,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     const auth = useContext(AuthContext);
     const toast = useToast();
     const [pin, setPin] = useState<string>("");
-    const [timer, setTimer] = useState<number>(30);
+    const [timer, setTimer] = useState<number>(60);
     const [otpRequestId, setOtpRequestId] = useState<string>("");
 
     useEffect(() => {
@@ -37,6 +37,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     useEffect(() => {
         // NO NEED TO SEND OTP IF DRAWER IS NOT OPEN
         if (!isOpen) return;
+        setTimer(60) ;
 
         const sendOtp = async () => {
             try {

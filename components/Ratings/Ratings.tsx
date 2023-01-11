@@ -10,7 +10,9 @@ export default function Ratings() {
     const [feedback, setFeedback] = useState<string>("");
 
     const submitForm = () => {
-
+        console.log(brandRating);
+        console.log(shippingRating);
+        console.log(feedback);
     }
 
     return (
