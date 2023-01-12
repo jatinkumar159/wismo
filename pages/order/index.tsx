@@ -25,6 +25,7 @@ export default function Order() {
 
     useEffect(() => {
         if (queryParams && queryParams.id) {
+            auth.setTrackingNumber(queryParams.id);
             setTrackingId(queryParams.id);
         }
     }, [queryParams]);

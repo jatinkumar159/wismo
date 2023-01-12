@@ -1,6 +1,8 @@
 export interface Auth {
   isAuthorized: boolean | undefined
-  setAuthorization: Function
+  checkAuthorization: Function
   phoneNumber: string | undefined
   setPhoneNumber: Function
+  trackingNumber: string | undefined
+  setTrackingNumber: Function
 }

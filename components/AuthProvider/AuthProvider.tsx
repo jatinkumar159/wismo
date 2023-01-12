@@ -4,22 +4,37 @@ import { Auth } from "../../interfaces";
 
 export const AuthContext = React.createContext<Auth>({
     isAuthorized: undefined,
-    setAuthorization: () => { },
+    checkAuthorization: () => { },
     phoneNumber: undefined,
     setPhoneNumber: () => { },
+    trackingNumber: undefined,
+    setTrackingNumber: () => { },
 });
 
 export default function AuthProvider({ children }: { children: JSX.Element }) {
     const [auth, setAuth] = useState<boolean>(false);
     const [phoneNumber, setPhoneNumber] = useState<string>("");
+    const [trackingNumber, setTrackingNumber] = useState<string>("");
+
+    const checkAuthorization = () => {
+        const token = localStorage.getItem('tr');
+        if (token === trackingNumber) setAuth(true);
+        else setAuth(false);
+    }
+
+    useEffect(() => {
+        checkAuthorization();
+    }, [trackingNumber])
 
     return (
         <AuthContext.Provider
             value={{
                 isAuthorized: auth,
-                setAuthorization: setAuth,
+                checkAuthorization: checkAuthorization,
                 phoneNumber: phoneNumber,
-                setPhoneNumber: setPhoneNumber
+                setPhoneNumber: setPhoneNumber,
+                trackingNumber: trackingNumber,
+                setTrackingNumber: setTrackingNumber,
             }}
         >{children}</AuthContext.Provider>
     )

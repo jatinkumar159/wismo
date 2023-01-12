@@ -37,7 +37,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     useEffect(() => {
         // NO NEED TO SEND OTP IF DRAWER IS NOT OPEN
         if (!isOpen) return;
-        setTimer(60) ;
+        setTimer(60);
 
         const sendOtp = async () => {
             try {
@@ -67,7 +67,8 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
             const data = await verifyOTP(otpRequestId, pin);
             if (data.otp_status !== 'VERIFIED') throw new Error('Invalid OTP!');
 
-            auth.setAuthorization(true);
+            localStorage.setItem('tr', auth.trackingNumber!);
+            auth.checkAuthorization();
             showToast('Logged in successfully!', true);
             onClose();
         } catch (err) {
