@@ -22,6 +22,10 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
         return () => clearInterval(interval);
     }, [timer]);
 
+    useEffect(() => {
+        if (pin?.length === 4) handleLogin();
+    }, [pin])
+
     const showToast = (message: any, success?: boolean) => {
         toast({
             title: success ? 'Successful!' : 'A problem occurred!',
