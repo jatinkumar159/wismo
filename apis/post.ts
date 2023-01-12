@@ -12,7 +12,8 @@ export async function fetchTracking(tracking_number: string): Promise<any> {
     'POST',
     JSON.stringify({
       tracking_number: tracking_number
-    })
+    }),
+    "BASE"
   )
   return res.json()
 }
@@ -24,7 +25,8 @@ export async function sendOTP(phoneNumber: string): Promise<any> {
     JSON.stringify({
       recipient: phoneNumber,
       channel: 'SMS'
-    })
+    }),
+    "otp"
   )
   if (!res.ok) throw new Error(res.statusText)
   return res.json()
@@ -37,7 +39,8 @@ export async function verifyOTP(otpRequestId: string, otp: string): Promise<any>
     JSON.stringify({
       otp_request_id: otpRequestId,
       otp: otp
-    })
+    }),
+    "otp"
   )
   if (!res.ok) throw new Error(res.statusText)
   return res.json()
@@ -49,7 +52,8 @@ export async function resendOTP(otpRequestId: string): Promise<any> {
     'PATCH',
     JSON.stringify({
       otp_request_id: otpRequestId
-    })
+    }),
+    "otp"
   )
   if (!res.ok) throw new Error(res.statusText)
   return res.json()
@@ -66,7 +70,8 @@ export async function submitFeedback(feedback: FeedbackProps): Promise<any> {
       "phone_number":feedback.phone,
       "tenant_code": feedback.tenant,
       "awb": feedback.trackingNumber
-    })
+    }),
+    "base"
   )
   if (!res.ok) throw new Error(res.statusText)
   return res.json()

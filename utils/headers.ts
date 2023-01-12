@@ -1,5 +1,9 @@
-export function getHeaders(method: string, headersMap: any): Headers {
+export function getHeaders(method: string, headerSource: string): Headers {
   const headers = new Headers()
-  headers.append("APP-KEY", "#$%^SK&SNLSH*^%SF");
+  if(headerSource === "otp") {
+    headers.append("Authorization", "Basic dXNlcjpwYXNzd29yZA==");
+  } else {
+    headers.append("APP-KEY", "#$%^SK&SNLSH*^%SF");
+  }
   return headers
 }
