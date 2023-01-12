@@ -131,6 +131,33 @@
       ],
       "enabled": true,
       "responseMode": null
+    },
+    {
+      "uuid": "118f850b-af8c-4b0c-bcae-53ab70e5603c",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "api/buyer/share-feedback",
+      "responses": [
+        {
+          "uuid": "a69397dd-f8c4-4aca-9c19-b19a8410f990",
+          "body": "{\n  \"done\":true\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
     }
   ],
   "proxyMode": false,

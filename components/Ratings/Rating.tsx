@@ -17,8 +17,8 @@ export default function Rating({ rating, setRating }: Props) {
                 return (
                     <Box key={i}>
                         {rating < i ?
-                            <IconButton background='none' icon={<StarIcon boxSize='3rem' color='grey' focusable='false' onClick={() => setRating(i)} />} aria-label='Star' />
-                            : <IconButton background='none' icon={<StarIcon boxSize='3rem' color='darkgreen' onClick={() => setRating(i)} />} aria-label='Star' />
+                            <IconButton background='none' _hover={{ backgroundColor: 'transparent'}} icon={<StarIcon boxSize='2rem' color='var(--chakra-colors-gray-300)' _hover={{color:`var(--chakra-colors-green-300)`}} focusable='false' onClick={() => setRating(i)} />} aria-label='Star' />
+                            : <IconButton background='none' _hover={{ backgroundColor: 'transparent'}} icon={<StarIcon boxSize='2rem' color='var(--chakra-colors-green-300)' onClick={() => setRating(i)} />} aria-label='Star' />
                         }
                     </Box>
                 )

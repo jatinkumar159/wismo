@@ -10,10 +10,11 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../components/AuthProvider/AuthProvider"
 import LoginPrompt from "../../components/LoginPrompt/LoginPrompt"
 import BrandRating from "../../components/Ratings/Brand/BrandRating"
-import { CloseIcon, ChevronRightIcon } from "@chakra-ui/icons"
+import { CloseIcon, ChevronRightIcon, Icon } from "@chakra-ui/icons"
 import Rating from "../../components/Ratings/Rating"
 import ShippingRating from "../../components/Ratings/Shipping/ShippingRating"
 import Ratings from "../../components/Ratings/Ratings"
+import { BsHeadphones } from "react-icons/bs"
 
 export default function Order() {
     const router = useRouter();
@@ -21,7 +22,10 @@ export default function Order() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const queryParams = QueryString.parse(router.asPath.split(/\?/)[1]);
     const [trackingId, setTrackingId] = useState<any | string>('');
-    const { isLoading, isError, data } = useQuery([trackingId], () => fetchTracking(trackingId));
+    const { isLoading, isError, data } = useQuery([trackingId], () => fetchTracking(trackingId), {
+        staleTime: Infinity,
+        refetchOnWindowFocus: false
+    });
 
     useEffect(() => {
         if (queryParams && queryParams.id) {
@@ -64,15 +68,32 @@ export default function Order() {
         deliveryStateCode: data.result.delivery_state_code
     };
 
+    const ratingsMetaData = {
+        phone: data.result.customer_phone,
+        trackingNumber: data.result.tracking_number,
+        tenant: data.result.tenant_code,
+        closeDrawer: onClose
+    }
+
     return (
         <>
             <Flex className={styles.container}>
                 <Status {...status} />
                 <Details {...details} />
-                <Box flexGrow={1} className={styles.flexGrowBox}>
+                <Box flexGrow={1}>
                     {
-                        auth.isAuthorized ?
-                            <Text as="span" color="blue" cursor="pointer" onClick={onOpen}>Ratings</Text>
+                        auth.isAuthorized ? (<Box justifyContent='space-between'>
+                            <HStack bgColor={`white`} py={2} px={4} onClick={onOpen} cursor="pointer">
+                                <Icon as={BsHeadphones} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
+                                <Box>
+                                    <Text>Rate us</Text>
+                                    <Text as="p" fontSize="xs" className={styles.lightText}>Share feedback</Text>
+                                </Box>
+                                <Box flexGrow={1} textAlign="right">
+                                    <ChevronRightIcon w='1.5rem' h='1.5rem' />
+                                </Box>
+                            </HStack>
+                        </Box>)
                             : <LoginPrompt />
                     }
                 </Box>
@@ -84,7 +105,7 @@ export default function Order() {
                         <CloseIcon w="1rem" h="1rem" onClick={onClose} />
                     </DrawerHeader>
                     <DrawerBody>
-                        <Ratings />
+                        <Ratings {...ratingsMetaData} />
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>

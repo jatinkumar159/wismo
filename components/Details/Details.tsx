@@ -88,19 +88,6 @@ export default function Details(props: OrderDetailProps) {
                         </Box>
                     </HStack>
                 </Box>
-                <Divider my={1} />
-                <Box justifyContent='space-between'>
-                    <HStack>
-                        <Icon as={BsHeadphones} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
-                        <Box>
-                            <Text>Rate us</Text>
-                            <Text as="p" fontSize="xs" className={styles.lightText}>Share feedback</Text>
-                        </Box>
-                        <Box flexGrow={1} textAlign="right">
-                            <ChevronRightIcon w='1.5rem' h='1.5rem' />
-                        </Box>
-                    </HStack>
-                </Box>
             </Flex>
             <Drawer placement="bottom" onClose={modal.onClose} isOpen={modal.isOpen}>
                 <DrawerOverlay />

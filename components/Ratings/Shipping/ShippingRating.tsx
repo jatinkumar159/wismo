@@ -10,7 +10,7 @@ interface Props {
 export default function ShippingRating({ rating, setRating }: Props) {
     return (
         <>
-            <Text>Did you like Shipping Journey?</Text>
+            <Text fontSize="sm">How would you rate the shipping journey?</Text>
             <Rating rating={rating} setRating={setRating} />
         </>
     )
