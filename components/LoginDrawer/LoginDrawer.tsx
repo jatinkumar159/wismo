@@ -69,7 +69,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     const handleLogin = async () => {
         try {
             const data = await verifyOTP(otpRequestId, pin);
-            if (data.otp_status !== 'VERIFIED') throw new Error('Invalid OTP!');
+            if (data.otp_status !== 'VERIFIED' || data.otp_status !== 'OtpStatus.VERIFIED(value=3)') throw new Error('Invalid OTP!');
 
             localStorage.setItem('tr', auth.trackingNumber!);
             auth.checkAuthorization();

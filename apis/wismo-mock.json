@@ -37,7 +37,7 @@
     {
       "uuid": "d8a278d8-82d8-4adc-a19e-2952090714d2",
       "documentation": "Verify OTP",
-      "method": "post",
+      "method": "patch",
       "endpoint": "communication/v1/otp/verify",
       "responses": [
         {

@@ -23,7 +23,7 @@ export async function sendOTP(phoneNumber: string): Promise<any> {
     `${OTP_PATH}/communication/v1/otp/send`,
     'POST',
     JSON.stringify({
-      recipient: phoneNumber,
+      recipient: "9958311308", //phoneNumber,
       channel: 'SMS'
     }),
     "otp"

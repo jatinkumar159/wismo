@@ -5,5 +5,6 @@ export function getHeaders(method: string, headerSource: string): Headers {
   } else {
     headers.append("APP-KEY", "#$%^SK&SNLSH*^%SF");
   }
+  if(method !== 'GET') headers.append('Content-type', 'application/json');
   return headers
 }
