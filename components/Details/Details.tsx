@@ -18,6 +18,7 @@ interface OrderDetailProps {
     items: any[];
     deliveryCity: string;
     deliveryStateCode: string;
+    paymentMethod: string;
 }
 export default function Details(props: OrderDetailProps) {
     const modal = useDisclosure();
@@ -84,7 +85,7 @@ export default function Details(props: OrderDetailProps) {
                         <Box>
                             <Text>Payment Method</Text>
                             <HStack>
-                                <Text as="p" fontSize="sm" className={styles.lightText}>Prepaid</Text>
+                                <Text as="p" fontSize="sm" className={styles.lightText}>{props.paymentMethod}</Text>
                             </HStack>
                         </Box>
                     </HStack>

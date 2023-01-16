@@ -52,7 +52,7 @@ export default function Order() {
     if (isError) return <Center h={`100%`}><Text as="p">Something went wrong, please try again later...</Text></Center>
 
     const status = {
-        statusHeading: data.result.current_wismo_display_status,
+        statusHeading: data.result.status_heading,
         statusSubheading: data.result.status_sub_heading,
         currentStep: resolveProgressStep(data.result),
         lastUpdated: data.result.last_event_updated,
@@ -66,7 +66,8 @@ export default function Order() {
         shippingProvider: data.result.shipping_source_code,
         items: Object.values(data.result.line_items),
         deliveryCity: data.result.delivery_city,
-        deliveryStateCode: data.result.delivery_state_code
+        deliveryStateCode: data.result.delivery_state_code,
+        paymentMethod: data.result.payment_method
     };
 
     const ratingsMetaData = {
