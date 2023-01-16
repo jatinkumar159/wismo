@@ -26,8 +26,8 @@ export default function ItemList(props: ItemListProps) {
                 {
                     props.items.map((item: OrderItem, itemIdx) => {
                         return <Flex key={itemIdx} flexGrow={1} my={2}>
-                            {/* <Image src={item.image || 'https://via.placeholder.com/50'} alt={item.channel_product_name} className={styles.image} loader={imageLoader} width='20' height='20' /> */}
-                            <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
+                            <Image src={item.image || 'https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2Faf%2F5b%2Faf5bc2554eac0ea2a3649dc9b730751614636733.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fminiature%5D'} alt={item.channel_product_name} className={styles.image} loader={imageLoader} width='20' height='20' />
+                            {/* <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar> */}
                             <Flex grow="1" flexDir={"column"} alignItems={"flex-start"} justifyContent={'center'} ml={4}>
                                 {/* <Text fontSize={`xs`} color="var(--turbo-colors-light-text)" fontWeight={700}>{item.vendor}</Text> */}
                                 <Text fontSize={`sm`} color="var(--turbo-colors-light-text)">{item.channel_product_name}</Text>
