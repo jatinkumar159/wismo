@@ -28,7 +28,7 @@ export default function Status(props: TrackingStatusProps) {
                 <Image priority={false} loader={imageLoader} src={brandLogo} alt="brand logo of snitch" />
             </Flex>
             <Box textAlign="center">
-                <Text as="h1" fontSize="xl">{props.statusHeading}</Text>
+                <Text as="h1" fontSize="xl" dangerouslySetInnerHTML={{__html: props.statusHeading}}></Text>
                 <Text as="p" fontSize="sm" className={styles.lightText} dangerouslySetInnerHTML={{__html: props.statusSubheading}}></Text>
             </Box>
             <OrderSteps {...stepData} />

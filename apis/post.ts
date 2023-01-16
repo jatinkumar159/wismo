@@ -24,7 +24,7 @@ export async function sendOTP(phoneNumber: string): Promise<any> {
     `${OTP_PATH}/communication/v1/otp/send`,
     'POST',
     JSON.stringify({
-      recipient: "9958311308", //phoneNumber,
+      recipient: "9654723413", //phoneNumber,
       channel: 'SMS'
     }),
     'otp'
@@ -36,7 +36,7 @@ export async function sendOTP(phoneNumber: string): Promise<any> {
 export async function verifyOTP(otpRequestId: string, otp: string): Promise<any> {
   const res = await gateway(
     `${OTP_PATH}/communication/v1/otp/verify`,
-    'POST',
+    'PATCH',
     JSON.stringify({
       otp_request_id: otpRequestId,
       otp: otp

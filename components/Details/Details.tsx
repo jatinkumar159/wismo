@@ -74,6 +74,19 @@ export default function Details(props: OrderDetailProps) {
                     </HStack>
                     <Box display="inline-flex" alignItems="center" onClick={auth.isAuthorized ? modal.onOpen : login.onOpen}>
                         <Box>
+                        <Flex align={`center`}>
+                            {
+                                auth.isAuthorized ? <AvatarGroup size='sm' max={2} spacing="-0.375rem">
+                                    {props.items.map((el, i) => {
+                                        return <Avatar key={i} icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
+                                    })}
+                                    
+                                    {/* <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
+                                    <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
+                                    <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar> */}
+                                </AvatarGroup>
+                            : null }
+                        </Flex>
                             <ChevronRightIcon w='1.5rem' h='1.5rem' />
                         </Box>
                     </Box>
