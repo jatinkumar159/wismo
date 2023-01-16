@@ -14,6 +14,7 @@ import { ActionModalTheme } from '../components/theme/action-modal/actionModal'
 import styles from '../styles/app.module.scss'
 import '../styles/globals.css'
 import AuthProvider from '../components/AuthProvider/AuthProvider'
+import { Toaster } from "react-hot-toast";
 
 const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-24px)'
@@ -155,6 +156,10 @@ export default function App({ Component, pageProps }: AppProps) {
             <ChakraProvider theme={theme}>
               <Flex className={styles.turboContainer} flexDir="column" grow={1}>
                 <Navigation />
+                <Toaster
+                  position="top-center"
+                  reverseOrder={false}
+                />
                 {isPageTransitionActive ? (
                   <Center h={`calc(100vh - 80px)`}>
                     <Spinner />

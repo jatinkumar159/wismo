@@ -1,8 +1,9 @@
 import { CloseIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Text, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Flex, HStack, PinInput, PinInputField, Button, useToast, Center } from "@chakra-ui/react";
+import { Text, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Flex, HStack, PinInput, PinInputField, Button, Center } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { resendOTP, sendOTP, verifyOTP } from "../../apis/post";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 interface Props {
     isOpen: boolean;
@@ -12,7 +13,6 @@ interface Props {
 
 export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     const auth = useContext(AuthContext);
-    const toast = useToast();
     const [pin, setPin] = useState<string>("");
     const [timer, setTimer] = useState<number>(60);
     const [otpRequestId, setOtpRequestId] = useState<string>("");
@@ -26,16 +26,9 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
         if (pin?.length === 4) handleLogin();
     }, [pin])
 
-    const showToast = (message: any, success?: boolean) => {
-        toast({
-            title: success ? 'Successful!' : 'A problem occurred!',
-            description: `${message}`,
-            status: success ? "success" : "error",
-            variant: 'left-accent',
-            position: 'top-right',
-            duration: 4000,
-            isClosable: true,
-        });
+    const showToast = (err: any, success?: boolean) => {
+        if (success) toast.success(err instanceof Error ? `Error: ${err.message}` : err);
+        else toast.error(err instanceof Error ? `Error: ${err.message}` : err);
     }
 
     useEffect(() => {
