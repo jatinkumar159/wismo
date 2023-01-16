@@ -56,7 +56,7 @@ export default function ShipmentStatus(props: ShipmentStatusProps) {
                 >  */}
                 <DrawerContent borderRadius="1rem 1rem 0 0" pt="2rem" maxHeight={`45%`}>
                     <DrawerHeader>
-                        <CloseIcon w="0.75rem" h="0.75rem" onClick={onClose} position="absolute" top="1.25rem" right="1.25rem"/>
+                        <CloseIcon w="0.75rem" h="0.75rem" onClick={onClose} position="absolute" top="1.25rem" right="1.25rem" />
                     </DrawerHeader>
                     <DrawerBody>
                         <Steps orientation="vertical" activeStep={props.trackingUpdates.length} size='sm'>
