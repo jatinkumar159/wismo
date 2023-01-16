@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 interface Props {
     isOpen: boolean;
     onOpen: () => void;
-    onClose: () => void;
+    onClose: (isAuth?: boolean) => void;
 }
 
 export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
@@ -70,14 +70,14 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
             localStorage.setItem('tr', auth.trackingNumber!);
             auth.checkAuthorization();
             showToast('Logged in successfully!', true);
-            onClose();
+            onClose(true);
         } catch (err) {
             showToast(err);
         }
     }
 
     return (
-        <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
+        <Drawer placement="bottom" onClose={() => onClose(false)} isOpen={isOpen}>
             <DrawerOverlay />
             {/* <motion.div
                     style={{
@@ -101,7 +101,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
                 > */}
             <DrawerContent borderRadius="1rem 1rem 0 0">
                 <DrawerHeader marginLeft="auto">
-                    <CloseIcon w="1rem" h="1rem" onClick={onClose} />
+                    <CloseIcon w="1rem" h="1rem" onClick={() =>onClose(false)} />
                 </DrawerHeader>
                 <DrawerBody>
                     <Flex flexDir="column" gap="1rem" pb="3rem" paddingInline="1rem" align="center">

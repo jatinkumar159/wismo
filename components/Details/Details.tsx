@@ -6,7 +6,7 @@ import { FaRupeeSign, FaTruckMoving, FaTshirt } from 'react-icons/fa'
 import { BsBagCheckFill, BsBagDashFill, BsBagFill, BsHeadphones } from 'react-icons/bs'
 import { motion } from "framer-motion"
 import ItemList from "../ItemList/ItemList"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "../AuthProvider/AuthProvider"
 import LoginDrawer from "../LoginDrawer/LoginDrawer"
 
@@ -31,6 +31,11 @@ export default function Details(props: OrderDetailProps) {
             return popover.onClose()
         }, 1500);
         return navigator.clipboard.writeText(text);
+    }
+
+    const handleLoginClose = (isAuth: boolean) => {
+        login.onClose();
+        if(isAuth) modal.onOpen();
     }
 
     return (
@@ -73,7 +78,7 @@ export default function Details(props: OrderDetailProps) {
                         <Text fontSize="sm">Order Items</Text>
                     </HStack>
                     <Box display="inline-flex" alignItems="center" onClick={auth.isAuthorized ? modal.onOpen : login.onOpen}>
-                        <Box>
+                        <Flex align={`center`}>
                         <Flex align={`center`}>
                             {
                                 auth.isAuthorized ? <AvatarGroup size='sm' max={2} spacing="-0.375rem">
@@ -88,7 +93,7 @@ export default function Details(props: OrderDetailProps) {
                             : null }
                         </Flex>
                             <ChevronRightIcon w='1.5rem' h='1.5rem' />
-                        </Box>
+                        </Flex>
                     </Box>
                 </Flex>
                 <Divider my={1}/>
@@ -178,7 +183,7 @@ export default function Details(props: OrderDetailProps) {
                 </DrawerContent>
                 {/* </motion.div> */}
             </Drawer>
-            <LoginDrawer {...login} />
+            <LoginDrawer onOpen={login.onOpen} isOpen={login.isOpen} onClose={handleLoginClose}/>
         </>
     )
 }

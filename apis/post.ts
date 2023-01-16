@@ -4,7 +4,7 @@ import gateway from './gateway'
 
 const BASE_PATH = 'https://qa-unishipper.unicommerce.com'
 const OTP_PATH = 'https://unicommunication.unicommerce.com'
-// const BASE_PATH = 'http://localhost÷:4001'
+// const BASE_PATH = 'http://localhost:4001'
 // const OTP_PATH = 'http://localhost:4001'
 
 export async function fetchTracking(tracking_number: string): Promise<any> {
@@ -24,7 +24,7 @@ export async function sendOTP(phoneNumber: string): Promise<any> {
     `${OTP_PATH}/communication/v1/otp/send`,
     'POST',
     JSON.stringify({
-      recipient: "9958311308", //phoneNumber,
+      recipient: "9654723413", //phoneNumber,
       channel: 'SMS'
     }),
     'otp'
