@@ -33,7 +33,7 @@ export default function Details(props: OrderDetailProps) {
         return navigator.clipboard.writeText(text);
     }
 
-    const handleLoginClose = (isAuth: boolean) => {
+    const handleLoginClose = (isAuth?: boolean) => {
         login.onClose();
         if(isAuth) modal.onOpen();
     }
