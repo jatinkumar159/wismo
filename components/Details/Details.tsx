@@ -97,17 +97,22 @@ export default function Details(props: OrderDetailProps) {
                     </Box>
                 </Flex>
                 <Divider my={1}/>
-                <Box>
-                    <HStack>
-                        <Icon as={FaRupeeSign} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
-                        <Box>
-                            <Text>Payment Method</Text>
-                            <HStack>
-                                <Text as="p" fontSize="sm" className={styles.lightText}>{props.paymentMethod}</Text>
-                            </HStack>
-                        </Box>
-                    </HStack>
-                </Box>
+                <Flex flexDir={`row`} justify={`space-between`} align="center">
+                    <Box>
+                        <HStack>
+                            <Icon as={FaRupeeSign} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
+                            <Box>
+                                <Text>Payment Method</Text>
+                                <HStack>
+                                    <Text as="p" fontSize="sm" className={styles.lightText}>{props.paymentMethod}</Text>
+                                </HStack>
+                            </Box>
+                        </HStack>
+                    </Box>
+                    <Flex>
+                        { auth.isAuthorized ? <Text as="span" mr={2}>₹ {(props.items.reduce((a, b) => a + parseInt(b.total_price, 10), 0)).toFixed(2)}</Text> : <ChevronRightIcon w='1.5rem' h='1.5rem' />}
+                    </Flex>
+                </Flex>
             </Flex>
             <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
                 <Text as="h3" fontSize="lg" mb={1}>Courier Details</Text>

@@ -2,6 +2,7 @@ import { Avatar, Box, Divider, Flex, HStack, Icon, Text } from '@chakra-ui/react
 import imageLoader from '../../utils/imageLoader'
 import styles from './ItemList.module.scss';
 import Image from 'next/image';
+import { BsBagCheckFill } from 'react-icons/bs';
 
 export interface OrderItem {
     total_price: any;
@@ -25,7 +26,8 @@ export default function ItemList(props: ItemListProps) {
                 {
                     props.items.map((item: OrderItem, itemIdx) => {
                         return <Flex key={itemIdx} flexGrow={1} my={2}>
-                            <Image src={item.image || 'https://via.placeholder.com/50'} alt={item.channel_product_name} className={styles.image} loader={imageLoader} width='20' height='20' />
+                            {/* <Image src={item.image || 'https://via.placeholder.com/50'} alt={item.channel_product_name} className={styles.image} loader={imageLoader} width='20' height='20' /> */}
+                            <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
                             <Flex grow="1" flexDir={"column"} alignItems={"flex-start"} justifyContent={'center'} ml={4}>
                                 {/* <Text fontSize={`xs`} color="var(--turbo-colors-light-text)" fontWeight={700}>{item.vendor}</Text> */}
                                 <Text fontSize={`sm`} color="var(--turbo-colors-light-text)">{item.channel_product_name}</Text>
