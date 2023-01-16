@@ -3,8 +3,11 @@ import { Step, Steps, useSteps } from "chakra-ui-steps"
 import styles from "./Status.module.scss"
 import OrderSteps from "./OrderSteps"
 import Link from "next/link"
+import Image from "next/image"
 import { TimeIcon } from "@chakra-ui/icons"
 import ShipmentStatus from "../ShipmentStatus/ShipmentStatus"
+import imageLoader from "../../utils/imageLoader"
+import brandLogo from '../../images/brandlogo.png'
 
 interface TrackingStatusProps {
     statusHeading: string;
@@ -21,6 +24,9 @@ export default function Status(props: TrackingStatusProps) {
     
     return (
         <Box className={styles.container} p={4}>
+            <Flex p={4} alignItems="center" justify={`center`}>
+                <Image priority={false} loader={imageLoader} src={brandLogo} alt="brand logo of snitch" />
+            </Flex>
             <Box textAlign="center">
                 <Text as="h1" fontSize="xl">{props.statusHeading}</Text>
                 <Text as="p" fontSize="sm" className={styles.lightText} dangerouslySetInnerHTML={{__html: props.statusSubheading}}></Text>

@@ -2,8 +2,8 @@ import { ChevronRightIcon, CloseIcon, CopyIcon } from "@chakra-ui/icons"
 import { Avatar, AvatarGroup, Box, Button, Divider, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, Icon, PinInput, PinInputField, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Text, useDisclosure } from "@chakra-ui/react"
 import styles from "./Details.module.scss"
 import { MdLocationPin } from 'react-icons/md'
-import { FaTruckMoving } from 'react-icons/fa'
-import { BsBagCheckFill, BsHeadphones } from 'react-icons/bs'
+import { FaRupeeSign, FaTruckMoving, FaTshirt } from 'react-icons/fa'
+import { BsBagCheckFill, BsBagDashFill, BsBagFill, BsHeadphones } from 'react-icons/bs'
 import { motion } from "framer-motion"
 import ItemList from "../ItemList/ItemList"
 import { useContext } from "react"
@@ -35,8 +35,8 @@ export default function Details(props: OrderDetailProps) {
     return (
         <>
             <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
-                <Text as="h3" fontSize="lg">Order Details</Text>
-                <Flex justifyContent='space-between' alignItems='center'>
+                <Text as="h3" fontSize="lg" mb={1}>Order Details</Text>
+                {/* <Flex justifyContent='space-between' alignItems='center'>
                     <Box>
                         <Text fontSize="sm" className={styles.lightText}>Order number:&nbsp;<Text as="span" className={styles.darkText}>{props.orderNumber}</Text></Text>
                     </Box>
@@ -53,7 +53,45 @@ export default function Details(props: OrderDetailProps) {
                             <ChevronRightIcon w='1.5rem' h='1.5rem' />
                         </Box>
                     </Box>
+                </Flex> */}
+                <Box>
+                    <HStack>
+                        <Icon as={BsBagFill} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
+                        <Box>
+                            <Text>Order number</Text>
+                            <HStack>
+                                <Text as="p" fontSize="sm" className={styles.lightText}>{props.orderNumber}</Text>
+                            </HStack>
+                        </Box>
+                    </HStack>
+                </Box>
+                <Divider my={1}/>
+                <Flex justifyContent='space-between' alignItems='center' onClick={auth.isAuthorized ? modal.onOpen : login.onOpen}>
+                    <HStack>
+                        <Icon as={FaTshirt} fontSize="md" mr={2} color="var(--wismo-colors-text)" />
+                        <Text fontSize="sm">Order Items</Text>
+                    </HStack>
+                    <Box display="inline-flex" alignItems="center" onClick={auth.isAuthorized ? modal.onOpen : login.onOpen}>
+                        <Box>
+                            <ChevronRightIcon w='1.5rem' h='1.5rem' />
+                        </Box>
+                    </Box>
                 </Flex>
+                <Divider my={1}/>
+                <Box>
+                    <HStack>
+                        <Icon as={FaRupeeSign} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
+                        <Box>
+                            <Text>Payment Method</Text>
+                            <HStack>
+                                <Text as="p" fontSize="sm" className={styles.lightText}>Prepaid</Text>
+                            </HStack>
+                        </Box>
+                    </HStack>
+                </Box>
+            </Flex>
+            <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
+                <Text as="h3" fontSize="lg" mb={1}>Courier Details</Text>
                 <Box>
                     <HStack>
                         <Icon as={MdLocationPin} fontSize="md" mr={2} color="var(--wismo-colors-text)" />

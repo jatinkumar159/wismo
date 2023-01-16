@@ -27,7 +27,7 @@ export default function Navigation() {
             alt="Unicommerce"
             width="60"
             height="40"
-            priority
+            priority={false}
           />
         </Flex>
       </div>

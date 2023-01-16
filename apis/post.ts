@@ -1,10 +1,10 @@
 import { number } from 'yup'
 import gateway from './gateway'
 
-const BASE_PATH = 'https://qa-unishipper.unicommerce.com'
-const OTP_PATH = 'https://unicommunication.unicommerce.com'
-// const BASE_PATH = 'http://localhost:4001'
-// const OTP_PATH = 'http://localhost:4001'
+// const BASE_PATH = 'https://qa-unishipper.unicommerce.com'
+// const OTP_PATH = 'https://unicommunication.unicommerce.com'
+const BASE_PATH = 'http://localhost:4001'
+const OTP_PATH = 'http://localhost:4001'
 
 export async function fetchTracking(tracking_number: string): Promise<any> {
   const res = await gateway(

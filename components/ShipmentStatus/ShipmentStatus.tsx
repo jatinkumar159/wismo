@@ -30,7 +30,7 @@ export default function ShipmentStatus(props: ShipmentStatusProps) {
     return (
         <>
             <Box className={styles.container}>
-                <Text color="var(--wismo-colors-link)" fontSize="xs" onClick={onOpen} cursor="pointer">View more</Text>
+                <Text color="var(--wismo-colors-link)" fontSize="xs" onClick={onOpen} cursor="pointer">View tracking history</Text>
             </Box>
             <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
                 <DrawerOverlay />

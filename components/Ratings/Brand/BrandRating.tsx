@@ -10,7 +10,7 @@ interface Props {
 export default function BrandRating({ rating, setRating }: Props) {
     return (
         <>
-            <Text fontSize="sm">Would you recommend Brand X to others?</Text>
+            <Text fontSize="sm" align="center">Rate your shopping experience</Text>
             <Rating rating={rating} setRating={setRating} />
         </>
     )
