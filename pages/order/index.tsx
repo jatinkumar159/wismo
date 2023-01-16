@@ -23,6 +23,7 @@ export default function Order() {
     const queryParams = QueryString.parse(router.asPath.split(/\?/)[1]);
     const [trackingId, setTrackingId] = useState<any | string>('');
     const { isLoading, isError, data } = useQuery([trackingId], () => fetchTracking(trackingId), {
+        enabled: trackingId?.length > 0,
         staleTime: Infinity,
         refetchOnWindowFocus: false
     });
