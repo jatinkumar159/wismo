@@ -101,12 +101,12 @@ export default function Details(props: OrderDetailProps) {
                     <Box>
                         <HStack>
                             <Icon as={FaRupeeSign} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
-                            <Box>
+                            <Flex flexDir="column" alignItems="flex-start">
                                 <Text>Payment Method</Text>
                                 <HStack>
                                     <Text as="p" fontSize="sm" className={styles.lightText}>{props.paymentMethod}</Text>
                                 </HStack>
-                            </Box>
+                            </Flex>
                         </HStack>
                     </Box>
                     <Flex>
@@ -116,7 +116,7 @@ export default function Details(props: OrderDetailProps) {
             </Flex>
             <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
                 <Text as="h3" fontSize="lg" mb={1}>Courier Details</Text>
-                <Box>
+                <Flex flexDir="column" alignItems="flex-start">
                     <HStack>
                         <Icon as={MdLocationPin} fontSize="md" mr={2} color="var(--wismo-colors-text)" />
                         <Text as='span'>{`${props.deliveryCity}, ${props.deliveryStateCode}`}</Text>
@@ -124,12 +124,12 @@ export default function Details(props: OrderDetailProps) {
                             <Text as="p" className={styles.lightText} fontSize="sm">&nbsp;</Text>
                         </Box> */}
                     </HStack>
-                </Box>
+                </Flex>
                 <Divider my={1} />
                 <Box>
                     <HStack>
                         <Icon as={FaTruckMoving} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
-                        <Box>
+                        <Flex flexDir="column" alignItems="flex-start">
                             <Text>{props.shippingProvider}</Text>
                             <HStack>
                                 <Text as="p" className={styles.lightText} fontSize="xs">Tracking ID: <Text as="span" className={styles.darkText}>{props.trackingNumber}</Text></Text>
@@ -147,7 +147,7 @@ export default function Details(props: OrderDetailProps) {
                                     </Portal>
                                 </Popover>
                             </HStack>
-                        </Box>
+                        </Flex>
                     </HStack>
                 </Box>
             </Flex>
