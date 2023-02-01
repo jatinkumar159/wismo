@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { resendOTP, sendOTP, verifyOTP } from "../../apis/post";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import { useReadOTP } from "react-read-otp";
 
 interface Props {
     isOpen: boolean;
@@ -16,6 +17,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     const [pin, setPin] = useState<string>("");
     const [timer, setTimer] = useState<number>(60);
     const [otpRequestId, setOtpRequestId] = useState<string>("");
+    const stopReadingOtp = useReadOTP(setOTP);
 
     useEffect(() => {
         const interval = timer > 0 ? setInterval(() => setTimer(time => time - 1), 1000) : undefined;
@@ -25,6 +27,11 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     useEffect(() => {
         if (pin?.length === 4) handleLogin();
     }, [pin])
+
+    const setOTP = (data: any): void => {
+        alert(JSON.stringify(data));
+        stopReadingOtp();
+    }
 
     const showToast = (err: any, success?: boolean) => {
         if (success) toast.success(err instanceof Error ? `Error: ${err.message}` : err);
