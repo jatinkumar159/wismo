@@ -96,7 +96,7 @@ export default function Order() {
                                 </Box>
                             </HStack>
                         </Box>)
-                            : <LoginPrompt />
+                            : <LoginPrompt context="submit feedback"/>
                     }
                 </Box>
             </Flex>

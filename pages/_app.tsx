@@ -152,10 +152,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
       <AuthProvider>
         <QueryClientProvider client={queryClient}>
-          <Flex flexDir="row" align="center" justify="center" h={`100vh`} w={`100vw`} className={`${mulish.className} ${styles.pageContainer}`}>
+          <Flex flexDir="row" align="center" justify="center" w={`100vw`} className={`${mulish.className} ${styles.pageContainer}`}>
             <ChakraProvider theme={theme}>
               <Flex className={styles.turboContainer} flexDir="column" grow={1}>
-                <Navigation />
                 <Toaster
                   position="top-center"
                   reverseOrder={false}
@@ -170,6 +169,7 @@ export default function App({ Component, pageProps }: AppProps) {
               </Flex>
             </ChakraProvider>
           </Flex>
+          <Navigation />
         </QueryClientProvider>
       </AuthProvider>
     </>

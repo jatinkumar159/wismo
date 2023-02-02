@@ -11,9 +11,9 @@
 }
 
 .turboContainer {
-  height: 100vh;
+  height: calc(100vh - 3rem);
   background: white;
-  border:1px solid var(--chakra-colors-gray-200);
+  // border:1px solid var(--chakra-colors-gray-200);
   box-shadow: 0 0 var(--chakra-space-4) var(--chakra-colors-gray-200);
 
   @media (prefers-color-scheme: dark) {

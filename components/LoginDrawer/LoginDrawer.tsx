@@ -17,6 +17,12 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     const [pin, setPin] = useState<string>("");
     const [timer, setTimer] = useState<number>(60);
     const [otpRequestId, setOtpRequestId] = useState<string>("");
+    
+    const setOTP = (data: any): void => {
+        alert(JSON.stringify(data));
+        stopReadingOtp();
+    }
+
     const stopReadingOtp = useReadOTP(setOTP);
 
     useEffect(() => {
@@ -27,11 +33,6 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
     useEffect(() => {
         if (pin?.length === 4) handleLogin();
     }, [pin])
-
-    const setOTP = (data: any): void => {
-        alert(JSON.stringify(data));
-        stopReadingOtp();
-    }
 
     const showToast = (err: any, success?: boolean) => {
         if (success) toast.success(err instanceof Error ? `Error: ${err.message}` : err);

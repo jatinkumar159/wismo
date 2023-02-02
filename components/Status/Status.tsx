@@ -25,7 +25,9 @@ export default function Status(props: TrackingStatusProps) {
     return (
         <Box className={styles.container} p={4}>
             <Flex p={4} alignItems="center" justify={`center`}>
-                <Image priority={false} loader={imageLoader} src={brandLogo} alt="brand logo of snitch" />
+                <div style={{maxWidth: `100px`, maxHeight: `100px`}}>
+                    <Image priority={false} loader={imageLoader} sizes="100px" src={brandLogo} alt="brand logo of snitch" />
+                </div>
             </Flex>
             <Box textAlign="center">
                 <Text as="h1" fontSize="xl" dangerouslySetInnerHTML={{__html: props.statusHeading}}></Text>
