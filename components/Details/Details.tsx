@@ -188,7 +188,7 @@ export default function Details(props: OrderDetailProps) {
                 </DrawerContent>
                 {/* </motion.div> */}
             </Drawer>
-            <LoginDrawer onOpen={login.onOpen} isOpen={login.isOpen} onClose={handleLoginClose}/>
+            <LoginDrawer context="To view order items, " onOpen={login.onOpen} isOpen={login.isOpen} onClose={handleLoginClose}/>
         </>
     )
 }

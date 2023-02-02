@@ -6,13 +6,14 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useReadOTP } from "react-read-otp";
 
-interface Props {
+interface LoginDrawerProps {
     isOpen: boolean;
     onOpen: () => void;
     onClose: (isAuth?: boolean) => void;
+    context? : string | null
 }
 
-export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
+export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginDrawerProps) {
     const auth = useContext(AuthContext);
     const [pin, setPin] = useState<string>("");
     const [timer, setTimer] = useState<number>(60);
@@ -113,7 +114,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose }: Props) {
                 </DrawerHeader>
                 <DrawerBody>
                     <Flex flexDir="column" gap="1rem" pb="3rem" paddingInline="1rem" align="center">
-                        <Text>Enter OTP received on {`*******${auth.phoneNumber?.substring(7, 10)}`}</Text>
+                        <Text>{context} please enter OTP received on {`*******${auth.phoneNumber?.substring(7, 10)}`}.</Text>
                         <HStack>
                             <PinInput otp onChange={val => setPin(val)} placeholder="">
                                 <PinInputField />

@@ -18,7 +18,7 @@ export default function LoginPrompt({ context }: LoginPromptProps) {
                     You don&apos;t have access to take any action on
                     this page. Please <Text color="var(--wismo-colors-link)" as="span" cursor="pointer" onClick={onOpen}>Login</Text> to {context}.
                 </Text>
-                <LoginDrawer isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+                <LoginDrawer context="To share feedback, " isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
             </Box>
         </>
     )
