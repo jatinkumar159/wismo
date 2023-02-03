@@ -81,7 +81,8 @@ export default function Order() {
     }
 
     const handleOpenRating = () => {
-        loginDrawer.onOpen();
+        if (auth.isAuthorized) onOpen();
+        else loginDrawer.onOpen();
     }
 
     const handleLoginDrawerClose = (isAuth?: boolean | undefined) => {
@@ -93,7 +94,7 @@ export default function Order() {
         <>
             <Flex className={styles.container}>
                 <Status {...status} />
-                {(!!details.delivered && !auth.isAuthorized) ? <Flex className={styles.containerRatings} flexDir='column' gap='0.5rem' mb={4} p={4}>
+                {(!!details.delivered) ? <Flex className={styles.containerRatings} flexDir='column' gap='0.5rem' mb={4} p={4}>
                     <Text as="h3" fontSize="lg" mb={1}>How did we do?</Text>
                     <Box>
                         <BrandRating rating={0} setRating={handleOpenRating} alignLeft={true} />
