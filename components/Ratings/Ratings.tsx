@@ -9,9 +9,10 @@ interface RatingsMetaDataProps {
     phone: string;
     trackingNumber: string;
     tenant: string;
+    setLastRating?: Function;
     closeDrawer: () => void
 }
-export default function Ratings({ phone, trackingNumber, tenant, closeDrawer }: RatingsMetaDataProps) {
+export default function Ratings({ phone, trackingNumber, tenant, setLastRating, closeDrawer }: RatingsMetaDataProps) {
     const [brandRating, setBrandRating] = useState<number>(0);
     const [shippingRating, setShippingRating] = useState<number>(0);
     const [feedback, setFeedback] = useState<string>("");
@@ -22,6 +23,10 @@ export default function Ratings({ phone, trackingNumber, tenant, closeDrawer }: 
             setIsSubmitting(true);
             const res = await submitFeedback({
                 brandRating, shippingRating, feedback, phone, tenant, trackingNumber
+            });
+            if (setLastRating) setLastRating({
+                brand: brandRating,
+                shipping: shippingRating,
             });
             if (res.description.toLowerCase() === 'ok') {
                 toast.success(`Thank you! Feedback submitted.`);

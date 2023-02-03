@@ -23,10 +23,18 @@ export default function Order() {
     const loginDrawer = useDisclosure();
     const queryParams = QueryString.parse(router.asPath.split(/\?/)[1]);
     const [trackingId, setTrackingId] = useState<any | string>('');
-    const { isLoading, isError, data } = useQuery([trackingId], () => fetchTracking(trackingId), {
+    const [lastRating, setLastRating] = useState<{ brand: number, shipping: number }>({ brand: 0, shipping: 0 });
+    const [data, setData] = useState<any>();
+    const { isLoading, isError, data: init_data } = useQuery([trackingId], () => fetchTracking(trackingId), {
         enabled: trackingId?.length > 0,
         staleTime: Infinity,
         refetchOnWindowFocus: false
+    });
+
+    const { data: refreshed_data } = useQuery(['refreshedTrackingData', init_data], () => fetchTracking(trackingId, init_data?.result), {
+        enabled: !!(init_data?.result?.refresh_required),
+        staleTime: Infinity,
+        refetchOnWindowFocus: false,
     });
 
     useEffect(() => {
@@ -34,12 +42,17 @@ export default function Order() {
             auth.setTrackingNumber(queryParams.id);
             setTrackingId(queryParams.id);
         }
-    }, [queryParams]);
+    }, [queryParams])
 
     useEffect(() => {
         if (data?.result?.customer_phone)
             auth.setPhoneNumber(data.result.customer_phone);
     }, [data])
+
+    useEffect(() => {
+        if (refreshed_data) setData(refreshed_data);
+        else setData(init_data);
+    }, [init_data, refreshed_data])
 
     const resolveProgressStep = (data: any): number => {
         if (!!data.is_delivered) return 4;
@@ -49,8 +62,9 @@ export default function Order() {
         else return 0;
     }
 
-    if (isLoading) return <Center h={`100%`}><Spinner /></Center>
-    if (isError) return <Center h={`100%`}><Text as="p">Something went wrong, please try again later...</Text></Center>
+    if (isLoading) return <Center h={`calc(100vh - 40px)`}><Spinner /></Center>
+    if (isError) return <Center h={`calc(100vh - 40px)`}><Text as="p">Something went wrong, please try again later...</Text></Center>
+    if (!data) return <Center h={`calc(100vh - 40px)`}><Spinner /></Center>
 
     const status = {
         statusHeading: data.result.status_heading,
@@ -97,8 +111,8 @@ export default function Order() {
                 {(!!details.delivered) ? <Flex className={styles.containerRatings} flexDir='column' gap='0.5rem' mb={4} p={4}>
                     <Text as="h3" fontSize="lg" mb={1}>How did we do?</Text>
                     <Box>
-                        <BrandRating rating={0} setRating={handleOpenRating} alignLeft={true} />
-                        <ShippingRating rating={0} setRating={handleOpenRating} alignLeft={true} />
+                        <BrandRating rating={lastRating.brand} setRating={handleOpenRating} alignLeft={true} />
+                        <ShippingRating rating={lastRating.shipping} setRating={handleOpenRating} alignLeft={true} />
                     </Box>
                 </Flex> : null}
                 <Details {...details} />
@@ -127,7 +141,7 @@ export default function Order() {
                         <CloseIcon w="1rem" h="1rem" onClick={onClose} />
                     </DrawerHeader>
                     <DrawerBody>
-                        <Ratings {...ratingsMetaData} />
+                        <Ratings {...ratingsMetaData} setLastRating={setLastRating} />
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
