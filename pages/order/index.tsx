@@ -12,11 +12,15 @@ import LoginPrompt from "../../components/LoginPrompt/LoginPrompt"
 import { CloseIcon, ChevronRightIcon, Icon } from "@chakra-ui/icons"
 import Ratings from "../../components/Ratings/Ratings"
 import { BsHeadphones } from "react-icons/bs"
+import BrandRating from "../../components/Ratings/Brand/BrandRating"
+import ShippingRating from "../../components/Ratings/Shipping/ShippingRating"
+import LoginDrawer from "../../components/LoginDrawer/LoginDrawer"
 
 export default function Order() {
     const router = useRouter();
     const auth = useContext(AuthContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const loginDrawer = useDisclosure();
     const queryParams = QueryString.parse(router.asPath.split(/\?/)[1]);
     const [trackingId, setTrackingId] = useState<any | string>('');
     const { isLoading, isError, data } = useQuery([trackingId], () => fetchTracking(trackingId), {
@@ -76,10 +80,26 @@ export default function Order() {
         closeDrawer: onClose
     }
 
+    const handleOpenRating = () => {
+        loginDrawer.onOpen();
+    }
+
+    const handleLoginDrawerClose = (isAuth?: boolean | undefined) => {
+        loginDrawer.onClose();
+        if (isAuth) onOpen();
+    }
+
     return (
         <>
             <Flex className={styles.container}>
                 <Status {...status} />
+                {(!!details.delivered && !auth.isAuthorized) ? <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
+                    <Text as="h3" fontSize="lg" mb={1}>How did we do?</Text>
+                    <Box>
+                        <BrandRating rating={0} setRating={handleOpenRating} alignLeft={true} />
+                        <ShippingRating rating={0} setRating={handleOpenRating} alignLeft={true} />
+                    </Box>
+                </Flex> : null}
                 <Details {...details} />
                 <Box flexGrow={1}>
                     {
@@ -95,7 +115,7 @@ export default function Order() {
                                 </Box>
                             </HStack>
                         </Box>)
-                            : <LoginPrompt context="submit feedback"/>
+                            : <LoginPrompt context="submit feedback" />
                     }
                 </Box>
             </Flex>
@@ -110,7 +130,7 @@ export default function Order() {
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
-
+            <LoginDrawer context="To share feedback, " isOpen={loginDrawer.isOpen} onOpen={onOpen} onClose={handleLoginDrawerClose} />
         </>
     )
 }

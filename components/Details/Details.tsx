@@ -40,23 +40,11 @@ export default function Details(props: OrderDetailProps) {
 
     const handleLoginClose = (isAuth?: boolean) => {
         login.onClose();
-        if(isAuth) modal.onOpen();
-    }
-
-    const handleOpenRating = () => {
-        return login.onOpen();
+        if (isAuth) modal.onOpen();
     }
 
     return (
         <>
-            { !!props.delivered ? <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
-                <Text as="h3" fontSize="lg" mb={1}>How did we do?</Text>
-                <Box>
-                    <BrandRating rating={0} setRating={handleOpenRating} alignLeft={true} />
-                    <ShippingRating rating={0} setRating={handleOpenRating} alignLeft={true} />
-                </Box>
-            </Flex> : null }
-
             <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
                 <Text as="h3" fontSize="lg" mb={1}>Order Details</Text>
                 <Box>
@@ -70,7 +58,7 @@ export default function Details(props: OrderDetailProps) {
                         </Box>
                     </HStack>
                 </Box>
-                <Divider my={1}/>
+                <Divider my={1} />
                 <Flex justifyContent='space-between' alignItems='center' onClick={auth.isAuthorized ? modal.onOpen : login.onOpen}>
                     <HStack>
                         <Icon as={FaTshirt} fontSize="md" mr={2} color="var(--wismo-colors-text)" />
@@ -78,24 +66,24 @@ export default function Details(props: OrderDetailProps) {
                     </HStack>
                     <Box display="inline-flex" alignItems="center" onClick={auth.isAuthorized ? modal.onOpen : login.onOpen}>
                         <Flex align={`center`}>
-                        <Flex align={`center`}>
-                            {
-                                auth.isAuthorized ? <AvatarGroup size='sm' max={2} spacing="-0.375rem">
-                                    {props.items.map((el, i) => {
-                                        return <Avatar key={i} icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
-                                    })}
-                                    
-                                    {/* <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
+                            <Flex align={`center`}>
+                                {
+                                    auth.isAuthorized ? <AvatarGroup size='sm' max={2} spacing="-0.375rem">
+                                        {props.items.map((el, i) => {
+                                            return <Avatar key={i} icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
+                                        })}
+
+                                        {/* <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
                                     <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
                                     <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar> */}
-                                </AvatarGroup>
-                            : null }
-                        </Flex>
+                                    </AvatarGroup>
+                                        : null}
+                            </Flex>
                             <ChevronRightIcon w='1.5rem' h='1.5rem' />
                         </Flex>
                     </Box>
                 </Flex>
-                <Divider my={1}/>
+                <Divider my={1} />
                 <Flex flexDir={`row`} justify={`space-between`} align="center">
                     <Box>
                         <HStack>
@@ -109,7 +97,7 @@ export default function Details(props: OrderDetailProps) {
                         </HStack>
                     </Box>
                     <Flex>
-                        { auth.isAuthorized ? <Text as="span" mr={2}>₹ {(props.items.reduce((a, b) => a + parseInt(b.total_price, 10), 0)).toFixed(2)}</Text> : <ChevronRightIcon w='1.5rem' h='1.5rem' />}
+                        {auth.isAuthorized ? <Text as="span" mr={2}>₹ {(props.items.reduce((a, b) => a + parseInt(b.total_price, 10), 0)).toFixed(2)}</Text> : <ChevronRightIcon w='1.5rem' h='1.5rem' />}
                     </Flex>
                 </Flex>
             </Flex>
@@ -180,14 +168,14 @@ export default function Details(props: OrderDetailProps) {
                             <Text as="p" fontSize="sm" fontWeight={`normal`} pr={6}>{props.deliveryAddress}</Text>
                         </HStack>
                         <CloseIcon w="0.75rem" h="0.75rem" onClick={modal.onClose} position="absolute" top="1.25rem" right="1.25rem" />
-                    </DrawerHeader> : null }
-                    <DrawerBody> 
+                    </DrawerHeader> : null}
+                    <DrawerBody>
                         {auth.isAuthorized ? <ItemList items={props.items} /> : <LoginPrompt context={"test"} />}
                     </DrawerBody>
                 </DrawerContent>
                 {/* </motion.div> */}
             </Drawer>
-            <LoginDrawer context="To view order items, " onOpen={login.onOpen} isOpen={login.isOpen} onClose={handleLoginClose}/>
+            <LoginDrawer context="To view order items, " onOpen={login.onOpen} isOpen={login.isOpen} onClose={handleLoginClose} />
         </>
     )
 }
