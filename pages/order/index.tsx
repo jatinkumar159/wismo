@@ -9,10 +9,7 @@ import { fetchTracking } from "../../apis/post"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../components/AuthProvider/AuthProvider"
 import LoginPrompt from "../../components/LoginPrompt/LoginPrompt"
-import BrandRating from "../../components/Ratings/Brand/BrandRating"
 import { CloseIcon, ChevronRightIcon, Icon } from "@chakra-ui/icons"
-import Rating from "../../components/Ratings/Rating"
-import ShippingRating from "../../components/Ratings/Shipping/ShippingRating"
 import Ratings from "../../components/Ratings/Ratings"
 import { BsHeadphones } from "react-icons/bs"
 
@@ -67,7 +64,9 @@ export default function Order() {
         items: Object.values(data.result.line_items),
         deliveryCity: data.result.delivery_city,
         deliveryStateCode: data.result.delivery_state_code,
-        paymentMethod: data.result.payment_method
+        paymentMethod: data.result.payment_method,
+        delivered: data.result.is_delivered,
+        modalOpener: onOpen
     };
 
     const ratingsMetaData = {

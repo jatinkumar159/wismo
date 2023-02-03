@@ -5,12 +5,13 @@ import Rating from "../Rating";
 interface Props {
     rating: number;
     setRating: Function;
+    alignLeft?: boolean;
 }
 
-export default function BrandRating({ rating, setRating }: Props) {
+export default function BrandRating({ rating, setRating, alignLeft }: Props) {
     return (
         <>
-            <Text fontSize="sm" align="center">Rate your shopping experience</Text>
+            <Text mb={2} fontSize="sm" align={ alignLeft ? 'left' : 'center'}>Rate your shopping experience.</Text>
             <Rating rating={rating} setRating={setRating} />
         </>
     )

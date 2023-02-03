@@ -9,6 +9,9 @@ import ItemList from "../ItemList/ItemList"
 import { useContext, useEffect } from "react"
 import { AuthContext } from "../AuthProvider/AuthProvider"
 import LoginDrawer from "../LoginDrawer/LoginDrawer"
+import BrandRating from "../Ratings/Brand/BrandRating"
+import ShippingRating from "../Ratings/Shipping/ShippingRating"
+import LoginPrompt from "../LoginPrompt/LoginPrompt"
 
 interface OrderDetailProps {
     orderNumber: string;
@@ -19,6 +22,8 @@ interface OrderDetailProps {
     deliveryCity: string;
     deliveryStateCode: string;
     paymentMethod: string;
+    delivered: boolean;
+    modalOpener: Function;
 }
 export default function Details(props: OrderDetailProps) {
     const modal = useDisclosure();
@@ -38,28 +43,22 @@ export default function Details(props: OrderDetailProps) {
         if(isAuth) modal.onOpen();
     }
 
+    const handleOpenRating = () => {
+        return login.onOpen();
+    }
+
     return (
         <>
+            { !!props.delivered ? <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
+                <Text as="h3" fontSize="lg" mb={1}>How did we do?</Text>
+                <Box>
+                    <BrandRating rating={0} setRating={handleOpenRating} alignLeft={true} />
+                    <ShippingRating rating={0} setRating={handleOpenRating} alignLeft={true} />
+                </Box>
+            </Flex> : null }
+
             <Flex className={styles.container} flexDir='column' gap='0.5rem' mb={4} p={4}>
                 <Text as="h3" fontSize="lg" mb={1}>Order Details</Text>
-                {/* <Flex justifyContent='space-between' alignItems='center'>
-                    <Box>
-                        <Text fontSize="sm" className={styles.lightText}>Order number:&nbsp;<Text as="span" className={styles.darkText}>{props.orderNumber}</Text></Text>
-                    </Box>
-                    <Box display="inline-flex" alignItems="center" onClick={auth.isAuthorized ? modal.onOpen : login.onOpen}>
-                        <Box>
-                            <AvatarGroup size='sm' max={2} spacing="-0.375rem">
-                                <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
-                                <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
-                                <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
-                                <Avatar icon={<BsBagCheckFill fontSize={`14px`} />}></Avatar>
-                            </AvatarGroup>
-                        </Box>
-                        <Box>
-                            <ChevronRightIcon w='1.5rem' h='1.5rem' />
-                        </Box>
-                    </Box>
-                </Flex> */}
                 <Box>
                     <HStack>
                         <Icon as={BsBagFill} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
@@ -175,15 +174,15 @@ export default function Details(props: OrderDetailProps) {
                 //   whileTap={{ cursor: "grabbing" }}
                 > */}
                 <DrawerContent borderRadius="1rem 1rem 0 0">
-                    <DrawerHeader pl={4} pt={4} pr={4} pb={2}>
+                    {auth.isAuthorized ? <DrawerHeader pl={4} pt={4} pr={4} pb={2}>
                         <HStack>
                             <Icon as={MdLocationPin} />
                             <Text as="p" fontSize="sm" fontWeight={`normal`} pr={6}>{props.deliveryAddress}</Text>
                         </HStack>
                         <CloseIcon w="0.75rem" h="0.75rem" onClick={modal.onClose} position="absolute" top="1.25rem" right="1.25rem" />
-                    </DrawerHeader>
-                    <DrawerBody>
-                        <ItemList items={props.items} />
+                    </DrawerHeader> : null }
+                    <DrawerBody> 
+                        {auth.isAuthorized ? <ItemList items={props.items} /> : <LoginPrompt context={"test"} />}
                     </DrawerBody>
                 </DrawerContent>
                 {/* </motion.div> */}
