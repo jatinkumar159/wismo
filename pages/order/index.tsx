@@ -23,6 +23,7 @@ export default function Order() {
     const loginDrawer = useDisclosure();
     const queryParams = QueryString.parse(router.asPath.split(/\?/)[1]);
     const [trackingId, setTrackingId] = useState<any | string>('');
+    const [lastRating, setLastRating] = useState<{ brand: number, shipping: number }>({ brand: 0, shipping: 0 });
     const [data, setData] = useState<any>();
     const { isLoading, isError, data: init_data } = useQuery([trackingId], () => fetchTracking(trackingId), {
         enabled: trackingId?.length > 0,
@@ -110,8 +111,8 @@ export default function Order() {
                 {(!!details.delivered) ? <Flex className={styles.containerRatings} flexDir='column' gap='0.5rem' mb={4} p={4}>
                     <Text as="h3" fontSize="lg" mb={1}>How did we do?</Text>
                     <Box>
-                        <BrandRating rating={0} setRating={handleOpenRating} alignLeft={true} />
-                        <ShippingRating rating={0} setRating={handleOpenRating} alignLeft={true} />
+                        <BrandRating rating={lastRating.brand} setRating={handleOpenRating} alignLeft={true} />
+                        <ShippingRating rating={lastRating.shipping} setRating={handleOpenRating} alignLeft={true} />
                     </Box>
                 </Flex> : null}
                 <Details {...details} />
@@ -140,7 +141,7 @@ export default function Order() {
                         <CloseIcon w="1rem" h="1rem" onClick={onClose} />
                     </DrawerHeader>
                     <DrawerBody>
-                        <Ratings {...ratingsMetaData} />
+                        <Ratings {...ratingsMetaData} setLastRating={setLastRating} />
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
