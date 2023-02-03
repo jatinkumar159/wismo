@@ -18,13 +18,13 @@ export default function AuthProvider({ children }: { children: JSX.Element }) {
 
     const checkAuthorization = () => {
         const token = localStorage.getItem('tr');
-        if (token === trackingNumber) setAuth(true);
+        if (token && decodeURIComponent(window.atob(token)) === phoneNumber) setAuth(true);
         else setAuth(false);
     }
 
     useEffect(() => {
         checkAuthorization();
-    }, [trackingNumber])
+    }, [trackingNumber, phoneNumber])
 
     return (
         <AuthContext.Provider
