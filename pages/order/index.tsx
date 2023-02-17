@@ -15,6 +15,7 @@ import { BsHeadphones } from "react-icons/bs"
 import BrandRating from "../../components/Ratings/Brand/BrandRating"
 import ShippingRating from "../../components/Ratings/Shipping/ShippingRating"
 import LoginDrawer from "../../components/LoginDrawer/LoginDrawer"
+import { logTrackingPageVisit } from "../../firebase"
 
 export default function Order() {
     const router = useRouter();
@@ -45,8 +46,10 @@ export default function Order() {
     }, [queryParams])
 
     useEffect(() => {
-        if (data?.result?.customer_phone)
+        if (data?.result?.customer_phone) {
             auth.setPhoneNumber(data.result.customer_phone);
+            logTrackingPageVisit(data.result.tenant_code, data.result.order_number, data.result.customer_phone, data.result.tracking_number);
+        }
     }, [data])
 
     useEffect(() => {

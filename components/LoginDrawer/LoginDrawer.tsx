@@ -5,6 +5,7 @@ import { resendOTP, sendOTP, verifyOTP } from "../../apis/post";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useReadOTP } from "react-read-otp";
+import { logLogin, logLoginClick } from "../../firebase";
 
 interface LoginDrawerProps {
     isOpen: boolean;
@@ -25,6 +26,10 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
     }
 
     const stopReadingOtp = useReadOTP(setOTP);
+
+    useEffect(() => {
+        logLoginClick(auth.trackingNumber ?? '');
+    }, [])
 
     useEffect(() => {
         const interval = timer > 0 ? setInterval(() => setTimer(time => time - 1), 1000) : undefined;
@@ -70,6 +75,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
 
     const handleLogin = async () => {
         try {
+            logLogin(auth.trackingNumber ?? '');
             if (auth.trackingNumber === '53441695985') {
                 localStorage.setItem('tr', window.btoa(encodeURIComponent(auth.phoneNumber!)));
                 auth.checkAuthorization();
