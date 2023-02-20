@@ -20,12 +20,9 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
     const [timer, setTimer] = useState<number>(60);
     const [otpRequestId, setOtpRequestId] = useState<string>("");
 
-    const setOTP = (data: any): void => {
-        alert(JSON.stringify(data));
-        stopReadingOtp();
-    }
-
-    const stopReadingOtp = useReadOTP(setOTP);
+    const stopReadingOTP = useReadOTP(setPin, {
+        enabled: !!otpRequestId.length
+    })
 
     useEffect(() => {
         logLoginClick(auth.trackingNumber ?? '');
@@ -143,7 +140,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
                             >Resend OTP</Text>
                         </Center>
                         {timer > 0 && <Text as="span" color={`gray.500`}>Didn’t receive the OTP? Resend in <Text as="span" fontWeight={`bold`} color={`var(--turbo-colors-text)`}>{timer} seconds</Text></Text>}
-                        <Button fontSize="sm" bg="black" color="white" _hover={{ background: "black" }} onClick={handleLogin}>Login&nbsp;<ChevronRightIcon /></Button>
+                        <Button fontSize="sm" bg="black" color="white" _hover={{ background: "black" }} onClick={() => { stopReadingOTP(); handleLogin(); }}>Login&nbsp;<ChevronRightIcon /></Button>
                     </Flex>
                 </DrawerBody>
             </DrawerContent>
