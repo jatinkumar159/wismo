@@ -5,6 +5,7 @@ import { resendOTP, sendOTP, verifyOTP } from "../../apis/post";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useReadOTP } from "react-read-otp";
+import { logLogin, logLoginClick } from "../../firebase";
 
 interface LoginDrawerProps {
     isOpen: boolean;
@@ -19,12 +20,13 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
     const [timer, setTimer] = useState<number>(60);
     const [otpRequestId, setOtpRequestId] = useState<string>("");
 
-    const setOTP = (data: any): void => {
-        alert(JSON.stringify(data));
-        stopReadingOtp();
-    }
+    const stopReadingOTP = useReadOTP(setPin, {
+        enabled: !!otpRequestId.length
+    })
 
-    const stopReadingOtp = useReadOTP(setOTP);
+    useEffect(() => {
+        logLoginClick(auth.trackingNumber ?? '');
+    }, [])
 
     useEffect(() => {
         const interval = timer > 0 ? setInterval(() => setTimer(time => time - 1), 1000) : undefined;
@@ -70,6 +72,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
 
     const handleLogin = async () => {
         try {
+            logLogin(auth.trackingNumber ?? '');
             if (auth.trackingNumber === '53441695985') {
                 localStorage.setItem('tr', window.btoa(encodeURIComponent(auth.phoneNumber!)));
                 auth.checkAuthorization();
@@ -137,7 +140,7 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
                             >Resend OTP</Text>
                         </Center>
                         {timer > 0 && <Text as="span" color={`gray.500`}>Didn’t receive the OTP? Resend in <Text as="span" fontWeight={`bold`} color={`var(--turbo-colors-text)`}>{timer} seconds</Text></Text>}
-                        <Button fontSize="sm" bg="black" color="white" _hover={{ background: "black" }} onClick={handleLogin}>Login&nbsp;<ChevronRightIcon /></Button>
+                        <Button fontSize="sm" bg="black" color="white" _hover={{ background: "black" }} onClick={() => { stopReadingOTP(); handleLogin(); }}>Login&nbsp;<ChevronRightIcon /></Button>
                     </Flex>
                 </DrawerBody>
             </DrawerContent>
