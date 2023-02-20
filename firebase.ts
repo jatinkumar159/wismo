@@ -8,13 +8,13 @@ import { initializeApp } from 'firebase/app'
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyDxVYOatDHgIj8dKKFui31fNGjyfCB9DoA',
-  authDomain: 'wismo-99cf7.firebaseapp.com',
-  projectId: 'wismo-99cf7',
-  storageBucket: 'wismo-99cf7.appspot.com',
-  messagingSenderId: '39292991240',
-  appId: '1:39292991240:web:8e16f688a3c1cec95f1ebd',
-  measurementId: 'G-21QVM189SQ'
+  apiKey: 'AIzaSyBaROZAt9Z94Yc0Hfsm2yXGeX2lL84Ta3c',
+  authDomain: 'unilog-wismo.firebaseapp.com',
+  projectId: 'unilog-wismo',
+  storageBucket: 'unilog-wismo.appspot.com',
+  messagingSenderId: '904221377967',
+  appId: '1:904221377967:web:eb694e23b8b73b1fecdb5a',
+  measurementId: 'G-HCG389TMEN'
 }
 
 // Initialize Firebase
