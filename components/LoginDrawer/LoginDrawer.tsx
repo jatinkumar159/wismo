@@ -6,6 +6,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import { useReadOTP } from "react-read-otp";
 import { logLogin, logLoginClick } from "../../firebase";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface LoginDrawerProps {
     isOpen: boolean;
@@ -16,6 +17,7 @@ interface LoginDrawerProps {
 
 export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginDrawerProps) {
     const auth = useContext(AuthContext);
+    const queryClient = useQueryClient();
     const [pin, setPin] = useState<string>("");
     const [timer, setTimer] = useState<number>(60);
     const [otpRequestId, setOtpRequestId] = useState<string>("");
@@ -23,10 +25,6 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
     const stopReadingOTP = useReadOTP(setPin, {
         enabled: !!otpRequestId.length
     })
-
-    useEffect(() => {
-        logLoginClick(auth.trackingNumber ?? '');
-    }, [])
 
     useEffect(() => {
         const interval = timer > 0 ? setInterval(() => setTimer(time => time - 1), 1000) : undefined;
@@ -46,6 +44,9 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
         // NO NEED TO SEND OTP IF DRAWER IS NOT OPEN
         if (!isOpen) return;
         setTimer(60);
+
+        const data: any = queryClient.getQueriesData(['refreshedTrackingData'])?.at(-1)?.at(-1) ?? queryClient.getQueriesData(['orderData']).at(-1)?.at(-1);
+        if(data) logLoginClick(data?.result?.tenant_code, data?.result?.order_number, data?.result?.customer_phone, data?.result?.tracking_number);
 
         const sendOtp = async () => {
             try {
@@ -72,7 +73,6 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
 
     const handleLogin = async () => {
         try {
-            logLogin(auth.trackingNumber ?? '');
             if (auth.trackingNumber === '53441695985') {
                 localStorage.setItem('tr', window.btoa(encodeURIComponent(auth.phoneNumber!)));
                 auth.checkAuthorization();
@@ -85,6 +85,9 @@ export default function LoginDrawer({ isOpen, onOpen, onClose, context }: LoginD
             if (data.otp_status !== 'VERIFIED' && data.otp_status !== 'OtpStatus.VERIFIED(value=3)') {
                 throw new Error('Invalid OTP!');
             }
+            
+            const _data: any = queryClient.getQueriesData(['refreshedTrackingData'])?.at(-1)?.at(-1) ?? queryClient.getQueriesData(['orderData']).at(-1)?.at(-1);
+            if(_data) logLogin(_data?.result?.tenant_code, _data?.result?.order_number, _data?.result?.customer_phone, _data?.result?.tracking_number);
 
             localStorage.setItem('tr', window.btoa(encodeURIComponent(auth.phoneNumber!)));
             auth.checkAuthorization();

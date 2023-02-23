@@ -3,6 +3,9 @@ import imageLoader from '../../utils/imageLoader'
 import styles from './ItemList.module.scss';
 import Image from 'next/image';
 import { BsBagCheckFill } from 'react-icons/bs';
+import { useEffect } from 'react';
+import { logOrderItemView } from '../../firebase';
+import { useQueryClient } from '@tanstack/react-query';
 
 export interface OrderItem {
     total_price: any;
@@ -16,6 +19,12 @@ interface ItemListProps {
 }
 
 export default function ItemList(props: ItemListProps) {
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        const data: any = queryClient.getQueriesData(['refreshedTrackingData'])?.at(-1)?.at(-1) ?? queryClient.getQueriesData(['orderData']).at(-1)?.at(-1);
+        logOrderItemView(data?.result?.tenant_code, data?.result?.order_number, data?.result?.customer_phone, data?.result?.tracking_number);
+    }, [])
 
     const priceSum = props.items.reduce((a, b) => a + parseInt(b.total_price, 10), 0);
 
