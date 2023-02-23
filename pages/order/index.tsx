@@ -26,7 +26,7 @@ export default function Order() {
     const [trackingId, setTrackingId] = useState<any | string>('');
     const [lastRating, setLastRating] = useState<{ brand: number, shipping: number }>({ brand: 0, shipping: 0 });
     const [data, setData] = useState<any>();
-    const { isLoading, isError, data: init_data } = useQuery([trackingId], () => fetchTracking(trackingId), {
+    const { isLoading, isError, data: init_data } = useQuery(['orderData', trackingId], () => fetchTracking(trackingId), {
         enabled: trackingId?.length > 0,
         staleTime: Infinity,
         refetchOnWindowFocus: false

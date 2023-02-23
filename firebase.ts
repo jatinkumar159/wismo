@@ -24,23 +24,38 @@ if (app.name && typeof window !== 'undefined') {
   analytics = getAnalytics(app)
 }
 
-export function logTrackingPageVisit(tenantId: string, orderNumber: string, phoneNumber: string, trackingNumber: string): void {
+export function logTrackingPageVisit(tenantCode: string, orderNumber: string, phoneNumber: string, trackingNumber: string): void {
   logEvent(analytics, 'page_view', {
-    tenant_id: tenantId,
+    tenant_code: tenantCode,
     order_number: orderNumber,
     phone_number: phoneNumber,
     tracking_number: trackingNumber
   })
 }
 
-export function logLoginClick(trackingNumber: string): void {
+export function logLoginClick(tenantCode: string, orderNumber: string, phoneNumber: string, trackingNumber: string): void {
   logEvent(analytics, 'login_click', {
+    tenant_code: tenantCode,
+    order_number: orderNumber,
+    phone_number: phoneNumber,
     tracking_number: trackingNumber
   })
 }
 
-export function logLogin(trackingNumber: string): void {
+export function logLogin(tenantCode: string, orderNumber: string, phoneNumber: string, trackingNumber: string): void {
   logEvent(analytics, 'login', {
+    tenant_code: tenantCode,
+    order_number: orderNumber,
+    phone_number: phoneNumber,
+    tracking_number: trackingNumber
+  })
+}
+
+export function logOrderItemView(tenantCode: string, orderNumber: string, phoneNumber: string, trackingNumber: string): void {
+  logEvent(analytics, 'order_item_view', {
+    tenant_code: tenantCode,
+    order_number: orderNumber,
+    phone_number: phoneNumber,
     tracking_number: trackingNumber
   })
 }
