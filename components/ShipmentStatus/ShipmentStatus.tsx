@@ -30,7 +30,8 @@ export default function ShipmentStatus(props: ShipmentStatusProps) {
     return (
         <>
             <Box className={styles.container}>
-                <Text color="var(--wismo-colors-link)" fontSize="xs" onClick={onOpen} cursor="pointer">Track journey&nbsp;<ChevronRightIcon w='0.75rem' h='0.75rem' /></Text>
+                {/* <Text color="var(--wismo-colors-link)" fontSize="xs" onClick={onOpen} cursor="pointer">Track journey&nbsp;<ChevronRightIcon w='0.75rem' h='0.75rem' /></Text> */}
+                <Button bgColor="pink.100" _hover={{ bgColor: 'pink.200' }}fontSize="xs" onClick={onOpen} cursor="pointer" size="xs">Track journey&nbsp;<ChevronRightIcon w='1rem' h='1rem' /></Button>
             </Box>
             <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
                 <DrawerOverlay />
