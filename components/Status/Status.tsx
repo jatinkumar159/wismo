@@ -12,6 +12,7 @@ import brandLogo from '../../images/brandlogo.png'
 interface TrackingStatusProps {
     statusHeading: string;
     statusSubheading: string | any;
+    brandLogo: string;
     currentStep: number;
     lastUpdated: string;
     trackingUpdates: any[]
@@ -26,7 +27,7 @@ export default function Status(props: TrackingStatusProps) {
         <Box className={styles.container} p={4}>
             <Flex p={4} alignItems="center" justify={`center`}>
                 <div style={{maxWidth: `100px`, maxHeight: `100px`}}>
-                    <Image priority={false} loader={imageLoader} sizes="100px" src={brandLogo} alt="brand logo of snitch" />
+                    <Image priority={false} loader={imageLoader} sizes="100px" src={props.brandLogo} alt="brand logo" />
                 </div>
             </Flex>
             <Box textAlign="center">

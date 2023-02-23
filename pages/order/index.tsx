@@ -72,6 +72,7 @@ export default function Order() {
     const status = {
         statusHeading: data.result.status_heading,
         statusSubheading: data.result.status_sub_heading,
+        brandLogo: data.result.brand_logo,
         currentStep: resolveProgressStep(data.result),
         lastUpdated: data.result.last_event_updated,
         trackingUpdates: data.result.tracking_events
@@ -97,6 +98,10 @@ export default function Order() {
         closeDrawer: onClose
     }
 
+    const banners = [{alt: "Alt Brand Text1", src: "https://sellon.kraftly.com/srcdnm/tr:f-auto,w-360,h-240,c-maintain_ratio,pr-true/kr-shipmultichannel-mum/1538615/po_banners/fc5fa122-436d-4096-a65f-734769d763ad.jpg"}, 
+    {alt: "Alt Brand Text 2", src: "https://sellon.kraftly.com/srcdnm/tr:f-auto,w-360,h-240,c-maintain_ratio,pr-true/kr-shipmultichannel-mum/1538615/po_banners/fc5fa122-436d-4096-a65f-734769d763ad.jpg"}, 
+    {alt: "Alt Brand Text 3", src: "https://sellon.kraftly.com/srcdnm/tr:f-auto,w-360,h-240,c-maintain_ratio,pr-true/kr-shipmultichannel-mum/1538615/po_banners/fc5fa122-436d-4096-a65f-734769d763ad.jpg"}, ]//data.result.marketing?.banners;
+
     const handleOpenRating = () => {
         if (auth.isAuthorized) onOpen();
         else loginDrawer.onOpen();
@@ -119,6 +124,12 @@ export default function Order() {
                     </Box>
                 </Flex> : null}
                 <Details {...details} />
+                {
+                    banners?.length ? <Flex align="center" pb={4} gap={4} px={4} className={styles.bannerContainer}>
+                        {banners.map((el, i) => <Box className={styles.banner}><img width="100%" height="100%" key={i} src={el.src} alt={el.alt} /></Box>)}
+                    </Flex> : <></>
+                }
+                
                 <Box flexGrow={1}>
                     {
                         auth.isAuthorized ? (<Box justifyContent='space-between'>
