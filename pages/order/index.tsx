@@ -126,7 +126,7 @@ export default function Order() {
                 <Details {...details} />
                 {
                     banners?.length ? <Flex align="center" pb={4} gap={4} px={4} className={styles.bannerContainer}>
-                        {banners.map((el, i) => <Box key={i} className={styles.banner}><img width="100%" height="100%" src={el.src} alt={el.alt} /></Box>)}
+                        {banners.map((el: any, i: number) => <Box key={i} className={styles.banner}><img width="100%" height="100%" src={el.src} alt={el.alt} /></Box>)}
                     </Flex> : <></>
                 }
                 
