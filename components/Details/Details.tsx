@@ -15,6 +15,8 @@ import LoginPrompt from "../LoginPrompt/LoginPrompt"
 
 interface OrderDetailProps {
     orderNumber: string;
+    isReverseJourney: boolean;
+    reversePickupCode: string;
     deliveryAddress: string;
     trackingNumber: string;
     shippingProvider: string;
@@ -51,10 +53,14 @@ export default function Details(props: OrderDetailProps) {
                     <HStack>
                         <Icon as={BsBagFill} fontSize="md" mr={2} color="var(--wismo-colors-text)"></Icon>
                         <Box>
-                            <Text>Order number</Text>
+                            {props.isReverseJourney ? <> <Text>Reverse Pickup Code</Text>
+                            <HStack>
+                                <Text as="p" fontSize="sm" className={styles.lightText}>{props.reversePickupCode}</Text>
+                            </HStack></> : <> <Text>Order number</Text>
                             <HStack>
                                 <Text as="p" fontSize="sm" className={styles.lightText}>{props.orderNumber}</Text>
-                            </HStack>
+                            </HStack></> }
+                           
                         </Box>
                     </HStack>
                 </Box>

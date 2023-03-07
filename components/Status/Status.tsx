@@ -9,17 +9,23 @@ import ShipmentStatus from "../ShipmentStatus/ShipmentStatus"
 import imageLoader from "../../utils/imageLoader"
 import brandLogo from '../../images/brandlogo.png'
 
+interface Step {
+    label: string;
+}
 interface TrackingStatusProps {
     statusHeading: string;
     statusSubheading: string | any;
     brandLogo: string;
     currentStep: number;
     lastUpdated: string;
-    trackingUpdates: any[]
+    trackingUpdates: any[];
+    steps: Step[];
+    activeStep?: number;
 }
 
 export default function Status(props: TrackingStatusProps) {
     const stepData = useSteps({
+        steps: props.steps,
         initialStep: props.currentStep,
     })
     
@@ -34,7 +40,8 @@ export default function Status(props: TrackingStatusProps) {
                 <Text as="h1" fontSize="xl" dangerouslySetInnerHTML={{__html: props.statusHeading}}></Text>
                 <Text as="p" fontSize="sm" className={styles.lightText} dangerouslySetInnerHTML={{__html: props.statusSubheading}}></Text>
             </Box>
-            <OrderSteps {...stepData} />
+            {/* <OrderSteps {...stepData} /> */}
+            <OrderSteps steps={props.steps} activeStep={props.currentStep}/>
             <Flex justifyContent="space-between" w="100%" pt={4}>
                 <HStack className={styles.lightText}>
                     <TimeIcon verticalAlign="middle" fontSize={`xs`}/>
