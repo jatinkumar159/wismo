@@ -23,10 +23,6 @@ interface ShipmentStatusProps {
 export default function ShipmentStatus(props: ShipmentStatusProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { activeStep } = useSteps({
-        initialStep: 3,
-    })
-
     return (
         <>
             <Box className={styles.container}>

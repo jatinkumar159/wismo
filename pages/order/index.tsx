@@ -17,6 +17,18 @@ import ShippingRating from "../../components/Ratings/Shipping/ShippingRating"
 import LoginDrawer from "../../components/LoginDrawer/LoginDrawer"
 import { logTrackingPageVisit } from "../../firebase"
 
+const resolveSteps = (shippingType: string, includeRefundFlow: boolean, isRtoReturned: boolean) => {
+    let forwardJourneySteps = [{ label: "Confirmed" }, { label: "Shipped" }, { label: "Out for Delivery" }, { label: isRtoReturned ? "Returned" : "Delivered" }];
+    let reverseJourneySteps = [];
+    if(includeRefundFlow) {
+        reverseJourneySteps = [{ label: "Return Created" }, { label: "Return Picked Up" }, { label: "Refund Initiated" }, { label: "Refund Complete" }, { label: "Return Completed" }];
+    } else {
+        reverseJourneySteps = [{ label: "Return Created" }, { label: "Return Picked Up" }, { label: "Return Completed" }];
+    }
+
+    return String(shippingType).toLowerCase().indexOf("reverse") !== -1 ? reverseJourneySteps : forwardJourneySteps
+}
+
 export default function Order() {
     const router = useRouter();
     const auth = useContext(AuthContext);
@@ -57,12 +69,27 @@ export default function Order() {
         else setData(init_data);
     }, [init_data, refreshed_data])
 
-    const resolveProgressStep = (data: any): number => {
-        if (!!data.is_delivered) return 4;
-        if (!!data.is_out_for_delivery) return 3;
-        if (!!data.is_dispatched) return 2;
-        if (!!data.is_shipped) return 1;
-        else return 0;
+    const resolveProgressStep = (data: any, shippingType: string, includeRefundFlow: boolean): number => {
+        if(String(shippingType).toLowerCase().indexOf('reverse') !== -1) {
+            if(!!includeRefundFlow) {
+                if(data.return_complete) return 5;
+                if(data.refund_complete) return 4;
+                if(data.refund_initiated) return 3;
+                if(data.return_picked_up) return 2;
+                if(data.return_created) return 1;
+            } else {
+                if(data.return_complete) return 3;
+                if(data.return_picked_up) return 2;
+                if(data.return_created) return 1;
+            }
+        } else {
+            if (!!data.is_delivered) return 4;
+            if (!!data.is_out_for_delivery) return 3;
+            if (!!data.is_dispatched) return 2;
+            if (!!data.is_shipped) return 1;
+            else return 0;
+        }
+        return 0;
     }
 
     if (isLoading) return <Center h={`calc(100vh - 40px)`}><Spinner /></Center>
@@ -73,13 +100,16 @@ export default function Order() {
         statusHeading: data.result.status_heading,
         statusSubheading: data.result.status_sub_heading,
         brandLogo: data.result.brand_logo,
-        currentStep: resolveProgressStep(data.result),
+        currentStep: resolveProgressStep(data.result, data.result.shipment_tracking_type, data.result.include_refund_flow),
         lastUpdated: data.result.last_event_updated,
-        trackingUpdates: data.result.tracking_events
+        trackingUpdates: data.result.tracking_events,
+        steps: resolveSteps(data.result.shipment_tracking_type, data.result.include_refund_flow, data.result.is_rto_returned)
     };
 
     const details = {
         orderNumber: data.result.order_number,
+        isReverseJourney: String(data.result.shipment_tracking_type).toLowerCase().indexOf('reverse') === -1 ? false : true,
+        reversePickupCode: data.result.reverse_pickup_code,
         deliveryAddress: data.result.delivery_address,
         trackingNumber: data.result.tracking_number,
         shippingProvider: data.result.shipping_source_code,
@@ -126,7 +156,7 @@ export default function Order() {
                 <Details {...details} />
                 {
                     banners?.length ? <Flex align="center" pb={4} gap={4} px={4} className={styles.bannerContainer}>
-                        {banners.map((el, i) => <Box key={i} className={styles.banner}><img width="100%" height="100%" src={el.src} alt={el.alt} /></Box>)}
+                        {banners.map((el: any, i: number) => <Box key={i} className={styles.banner}><img width="100%" height="100%" src={el.src} alt={el.alt} /></Box>)}
                     </Flex> : <></>
                 }
                 

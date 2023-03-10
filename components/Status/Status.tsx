@@ -9,17 +9,23 @@ import ShipmentStatus from "../ShipmentStatus/ShipmentStatus"
 import imageLoader from "../../utils/imageLoader"
 import brandLogo from '../../images/brandlogo.png'
 
+interface Step {
+    label: string;
+}
 interface TrackingStatusProps {
     statusHeading: string;
     statusSubheading: string | any;
     brandLogo: string;
     currentStep: number;
     lastUpdated: string;
-    trackingUpdates: any[]
+    trackingUpdates: any[];
+    steps: Step[];
+    activeStep?: number;
 }
 
 export default function Status(props: TrackingStatusProps) {
     const stepData = useSteps({
+        steps: props.steps,
         initialStep: props.currentStep,
     })
     
@@ -35,8 +41,9 @@ export default function Status(props: TrackingStatusProps) {
                 <Text as="h1" fontSize="xl" dangerouslySetInnerHTML={{__html: props.statusHeading}}></Text>
                 <Text as="p" fontSize="sm" className={styles.lightText} dangerouslySetInnerHTML={{__html: props.statusSubheading}}></Text>
             </Box>
-            <OrderSteps {...stepData} />
-            <Flex justifyContent="space-between" w="100%" pt={4}>
+            {/* <OrderSteps {...stepData} /> */}
+            <OrderSteps steps={props.steps} activeStep={props.currentStep}/>
+            <Flex justifyContent="space-between" w="100%" pt={1}>
                 <HStack className={styles.lightText}>
                     <TimeIcon verticalAlign="middle" fontSize={`xs`}/>
                     <Text as="span" fontSize="xs">{`${new Date(props.lastUpdated).toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })} at ${new Date(props.lastUpdated).toLocaleTimeString('en-us', {hour: '2-digit', minute:'2-digit'})}`}</Text>
