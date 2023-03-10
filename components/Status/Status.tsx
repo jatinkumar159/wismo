@@ -42,7 +42,7 @@ export default function Status(props: TrackingStatusProps) {
             </Box>
             {/* <OrderSteps {...stepData} /> */}
             <OrderSteps steps={props.steps} activeStep={props.currentStep}/>
-            <Flex justifyContent="space-between" w="100%" pt={4}>
+            <Flex justifyContent="space-between" w="100%" pt={1}>
                 <HStack className={styles.lightText}>
                     <TimeIcon verticalAlign="middle" fontSize={`xs`}/>
                     <Text as="span" fontSize="xs">{`${new Date(props.lastUpdated).toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })} at ${new Date(props.lastUpdated).toLocaleTimeString('en-us', {hour: '2-digit', minute:'2-digit'})}`}</Text>

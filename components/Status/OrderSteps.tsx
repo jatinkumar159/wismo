@@ -1,5 +1,5 @@
 import { CheckCircleIcon, CheckIcon } from "@chakra-ui/icons";
-import { Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { Step, Steps } from "chakra-ui-steps";
 
 interface Step {
@@ -16,10 +16,12 @@ interface Props {
 
 export default function OrderSteps({ steps, activeStep }: Props) {
     return (
-        <Steps activeStep={activeStep} orientation='horizontal' labelOrientation="vertical" responsive={false} mt='1rem' size='sm'>
-            {steps.map(({ label }, index) => (
-                <Step label={label} key={index}></Step>
-            ))}
-        </Steps>
+        <Box overflow="auto" pb={3}>
+            <Steps activeStep={activeStep} orientation='horizontal' labelOrientation="vertical" responsive={false} mt='1rem' size='sm'>
+                {steps.map(({ label }, index) => (
+                    <Step label={label} key={index}></Step>
+                ))}
+            </Steps>
+        </Box>
     )
 }

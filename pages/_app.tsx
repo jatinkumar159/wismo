@@ -29,10 +29,12 @@ const CustomSteps = {
         ...StepsStyleConfig.baseStyle(props).label,
         // "font-size": "0.625rem",
         // "font-weight": "normal"
+        "margin" : "0 0.5rem"
       },
       iconLabel: {
         ...StepsStyleConfig.baseStyle(props).iconLabel,
-        "fontSize": "0"
+        "fontSize": "0",
+        "padding" : "0 0.25rem"
       },
       steps: {
         ...StepsStyleConfig.baseStyle(props).steps,

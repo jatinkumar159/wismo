@@ -26,7 +26,7 @@ const resolveSteps = (shippingType: string, includeRefundFlow: boolean, isRtoRet
         reverseJourneySteps = [{ label: "Return Created" }, { label: "Return Picked Up" }, { label: "Return Completed" }];
     }
 
-    return shippingType.toLowerCase().indexOf("reverse") !== -1 ? reverseJourneySteps : forwardJourneySteps
+    return String(shippingType).toLowerCase().indexOf("reverse") !== -1 ? reverseJourneySteps : forwardJourneySteps
 }
 
 export default function Order() {
@@ -70,7 +70,7 @@ export default function Order() {
     }, [init_data, refreshed_data])
 
     const resolveProgressStep = (data: any, shippingType: string, includeRefundFlow: boolean): number => {
-        if(shippingType.toLowerCase().indexOf('reverse') !== -1) {
+        if(String(shippingType).toLowerCase().indexOf('reverse') !== -1) {
             if(!!includeRefundFlow) {
                 if(data.return_complete) return 5;
                 if(data.refund_complete) return 4;
