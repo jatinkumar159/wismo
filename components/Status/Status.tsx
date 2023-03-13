@@ -71,7 +71,7 @@ export default function Status(props: TrackingStatusProps) {
         <Box className={styles.container} p={4}>
             <Flex p={4} alignItems="center" justify={`center`}>
                 <div style={{maxWidth: `100px`, maxHeight: `100px`}}>
-                    { props.brandLogo ? <Image priority={false} width={"60"} height={"40"} loader={imageLoader} sizes="100px" src={props.brandLogo} alt="brand logo" /> : <></>}
+                    { props.brandLogo ? <Image priority={false} width={"60"} height={"40"} style={{ width: 60, height: 40 }} loader={imageLoader} sizes="100px" src={props.brandLogo} alt="brand logo" /> : <></>}
                     {/* <Image priority={false} loader={imageLoader} sizes="100px" src={props.brandLogo} alt="brand logo" /> */}
                 </div>
             </Flex>

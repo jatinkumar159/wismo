@@ -23,11 +23,12 @@ export default function Navigation() {
           <Text as="span" fontSize="xs" className={styles.lightText} mr={2}>Powered by </Text>
           <Image
             loader={imageLoader}
-            src="https://infowordpress.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/10/06114711/logo.webp"
+            src="/image.webp"
             alt="Unicommerce"
             width="60"
             height="40"
             priority={false}
+            style={{ width: 60, height: 40 }}
           />
         </Flex>
       </div>
