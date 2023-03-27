@@ -61,6 +61,10 @@ export default function Order() {
     useEffect(() => {
         if (data?.result?.customer_phone) {
             auth.setPhoneNumber(data.result.customer_phone);
+            if(data.result.is_buyer_login_needed === false) {
+                localStorage.setItem('tr', window.btoa(encodeURIComponent(data.result.customer_phone)));
+                auth.checkAuthorization();
+            }
             logTrackingPageVisit(data.result.tenant_code, data.result.order_number, data.result.customer_phone, data.result.tracking_number);
         }
     }, [data])
