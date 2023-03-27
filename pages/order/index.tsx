@@ -16,6 +16,7 @@ import BrandRating from "../../components/Ratings/Brand/BrandRating"
 import ShippingRating from "../../components/Ratings/Shipping/ShippingRating"
 import LoginDrawer from "../../components/LoginDrawer/LoginDrawer"
 import { logTrackingPageVisit } from "../../firebase"
+import FullSkeleton from "../../components/Skeleton/Skeleton"
 
 const resolveSteps = (shippingType: string, includeRefundFlow: boolean, isRtoReturned: boolean) => {
     let forwardJourneySteps = [{ label: "Confirmed" }, { label: "Shipped" }, { label: "Out for Delivery" }, { label: isRtoReturned ? "Returned" : "Delivered" }];
@@ -60,6 +61,10 @@ export default function Order() {
     useEffect(() => {
         if (data?.result?.customer_phone) {
             auth.setPhoneNumber(data.result.customer_phone);
+            if(data.result.is_buyer_login_needed === false) {
+                localStorage.setItem('tr', window.btoa(encodeURIComponent(data.result.customer_phone)));
+                auth.checkAuthorization();
+            }
             logTrackingPageVisit(data.result.tenant_code, data.result.order_number, data.result.customer_phone, data.result.tracking_number);
         }
     }, [data])
@@ -92,7 +97,7 @@ export default function Order() {
         return 0;
     }
 
-    if (isLoading) return <Center h={`calc(100vh - 40px)`}><Spinner /></Center>
+    if (isLoading) return <FullSkeleton />
     if (isError) return <Center h={`calc(100vh - 40px)`}><Text as="p">Something went wrong, please try again later...</Text></Center>
     if (!data) return <Center h={`calc(100vh - 40px)`}><Spinner /></Center>
 
@@ -145,7 +150,7 @@ export default function Order() {
     return (
         <>
             <Flex className={styles.container}>
-                <Status {...status} />
+                <Status isLoading={false} {...status} />
                 {(!!details.delivered) ? <Flex className={styles.containerRatings} flexDir='column' gap='0.5rem' mb={4} p={4}>
                     <Text as="h3" fontSize="lg" mb={1}>How did we do?</Text>
                     <Box>

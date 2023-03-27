@@ -1,0 +1,17 @@
+
+@import './../../styles/common.scss';
+
+.container {
+    height: calc(100% - 3rem);
+    flex-direction: column;
+    background: var(--wismo-colors-background);
+    // border-radius: var(--chakra-spaces-4);
+}
+
+.containerRatings {
+    background-color: var(--wismo-colors-white);
+}
+
+.detailsContainer {
+    background-color: var(--wismo-colors-white);
+}
